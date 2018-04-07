@@ -606,7 +606,7 @@ table.dataTable thead .sorting:after {
     margin: 20px 0px 20px 50px;
 }
 
-.layer-form .control-group {
+.control-group {
     margin: 10px;
 }
 
@@ -637,4 +637,64 @@ table.dataTable thead .sorting:after {
     border-collapse: separate;
     word-wrap: break-word;
     overflow: hidden;
+}
+
+/*创建复盘*/
+.creat-step {
+    width: 20px;
+    height: 20px;
+    display: block;
+    border: 2px solid;
+    border-radius: 50%;
+    float: left;
+    line-height: 16px;
+    text-align: center;
+}
+
+/* 清除蓝色边框 */
+.tab-pane {
+    outline: none;
+}
+
+.reveal-modal {
+    z-index: 9996;
+}
+
+.field-box-title {
+    float: left;
+    width: 50%;
+}
+
+.field-box-title-head {
+    border-bottom: 1px solid #eff2f7;
+    line-height: 40px;
+    padding-left: 25px
+}
+
+.field-box-title-center {
+    padding-left: 15px;
+}
+
+.control-group ul {
+    margin-top: 25px;
+}
+.control-group ul li {
+    margin-top: 5px;
+}
+
+/*拖动样式*/
+/*body.dragging, body.dragging * {*/
+    /*cursor: move !important;*/
+/*}*/
+.dragged {
+    position: absolute;
+    opacity: 1;
+    z-index: 2000;
+}
+ul.custom-fields li.placeholder {
+    position: relative;
+    list-style: none;
+}
+ul.custom-fields li.placeholder:before {
+    position: absolute;
 }

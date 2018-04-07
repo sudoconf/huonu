@@ -84,5 +84,42 @@ $(".ux-status-handle").hover(function () {
     $('.ux-status-info').hide();
 });
 
+// 时间段选择
+var cb = function (start, end, label) {
+    $('.select-time span').html(start.format('YYYY-MM-DD HH:mm:ss'));
+};
 
+var optionSet = {
+    'startDate': moment().hours(4).minutes(0).seconds(0),
+    'endDate': moment().endOf('day'),
+    'timePicker': true,
+    'ranges': {
+        // '最近1小时': [moment().subtract('hours',1), moment()],
+        '今天': [moment().startOf('day'), moment()],
+        '昨天': [moment().subtract(1, 'days').startOf('day'), moment().subtract(1, 'days').endOf('day')],
+        '7天': [moment().subtract(7, 'days').startOf('day'), moment().endOf('day')],
+        '15天': [moment().subtract(15, 'days').startOf('day'), moment().endOf('day')],
+        '30天': [moment().subtract(30, 'days').startOf('day'), moment().endOf('day')],
+        '这个月': [moment().startOf('month').startOf('day'), moment().endOf('month').endOf('day')],
+        '上个月': [moment().subtract(1, 'month').startOf('month').startOf('day'), moment().subtract(1, 'month').endOf('month').endOf('day')]
+    },
+    'locale': {
+        'format': 'YYYY-MM-DD HH:mm:ss',
+        "separator": " - ",
+        "applyLabel": "确定",
+        "cancelLabel": "取消",
+        "fromLabel": "起始时间",
+        "toLabel": "结束时间'",
+        "customRangeLabel": "自定义",
+        "weekLabel": "W",
+        'daysOfWeek': ['日', '一', '二', '三', '四', '五', '六'],
+        'monthNames': ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+    },
+    'opens': 'right',
+    'drops': 'down',
+    'format': 'YYYY-MM-DD HH:mm:ss',
+};
+$('.select-time').daterangepicker(optionSet, cb);
 
+// 拖动排序
+$("ul.custom-fields").sortable()
