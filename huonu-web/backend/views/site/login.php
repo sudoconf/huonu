@@ -9,7 +9,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => '登录'], 'descri
 <?= Html::cssFile('@web/css/login.css')?>
 <div class="login">
 
-  <form id="login-form" action="index.php?r=login/login-up" method="post">
+  <form id="login-form" action="index.php?r=site/login" method="post">
       <center><img id="logo" src="http://buy.cmseasy.cn/resources/images/logo.png" /></center>
 
       <div class="clear"></div>
@@ -22,10 +22,10 @@ $this->registerMetaTag(['name' => 'description', 'content' => '登录'], 'descri
         <input class="form-control" placeholder="请输入密码" name="password" type="password">
       </div>
 
-      <div class="form-group">
-        <input class="form-control" style="width: 150px; display: inline-block;" placeholder="请输入验证码" name="captcha" type="text">
-        <img src="index.php?r=login/captcha" alt="验证码" align="bottom" style="cursor:pointer;" title="看不清可单击图片刷新" onclick="this.src='index.php?r=login/captcha&d='+Math.random();" />
-      </div>
+<!--      <div class="form-group">-->
+<!--        <input class="form-control" style="width: 150px; display: inline-block;" placeholder="请输入验证码" name="captcha" type="text">-->
+<!--        <img src="index.php?r=login/captcha" alt="验证码" align="bottom" style="cursor:pointer;" title="看不清可单击图片刷新" onclick="this.src='index.php?r=login/captcha&d='+Math.random();" />-->
+<!--      </div>-->
 
       <!--<div class="form-group">-->
       <!--  <label>-->

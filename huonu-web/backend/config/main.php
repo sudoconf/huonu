@@ -11,7 +11,7 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'defaultRoute' => 'login', // 默认配置访问地址
+    // 'defaultRoute' => 'login', // 默认配置访问地址
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
