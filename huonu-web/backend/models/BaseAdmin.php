@@ -19,9 +19,7 @@ use yii\web\IdentityInterface;
  * @property string $auth_key
  * @property integer $role
  * @property integer $status
- * @property integer $create_id
  * @property integer $create_time
- * @property integer $updated_id
  * @property integer $updated_time
  * @property string $password write-only password
  */
@@ -78,10 +76,8 @@ class BaseAdmin extends ActiveRecord implements IdentityInterface
             'password_hash' => '密码的哈希值',
             'password_reset_token' => '重新登录密钥',
             'status' => '状态',
-            'create_time' => '创建时间',
-            'create_id' => '创建用户',
-            'update_time' => '修改时间',
-            'update_id' => '修改用户',
+            'created_at' => '创建时间',
+            'updated_at' => '修改时间',
         ];
     }
 

@@ -24,13 +24,6 @@ use Yii;
  */
 class Admin extends BaseAdmin
 {
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return '{{%admin}}';
-    }
 
     /**
      * @inheritdoc
@@ -63,9 +56,9 @@ class Admin extends BaseAdmin
             [
                 'face' => '头像信息',
                 'last_time' => '上一次登录时间',
-                'last__ip' => '上一次登录的IP',
+                'last_ip' => '上一次登录的IP',
                 'password' => '密码',
-                'repassword' => '确认密码',
+                're_password' => '确认密码',
             ]
         );
     }

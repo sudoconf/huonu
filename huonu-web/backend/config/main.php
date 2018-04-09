@@ -12,6 +12,7 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     // 'defaultRoute' => 'login', // 默认配置访问地址
+    'language' => 'zh-CN',
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
@@ -60,18 +61,6 @@ return [
     'modules' => [
         'system' => [
             'class' => 'backend\modules\system\systemModule',
-        ],
-        'reportForm' => [
-            'class' => 'backend\modules\reportForm\reportFormModule',
-        ],
-        'log' => [
-            'class' => 'backend\modules\log\logModule',
-        ],
-        'plan' => [
-            'class' => 'backend\modules\plan\planModule',
-        ],
-        'customer' => [
-            'class' => 'backend\modules\customer\customerModule',
         ],
     ],
     'params' => $params,

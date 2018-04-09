@@ -7,8 +7,28 @@
 
 namespace common\components;
 
+use Yii;
+use yii\web\Response;
+
 class CtHelper
 {
+    public static function makeResponse($result = true, $message = '', $data = [])
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return [
+            'result' => $result,
+            'message' => $message,
+            'data' => $data
+        ];
+    }
+
+    public static function response($result = true, $message = '', $data = [])
+    {
+        Yii::$app->response->data = CtHelper::makeResponse($result, $message, $data);
+        Yii::$app->response->send();
+        exit();
+    }
+
     /**
      * 获取IP地址
      * @return array|false|string
