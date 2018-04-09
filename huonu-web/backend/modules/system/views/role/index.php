@@ -211,8 +211,8 @@ $this->registerMetaTag(['name' => 'description', 'content' => '人群复盘列�
 
         <div class="control-group">
             <div class="controls">
-                <button type="submit" class="btn btn-primary">提交</button>
-                <button type="submit" class="btn btn-primary">重置</button>
+                <button type="button" class="btn btn-primary">提交</button>
+                <button type="button" class="btn btn-primary">重置</button>
             </div>
         </div>
     </div>
