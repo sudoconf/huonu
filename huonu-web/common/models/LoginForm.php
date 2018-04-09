@@ -7,7 +7,7 @@ use yii\base\Model;
 /**
  * Login form
  */
-class AdminLoginForm extends Model
+class LoginForm extends Model
 {
     public $username;
     public $password;
@@ -28,18 +28,6 @@ class AdminLoginForm extends Model
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'username'   => '管理员账号',
-            'password'   => '管理员密码',
-            'rememberMe' => '记住登录',
         ];
     }
 
