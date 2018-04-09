@@ -49,14 +49,17 @@ return [
                 'yii\web\JqueryAsset' => false,
             ],
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
-            'showScriptName' => false,
+            'showScriptName' => false, // 隐藏index.php
+            'suffix' => '.html', // 后缀
             'rules' => [
             ],
         ],
-        */
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+            "defaultRoles" => ["guest"],
+        ],
     ],
     'modules' => [
         'system' => [

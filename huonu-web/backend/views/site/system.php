@@ -65,10 +65,10 @@ $this->registerMetaTag(['name' => 'description', 'content' => '人群复盘列�
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="<?= Url::toRoute('system/user') ?>">用户列表</a>
+                            <a href="<?= Url::toRoute('/system/user') ?>">用户列表</a>
                         </li>
                         <li>
-                            <a href="#">角色列表</a>
+                            <a href="<?= Url::toRoute('/system/role') ?>">角色列表</a>
                         </li>
                         <li>
                             <a href="#">权限列表</a>

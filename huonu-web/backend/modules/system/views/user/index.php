@@ -19,7 +19,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => '人群复盘列�
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="<?= Url::toRoute('site/index') ?>">智行智投</a>
+        <a class="navbar-brand" href="<?= Url::toRoute('/site/index') ?>">智行智投</a>
     </div>
     <!-- /.navbar-header -->
 
@@ -56,7 +56,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => '人群复盘列�
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
                 <li>
-                    <a href="<?= Url::to(['site/index']) ?>"><i class="fa fa-dashboard fa-fw"></i> 控制盘</a>
+                    <a href="<?= Url::toRoute('/site') ?>"><i class="fa fa-dashboard fa-fw"></i> 控制盘</a>
                 </li>
 
                 <li>
@@ -66,10 +66,10 @@ $this->registerMetaTag(['name' => 'description', 'content' => '人群复盘列�
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="<?php Url::toRoute('system/user') ?>">用户列表</a>
+                            <a href="<?= Url::toRoute('/system/user') ?>">用户列表</a>
                         </li>
                         <li>
-                            <a href="#">角色列表</a>
+                            <a href="<?= Url::toRoute('/system/role') ?>">角色列表</a>
                         </li>
                         <li>
                             <a href="#">权限列表</a>
@@ -114,7 +114,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => '人群复盘列�
         <ul class="page-breadcrumb">
             <li>
                 <i class="fa fa-home"></i>
-                <a href="<?= Url::to('index.php?r=site/index') ?>">Home</a>
+                <a href="<?= Url::toRoute('/site') ?>">Home</a>
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
@@ -134,7 +134,11 @@ $this->registerMetaTag(['name' => 'description', 'content' => '人群复盘列�
                     查询条件
                 </div>
 
-                <?php $form = ActiveForm::begin(['id' => 'search-form', 'method' => 'get']); ?>
+                <?php $form = ActiveForm::begin([
+                    'id' => 'search-form',
+                    'method' => 'get',
+                    'action' => Url::toRoute('user/index')
+                    ]); ?>
                 <div class="panel-body form-group">
                     <div class="form-filter">
                         <label class="form-filter-field">用户名：</label>
@@ -167,7 +171,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => '人群复盘列�
                         </div>
                     </div>
                     <div class="form-filter-btn">
-                        <?= Html::submitButton('搜索', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                        <?= Html::submitButton('搜索', ['class' => 'btn btn-primary']) ?>
                     </div>
                 </div>
                 <?php ActiveForm::end(); ?>

@@ -40,6 +40,18 @@ $(function () {
 
 });
 
+$('.create-role-button').click(function () {
+    layer.open({
+        type: 1,
+        title: '创建角色',
+        shadeClose: true,
+        shade: false,
+        maxmin: false, //开启最大化最小化按钮
+        area: ['462px', '430px'],
+        content: $('.layer-form-create-role').html()
+    });
+});
+
 $('.create-user-button').click(function () {
     layer.open({
         type: 1,
@@ -69,7 +81,7 @@ $('.del').click(function () {
 
         layer.close(index);
     });
-})
+});
 
 // 客户计划
 $('.plan-table tr:even').hover(function () {
@@ -122,4 +134,8 @@ var optionSet = {
 $('.select-time').daterangepicker(optionSet, cb);
 
 // 拖动排序
-$("ul.custom-fields").sortable()
+$('ul.custom-fields').sortable();
+
+// ajax 创建角色
+function createRole() {
+}
