@@ -135,21 +135,3 @@ $('.select-time').daterangepicker(optionSet, cb);
 
 // 拖动排序
 $('ul.custom-fields').sortable();
-
-// ajax 创建角色
-function submitForm() {
-    //提交表单数据
-    $.ajax({
-        url:"略",
-        type:"post",
-        data:"",
-        dataType:"text",
-        success:function(data){
-            layer.closeAll('page');
-
-        },
-        error:function(xhr){
-            alert(xhr.status)
-        }
-    });
-};
