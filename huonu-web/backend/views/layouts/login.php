@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\captcha\Captcha;
 
 $model = new \backend\models\AdminLoginForm();
 ?>
@@ -33,10 +34,11 @@ $model = new \backend\models\AdminLoginForm();
 
       <?= $form->field($model, 'password')->passwordInput(['placeholder' => $model->getAttributeLabel('password')])->label(false) ?>
 
-      <!--<div class="form-group">-->
-      <!--  <input class="form-control" style="width: 150px; display: inline-block;" placeholder="请输入验证码" name="captcha" type="text">-->
-      <!--  <img src="index.php?r=login/captcha" alt="验证码" align="bottom" style="cursor:pointer;" title="看不清可单击图片刷新" onclick="this.src='index.php?r=login/captcha&d='+Math.random();" />-->
-      <!--</div>-->
+      <div class="form-group">
+        <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
+            'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
+        ]) ?>
+      </div>
 
       <?= $form->field($model, 'rememberMe')->checkbox() ?>
 

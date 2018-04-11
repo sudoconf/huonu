@@ -24,7 +24,7 @@ class BaseController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error', 'captcha'],
                         'allow' => true,
                     ],
                     [
@@ -55,7 +55,9 @@ class BaseController extends Controller
         // 主控制器验证
         if (parent::beforeAction($action)) {
             // 验证权限
-            if (!Yii::$app->user->can($action->controller->id . '/' . $action->id) && Yii::$app->getErrorHandler()->exception === null) {
+            if (!Yii::$app->user->can($action->controller->id.'/'.$action->id) && Yii::$app->getErrorHandler(
+                )->exception === null
+            ) {
                 // 没有权限AJAX返回
                 if (Yii::$app->request->isAjax) {
                     // CtHelper::response(false, '对不起，您现在还没获得该操作的权限!');

@@ -13,6 +13,7 @@ class AdminLoginForm extends Model
     public $username;
     public $password;
     public $rememberMe = true;
+    public $verifyCode;
 
     private $_user = false;
 
@@ -28,6 +29,7 @@ class AdminLoginForm extends Model
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
+            ['verifyCode', 'captcha'],
         ];
     }
 
@@ -40,6 +42,7 @@ class AdminLoginForm extends Model
             'username' => '管理员账号',
             'password' => '管理员密码',
             'rememberMe' => '记住登录',
+            'verifyCode' => '验证码',
         ];
     }
 
