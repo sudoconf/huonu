@@ -59,3 +59,8 @@ body {
     font-size: 10px;
     color: #888;
 }
+
+.form-group input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+}
