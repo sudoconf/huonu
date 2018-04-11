@@ -37,7 +37,7 @@ class BaseController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['get'],
+                    'logout' => ['post'],
                 ],
             ],
         ];

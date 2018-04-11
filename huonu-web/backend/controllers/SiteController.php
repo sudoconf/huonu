@@ -65,6 +65,7 @@ class SiteController extends BaseController
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack(); // 到首页去
         } else {
+            $model->password = '';
             return $this->render('login', [
                 'model' => $model,
             ]);
