@@ -37,7 +37,7 @@ class BaseController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'logout' => ['get'],
                 ],
             ],
         ];
@@ -58,7 +58,7 @@ class BaseController extends Controller
             if (!Yii::$app->user->can($action->controller->id . '/' . $action->id) && Yii::$app->getErrorHandler()->exception === null) {
                 // 没有权限AJAX返回
                 if (Yii::$app->request->isAjax) {
-                    CtHelper::response(false, '对不起，您现在还没获得该操作的权限!');
+                    // CtHelper::response(false, '对不起，您现在还没获得该操作的权限!');
                 }
 
                 // throw new UnauthorizedHttpException('对不起，您现在还没获得该操作的权限!');

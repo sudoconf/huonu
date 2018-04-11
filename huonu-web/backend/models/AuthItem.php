@@ -4,6 +4,7 @@ namespace backend\models;
 
 use Yii;
 use yii\helpers\Json;
+use yii\rbac\Item;
 
 /**
  * This is the model class for table "{{%auth_item}}".
@@ -15,6 +16,8 @@ use yii\helpers\Json;
  * @property resource $data
  * @property int $created_at
  * @property int $updated_at
+ *
+ * @property Item $item
  *
  * @property AuthAssignment[] $authAssignments
  * @property AuthRule $ruleName
@@ -31,6 +34,9 @@ class AuthItem extends \yii\db\ActiveRecord
     public $ruleName;
     public $data;
 
+    /**
+     * @var Item
+     */
     private $_item;
 
     public function __construct($item = null, $config = [])
@@ -148,5 +154,112 @@ class AuthItem extends \yii\db\ActiveRecord
         }
 
         return null;
+    }
+
+    public function createSave()
+    {
+        if ($this->validate()) {
+            $manager = Yii::$app->authManager;
+            if ($this->_item === null) {
+                if ($this->type == Item::TYPE_ROLE) {
+                    $this->_item = $manager->createRole($this->name);
+                } else {
+                    $this->_item = $manager->createPermission($this->name);
+                }
+                $isNew = true;
+            } else {
+                $isNew = false;
+                $oldName = $this->_item->name;
+            }
+            $this->_item->name = $this->name;
+            $this->_item->description = $this->description;
+            $this->_item->ruleName = $this->ruleName;
+            $this->_item->data = $this->data === null || $this->data === '' ? null : Json::decode($this->data);
+            if ($isNew) {
+                $manager->add($this->_item);
+            } else {
+                $manager->update($oldName, $this->_item);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function addChildren($items)
+    {
+        $manager = Yii::$app->authManager;
+        $success = 0;
+        if ($this->_item) {
+            foreach ($items as $name) {
+                $child = $manager->getPermission($name);
+                if ($this->type == Item::TYPE_ROLE && $child === null) {
+                    $child = $manager->getRole($name);
+                }
+                try {
+                    $manager->addChild($this->_item, $child);
+                    $success++;
+                } catch (\Exception $exc) {
+                    Yii::error($exc->getMessage(), __METHOD__);
+                }
+            }
+        }
+        if ($success > 0) {
+        }
+        return $success;
+    }
+
+    //
+    public function removeChildren($items)
+    {
+        $manager = Yii::$app->authManager;
+        $success = 0;
+        if ($this->_item !== null) {
+            foreach ($items as $name) {
+                $child = $manager->getPermission($name);
+                if ($this->type == Item::TYPE_ROLE && $child === null) {
+                    $child = $manager->getRole($name);
+                }
+                try {
+                    $manager->removeChild($this->_item, $child);
+                    $success++;
+                } catch (\Exception $exc) {
+                    Yii::error($exc->getMessage(), __METHOD__);
+                }
+            }
+        }
+        if ($success > 0) {
+        }
+        return $success;
+    }
+
+    public function getItems()
+    {
+        $manager = Yii::$app->authManager;
+        $available = [];
+        if ($this->type == Item::TYPE_ROLE) {
+            foreach (array_keys($manager->getRoles()) as $name) {
+                $available[$name] = 'role';
+            }
+        }
+        foreach (array_keys($manager->getPermissions()) as $name) {
+            $available[$name] = $name[0] == '/' ? 'route' : 'permission';
+        }
+
+        $assigned = [];
+        foreach ($manager->getChildren($this->_item->name) as $item) {
+            $assigned[$item->name] = $item->type == 1 ? 'role' : ($item->name[0] == '/' ? 'route' : 'permission');
+            unset($available[$item->name]);
+        }
+        unset($available[$this->name]);
+        return [
+            'available' => $available,
+            'assigned' => $assigned,
+        ];
+    }
+
+    public function getItem()
+    {
+        return $this->_item;
     }
 }

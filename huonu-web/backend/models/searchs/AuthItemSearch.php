@@ -77,7 +77,7 @@ class AuthItemSearch extends Model
         return new ArrayDataProvider([
             'allModels' => $items,
             'pagination' => [
-                'pageSize' => '1',
+                'pageSize' => '10',
             ],
         ]);
     }

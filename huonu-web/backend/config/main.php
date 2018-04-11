@@ -40,13 +40,14 @@ return [
         ],
         'assetManager' => [
             'bundles' => [
-                'yii\web\AssetManager' => false,
-                'yii\web\YiiAsset' => false,
-                'yii\widgets\ActiveFormAsset' => false,
-                'yii\validators\ValidationAsset' => false,
-                'yii\bootstrap\BootstrapAsset' => false,
-                'yii\bootstrap\BootstrapPluginAsset' => false,
-                'yii\web\JqueryAsset' => false,
+                // 'yii\web\AssetManager' => false,
+                // 'yii\web\YiiAsset' => false,
+                // 'yii\widgets\ActiveFormAsset' => false,
+                // 'yii\validators\ValidationAsset' => false,
+                // 'yii\bootstrap\BootstrapAsset' => false,
+                // 'yii\bootstrap\BootstrapPluginAsset' => false,
+                // 'yii\web\JqueryAsset' => false,
+                // 'yii\grid\GridViewAsset' => false,
             ],
         ],
         'urlManager' => [
@@ -59,6 +60,18 @@ return [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
             "defaultRoles" => ["guest"],
+        ],
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    // 'basePath' => '@backend/messages',
+                    // 'sourceLanguage' => 'zh-CN',
+                    'fileMap' => [
+                        'app' => 'admin.php',
+                    ],
+                ],
+            ],
         ],
     ],
     'modules' => [

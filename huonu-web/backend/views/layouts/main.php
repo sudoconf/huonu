@@ -3,7 +3,7 @@
 use backend\assets\AppAsset;
 use yii\helpers\Html;
 
-// AppAsset::register($this);
+AppAsset::register($this);
 
 ?>
 <?php $this->beginPage() ?>
@@ -16,15 +16,8 @@ use yii\helpers\Html;
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
 
-    <?= Html::cssFile('@web/vendor/bootstrap/css/bootstrap.min.css') ?>
-
-    <!-- MetisMenu CSS -->
-    <?= Html::cssFile('@web/vendor/metisMenu/metisMenu.min.css') ?>
-
-    <?= Html::cssFile('@web/css/hn-admin.css') ?>
-
-    <!-- Custom Fonts -->
-    <?= Html::cssFile('@web/vendor/font-awesome/css/font-awesome.min.css') ?>
+    <!-- jQuery -->
+    <?= Html::jsFile('@web/vendor/jquery/jquery.min.js')?>
 
     <?php $this->head() ?>
 </head>
@@ -33,27 +26,15 @@ use yii\helpers\Html;
 
 <div id="wrapper">
 
+    <?=
+    $this->render('left-top-menu');
+    ?>
+
   <?= $content ?>
 
 </div>
 
-
 <?php $this->endBody() ?>
-
-<!-- jQuery -->
-<?= Html::jsFile('@web/vendor/jquery/jquery.min.js')?>
-
-<!-- Bootstrap Core JavaScript -->
-<?= Html::jsFile('@web/vendor/bootstrap/js/bootstrap.min.js')?>
-
-<!-- Metis Menu Plugin JavaScript -->
-<?= Html::jsFile('@web/vendor/metisMenu/metisMenu.min.js')?>
-
-<!-- Custom Theme JavaScript -->
-<?= Html::jsFile('@web/js/hn-admin.js')?>
-
-<!-- Custom Theme JavaScript -->
-<?= Html::jsFile('@web/vendor/layer/layer.js')?>
 
 </body>
 </html>
