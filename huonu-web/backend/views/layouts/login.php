@@ -33,10 +33,10 @@ $model = new \backend\models\AdminLoginForm();
 
       <?= $form->field($model, 'password')->passwordInput(['placeholder' => $model->getAttributeLabel('password')])->label(false) ?>
 
-          <!--<div class="form-group">-->
-          <!--  <input class="form-control" style="width: 150px; display: inline-block;" placeholder="请输入验证码" name="captcha" type="text">-->
-          <!--  <img src="index.php?r=login/captcha" alt="验证码" align="bottom" style="cursor:pointer;" title="看不清可单击图片刷新" onclick="this.src='index.php?r=login/captcha&d='+Math.random();" />-->
-          <!--</div>-->
+      <!--<div class="form-group">-->
+      <!--  <input class="form-control" style="width: 150px; display: inline-block;" placeholder="请输入验证码" name="captcha" type="text">-->
+      <!--  <img src="index.php?r=login/captcha" alt="验证码" align="bottom" style="cursor:pointer;" title="看不清可单击图片刷新" onclick="this.src='index.php?r=login/captcha&d='+Math.random();" />-->
+      <!--</div>-->
 
       <?= $form->field($model, 'rememberMe')->checkbox() ?>
 

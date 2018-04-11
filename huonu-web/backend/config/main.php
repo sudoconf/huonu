@@ -25,6 +25,7 @@ return [
         'session' => [
             // this is the name of the session cookie used for login on the backend
             'name' => 'advanced-backend',
+            'timeout' => 60,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -32,6 +33,7 @@ return [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
+                    // 'logFile' => "@app/runtime/logs/".date('Y-m-d H:i').'.log',
                 ],
             ],
         ],
