@@ -35,14 +35,13 @@ class BizRuleSearch extends Model
     public function attributeLabels()
     {
         return [
-            'name' => Yii::t('rbac-admin', 'Name'),
+            'name' => Yii::t('admin', 'Name'),
         ];
     }
 
     /**
-     * Search BizRule
-     * @param array $params
-     * @return \yii\data\ActiveDataProvider|\yii\data\ArrayDataProvider
+     * @param $params
+     * @return ArrayDataProvider
      */
     public function search($params)
     {

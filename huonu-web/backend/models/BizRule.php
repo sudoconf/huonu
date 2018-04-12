@@ -12,7 +12,7 @@ use yii\rbac\Rule;
  * @author Misbahul D Munir <misbahuldmunir@gmail.com>
  * @since 1.0
  */
-class BizRule extends Model
+class BizRule extends \yii\db\ActiveRecord
 {
     /**
      * @var string name of the rule
@@ -95,8 +95,7 @@ class BizRule extends Model
     }
 
     /**
-     * Check if new record.
-     * @return boolean
+     * @return bool
      */
     public function getIsNewRecord()
     {
@@ -104,8 +103,7 @@ class BizRule extends Model
     }
 
     /**
-     * Find model by id
-     * @param type $id
+     * @param $id
      * @return null|static
      */
     public static function find($id)
@@ -119,8 +117,8 @@ class BizRule extends Model
     }
 
     /**
-     * Save model to authManager
-     * @return boolean
+     * @return bool
+     * @throws \Exception
      */
     public function saveOperation()
     {
@@ -149,8 +147,7 @@ class BizRule extends Model
     }
 
     /**
-     * Get item
-     * @return Item
+     * @return Rule
      */
     public function getItem()
     {

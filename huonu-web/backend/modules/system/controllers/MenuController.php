@@ -4,6 +4,7 @@
  * User: hx
  * Date: 2018/4/11 19:32
  */
+
 namespace backend\modules\system\controllers;
 
 use backend\controllers\BaseController;
@@ -32,8 +33,8 @@ class MenuController extends BaseController
     }
 
     /**
-     * Lists all Menu models.
-     * @return mixed
+     * 菜单首页
+     * @return string
      */
     public function actionIndex()
     {
@@ -47,9 +48,10 @@ class MenuController extends BaseController
     }
 
     /**
-     * Displays a single Menu model.
-     * @param  integer $id
-     * @return mixed
+     * 详情
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
      */
     public function actionView($id)
     {
@@ -59,16 +61,15 @@ class MenuController extends BaseController
     }
 
     /**
-     * Creates a new Menu model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * 添加
+     * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
         $model = new Menu();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Helper::invalidate();
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -78,10 +79,10 @@ class MenuController extends BaseController
     }
 
     /**
-     * Updates an existing Menu model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param  integer $id
-     * @return mixed
+     * 修改
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
      */
     public function actionUpdate($id)
     {
@@ -90,7 +91,7 @@ class MenuController extends BaseController
             $model->parent_name = $model->menuParent->name;
         }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Helper::invalidate();
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -100,25 +101,26 @@ class MenuController extends BaseController
     }
 
     /**
-     * Deletes an existing Menu model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param  integer $id
-     * @return mixed
+     * 删除
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Exception
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-        Helper::invalidate();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Menu model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param  integer $id
-     * @return Menu the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * 查一条
+     * @param $id
+     * @return Menu model
+     * @throws NotFoundHttpException
      */
     protected function findModel($id)
     {

@@ -16,15 +16,8 @@ use yii\rbac\Item;
  * @property resource $data
  * @property int $created_at
  * @property int $updated_at
- *
  * @property Item $item
  *
- * @property AuthAssignment[] $authAssignments
- * @property AuthRule $ruleName
- * @property AuthItemChild[] $authItemChildren
- * @property AuthItemChild[] $authItemChildren0
- * @property HuonuAuthItem[] $children
- * @property HuonuAuthItem[] $parents
  */
 class AuthItem extends \yii\db\ActiveRecord
 {
@@ -143,7 +136,7 @@ class AuthItem extends \yii\db\ActiveRecord
     /**
      * Find role
      * @param string $id
-     * @return null|\self
+     * @return AuthItem|null|\yii\db\ActiveQuery
      */
     public static function find($id = '')
     {
@@ -156,6 +149,10 @@ class AuthItem extends \yii\db\ActiveRecord
         return null;
     }
 
+    /**
+     * @return bool
+     * @throws \Exception
+     */
     public function createSave()
     {
         if ($this->validate()) {
@@ -186,6 +183,10 @@ class AuthItem extends \yii\db\ActiveRecord
         }
     }
 
+    /**
+     * @param $items
+     * @return int
+     */
     public function addChildren($items)
     {
         $manager = Yii::$app->authManager;
@@ -209,7 +210,10 @@ class AuthItem extends \yii\db\ActiveRecord
         return $success;
     }
 
-    //
+    /**
+     * @param $items
+     * @return int
+     */
     public function removeChildren($items)
     {
         $manager = Yii::$app->authManager;
@@ -233,6 +237,9 @@ class AuthItem extends \yii\db\ActiveRecord
         return $success;
     }
 
+    /**
+     * @return array
+     */
     public function getItems()
     {
         $manager = Yii::$app->authManager;

@@ -2,9 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use mdm\admin\models\Menu;
+use backend\models\Menu;
 use yii\helpers\Json;
-use mdm\admin\AutocompleteAsset;
+use backend\assets\AutocompleteAsset;
 
 /* @var $this yii\web\View */
 /* @var $model mdm\admin\models\Menu */
@@ -17,6 +17,17 @@ $opts = Json::htmlEncode([
 $this->registerJs("var _opts = $opts;");
 $this->registerJs($this->render('_script.js'));
 ?>
+<style>
+
+    ul.ui-autocomplete{
+        z-index:9999;
+        max-height: 200px;
+        overflow-y: scroll;
+        margin-left: 200px;
+        margin-top: 500px;
+    }
+
+</style>
 
 <div class="menu-form">
     <?php $form = ActiveForm::begin(); ?>

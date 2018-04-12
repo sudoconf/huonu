@@ -36,6 +36,7 @@ $('#parent_name').autocomplete({
         .appendTo(ul);
 };
 
+// jquery ui autocomplete
 $('#route').autocomplete({
     source: _opts.routes,
 });

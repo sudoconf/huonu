@@ -7,12 +7,6 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-/**
- * Menu represents the model behind the search form about [[\mdm\admin\models\Menu]].
- * 
- * @author Misbahul D Munir <misbahuldmunir@gmail.com>
- * @since 1.0
- */
 class MenuSearch extends Menu
 {
 
@@ -32,22 +26,21 @@ class MenuSearch extends Menu
      */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
     /**
-     * Searching menu
-     * @param  array $params
-     * @return \yii\data\ActiveDataProvider
+     * 搜索
+     * @param $params
+     * @return ActiveDataProvider
      */
     public function search($params)
     {
         $query = Menu::find()
             ->from(Menu::tableName() . ' t')
             ->joinWith(['menuParent' => function ($q) {
-            $q->from(Menu::tableName() . ' parent');
-        }]);
+                $q->from(Menu::tableName() . ' parent');
+            }]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query

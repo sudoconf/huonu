@@ -48,6 +48,11 @@ class AuthItemSearch extends Model
         ];
     }
 
+    /**
+     * 搜索
+     * @param $params
+     * @return ArrayDataProvider
+     */
     public function search($params)
     {
         $authManager = Yii::$app->authManager;

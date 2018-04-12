@@ -54,6 +54,15 @@ use yii\helpers\Html;
                     <a href="<?= Url::toRoute('/site/index') ?>"><i class="fa fa-dashboard fa-fw"></i> 控制盘</a>
                 </li>
 
+                <?php
+                echo \yii\bootstrap\Nav::widget(
+                    [
+                        "encodeLabels" => false,
+                        "options" => ["class" => "sidebar-menu"],
+                        "items" => \backend\components\MenuHelper::getAssignedMenu(Yii::$app->user->id),
+                    ]
+                );
+                ?>
                 <li>
                     <a href="javascript:;">
                         <i class="fa fa-bar-chart-o fa-fw"></i> 系统管理
@@ -62,6 +71,9 @@ use yii\helpers\Html;
                     <ul class="nav nav-second-level">
                         <li>
                             <a href="<?= Url::toRoute('/system/user') ?>">用户列表</a>
+                        </li>
+                        <li>
+                            <a href="<?= Url::toRoute('/system/assignment') ?>">分配</a>
                         </li>
                         <li>
                             <a href="<?= Url::toRoute('/system/role') ?>">角色列表</a>

@@ -61,7 +61,12 @@ class ItemController extends BaseController
         ]);
     }
 
-    // 详情
+    /**
+     * 详情
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
     public function actionView($id)
     {
         $model = $this->findModel($id);
@@ -84,7 +89,12 @@ class ItemController extends BaseController
         }
     }
 
-    // 更新
+    /**
+     * 更新
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -95,7 +105,12 @@ class ItemController extends BaseController
         return $this->render('update', ['model' => $model]);
     }
 
-    // 删除
+    /**
+     * 删除
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -104,7 +119,12 @@ class ItemController extends BaseController
         return $this->redirect(['index']);
     }
 
-    // 分配
+    /**
+     * 分配
+     * @param $id
+     * @return array
+     * @throws NotFoundHttpException
+     */
     public function actionAssign($id)
     {
         $items = Yii::$app->getRequest()->post('items', []);
@@ -115,7 +135,12 @@ class ItemController extends BaseController
         return array_merge($model->getItems(), ['success' => $success]);
     }
 
-    // 移除
+    /**
+     * 移除
+     * @param $id
+     * @return array
+     * @throws NotFoundHttpException
+     */
     public function actionRemove($id)
     {
         $items = Yii::$app->getRequest()->post('items', []);
@@ -126,16 +151,22 @@ class ItemController extends BaseController
         return array_merge($model->getItems(), ['success' => $success]);
     }
 
-    // 获取视图
+    /**
+     * 获取视图
+     * @return string
+     */
     public function getViewPath()
     {
         return $this->module->getViewPath() . DIRECTORY_SEPARATOR . 'item';
     }
 
-    //
+    /**
+     * label 标签
+     * @throws NotSupportedException
+     */
     public function labels()
     {
-        throw new NotSupportedException(get_class($this) . ' does not support labels().');
+        throw new NotSupportedException(get_class($this) . ' 不支持标签().');
     }
 
     /**

@@ -39,7 +39,7 @@ return [
             ],
         ],
         'errorHandler' => [
-            // 'errorAction' => 'site/error',
+            'errorAction' => 'site/error',
         ],
         'assetManager' => [
             'bundles' => [
@@ -81,6 +81,16 @@ return [
         'system' => [
             'class' => 'backend\modules\system\systemModule',
         ],
+    ],
+    'as access' => [
+        'class' => 'backend\components\AccessControl',
+        'allowActions' => [
+            // 这里是允许访问的action
+            'site/login',
+            'site/captcha',
+            'site/error',
+            // '*'
+        ]
     ],
     'params' => $params,
 ];
