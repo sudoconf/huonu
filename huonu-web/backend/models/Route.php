@@ -8,6 +8,7 @@
 namespace backend\models;
 
 use backend\components\Configs;
+use backend\components\RouteHelper;
 use backend\components\RouteRule;
 use Exception;
 use yii\base\Object;
@@ -53,6 +54,7 @@ class Route extends Object
                 Yii::error($exc->getMessage(), __METHOD__);
             }
         }
+        RouteHelper::invalidate();
     }
 
     public function remove($routes)
@@ -66,6 +68,7 @@ class Route extends Object
                 Yii::error($exc->getMessage(), __METHOD__);
             }
         }
+        RouteHelper::invalidate();
     }
 
     /**

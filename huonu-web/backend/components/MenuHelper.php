@@ -9,29 +9,15 @@ use backend\models\Menu;
 class MenuHelper
 {
     /**
-     * Use to get assigned menu of user.
-     * @param mixed $userId
-     * @param integer $root
-     * @param \Closure $callback use to reformat output.
-     * callback should have format like
-     *
-     * ```
-     * function ($menu) {
-     *    return [
-     *        'label' => $menu['name'],
-     *        'url' => [$menu['route']],
-     *        'options' => $data,
-     *        'items' => $menu['children']
-     *        ]
-     *    ]
-     * }
-     * ```
-     * @param boolean $refresh
-     * @return array
+     * 用于获得指定的用户菜单
+     * @param $userId
+     * @param null $root
+     * @param null $callback
+     * @param bool $refresh
+     * @return array|mixed
      */
     public static function getAssignedMenu($userId, $root = null, $callback = null, $refresh = false)
     {
-        /* @var $manager \yii\rbac\BaseManager */
         $manager = Yii::$app->authManager;
         $menus = Menu::find()->asArray()->indexBy('id')->all();
         $key = [__METHOD__, $userId, $manager->defaultRoles];
@@ -105,10 +91,10 @@ class MenuHelper
     }
 
     /**
-     * Ensure all item menu has parent.
-     * @param  array $assigned
-     * @param  array $menus
-     * @return array
+     * 确保所有项目菜单都有父类
+     * @param $assigned
+     * @param $menus
+     * @return mixed
      */
     private static function requiredParent($assigned, &$menus)
     {
@@ -125,9 +111,9 @@ class MenuHelper
     }
 
     /**
-     * Parse route
-     * @param  string $route
-     * @return mixed
+     * 解析路线
+     * @param $route
+     * @return array|string
      */
     public static function parseRoute($route)
     {
@@ -148,11 +134,11 @@ class MenuHelper
     }
 
     /**
-     * Normalize menu
-     * @param  array $assigned
-     * @param  array $menus
-     * @param  Closure $callback
-     * @param  integer $parent
+     * 返回标准化菜单
+     * @param $assigned
+     * @param $menus
+     * @param $callback
+     * @param null $parent
      * @return array
      */
     private static function normalizeMenu(&$assigned, &$menus, $callback, $parent = null)

@@ -1,25 +1,22 @@
 <?php
 
-namespace mdm\admin\components;
+namespace backend\components;
 
-use backend\components\CtConstant;
 use mdm\admin\models\Route;
 use Yii;
 use yii\caching\TagDependency;
 use yii\helpers\ArrayHelper;
 use yii\web\User;
 
-/**
- * Description of Helper
- *
- * @author Misbahul D Munir <misbahuldmunir@gmail.com>
- * @since 2.3
- */
 class RouteHelper
 {
     private static $_userRoutes = [];
     private static $_defaultRoutes;
     private static $_routes;
+
+    private static $_onlyRegisteredRoute = false; // 如果是真的，那么AccessControl只检查路线是否注册。
+    private static $_strict = true; // 如果是假的，那么访问控制将会在没有规则的情况下进行检查
+    private static $_advanced;
 
     public static function getRegisteredRoutes()
     {
@@ -36,8 +33,8 @@ class RouteHelper
     }
 
     /**
-     * Get assigned routes by default roles
-     * @return array
+     * 通过默认角色获得指定的路由
+     * @return array|mixed
      */
     protected static function getDefaultRoutes()
     {
@@ -68,9 +65,9 @@ class RouteHelper
     }
 
     /**
-     * Get assigned routes of user.
-     * @param integer $userId
-     * @return array
+     * 获取用户的指定路由
+     * @param $userId
+     * @return mixed
      */
     public static function getRoutesByUser($userId)
     {
@@ -98,16 +95,16 @@ class RouteHelper
     }
 
     /**
-     * Check access route for user.
-     * @param string|array $route
-     * @param integer|User $user
-     * @return boolean
+     * 检查用户的访问路径
+     * @param $route
+     * @param array $params
+     * @param null $user
+     * @return bool
      */
     public static function checkRoute($route, $params = [], $user = null)
     {
-        $config = Yii::$app->cache;
-        $r = static::normalizeRoute($route, $config->advanced);
-        if ($config->onlyRegisteredRoute && !isset(static::getRegisteredRoutes()[$r])) {
+        $r = static::normalizeRoute($route, self::$_advanced);
+        if (self::$_onlyRegisteredRoute && !isset(static::getRegisteredRoutes()[$r])) {
             return true;
         }
 
@@ -116,7 +113,7 @@ class RouteHelper
         }
         $userId = $user instanceof User ? $user->getId() : $user;
 
-        if ($config->strict) {
+        if (self::$_strict) {
             if ($user->can($r, $params)) {
                 return true;
             }
@@ -143,7 +140,7 @@ class RouteHelper
     }
 
     /**
-     * Normalize route
+     * 规范化的路线
      * @param  string $route Plain route string
      * @param  boolean|array $advanced Array containing the advanced configuration. Defaults to false.
      * @return string            Normalized route string
@@ -169,9 +166,10 @@ class RouteHelper
     }
 
     /**
-     * Filter menu items
-     * @param array $items
-     * @param integer|User $user
+     * 过滤器菜单项
+     * @param $items
+     * @param null $user
+     * @return array
      */
     public static function filter($items, $user = null)
     {
@@ -182,9 +180,9 @@ class RouteHelper
     }
 
     /**
-     * Filter menu recursive
-     * @param array $items
-     * @param integer|User $user
+     * 过滤器菜单递归
+     * @param $items
+     * @param $user
      * @return array
      */
     protected static function filterRecursive($items, $user)
@@ -209,7 +207,7 @@ class RouteHelper
     }
 
     /**
-     * Filter action column button. Use with [[yii\grid\GridView]]
+     * 过滤操作栏按钮. Use with [[yii\grid\GridView]]
      * ```php
      * 'columns' => [
      *     ...
@@ -240,10 +238,12 @@ class RouteHelper
     }
 
     /**
-     * Use to invalidate cache.
+     * 使用缓存失效
      */
     public static function invalidate()
     {
-        TagDependency::invalidate(Yii::$app->cache, CtConstant::CACHE_TAG);
+        if (Yii::$app->cache !== null) {
+            TagDependency::invalidate(Yii::$app->cache, CtConstant::CACHE_TAG);
+        }
     }
 }

@@ -7,15 +7,17 @@
 
 namespace backend\models;
 
+use backend\components\RouteHelper;
 use Yii;
 use yii\base\Object;
 
 class Assignment extends Object
 {
     /**
-     * @var integer User id
+     * @var 用户id
      */
     public $id;
+
     /**
      * @var \yii\web\IdentityInterface User
      */
@@ -32,9 +34,9 @@ class Assignment extends Object
     }
 
     /**
-     * Grands a roles from a user.
-     * @param array $items
-     * @return integer number of successful grand
+     * 从用户那里获得角色
+     * @param $items
+     * @return int
      */
     public function assign($items)
     {
@@ -50,13 +52,14 @@ class Assignment extends Object
                 Yii::error($exc->getMessage(), __METHOD__);
             }
         }
+        RouteHelper::invalidate();
         return $success;
     }
 
     /**
-     * Revokes a roles from a user.
-     * @param array $items
-     * @return integer number of successful revoke
+     * 从用户撤消角色。
+     * @param $items
+     * @return int
      */
     public function revoke($items)
     {
@@ -72,11 +75,12 @@ class Assignment extends Object
                 Yii::error($exc->getMessage(), __METHOD__);
             }
         }
+        RouteHelper::invalidate();
         return $success;
     }
 
     /**
-     * Get all available and assigned roles/permission
+     * 获得所有可用的和指定的 roles/permission
      * @return array
      */
     public function getItems()

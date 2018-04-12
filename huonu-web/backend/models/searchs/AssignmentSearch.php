@@ -39,11 +39,11 @@ class AssignmentSearch extends Model
     }
 
     /**
-     * Create data provider for Assignment model.
-     * @param  array                        $params
-     * @param  \yii\db\ActiveRecord         $class
-     * @param  string                       $usernameField
-     * @return \yii\data\ActiveDataProvider
+     * 搜索
+     * @param $params
+     * @param $class
+     * @param $usernameField
+     * @return ActiveDataProvider
      */
     public function search($params, $class, $usernameField)
     {

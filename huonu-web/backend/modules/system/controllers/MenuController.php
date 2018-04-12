@@ -7,6 +7,7 @@
 
 namespace backend\modules\system\controllers;
 
+use backend\components\RouteHelper;
 use backend\controllers\BaseController;
 use backend\models\Menu;
 use backend\models\searchs\MenuSearch;
@@ -69,6 +70,7 @@ class MenuController extends BaseController
         $model = new Menu();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            RouteHelper::invalidate();
 
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -91,6 +93,7 @@ class MenuController extends BaseController
             $model->parent_name = $model->menuParent->name;
         }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            RouteHelper::invalidate();
 
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -112,6 +115,7 @@ class MenuController extends BaseController
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+        RouteHelper::invalidate();
 
         return $this->redirect(['index']);
     }

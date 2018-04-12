@@ -3,6 +3,7 @@
 namespace backend\components;
 
 use mdm\admin\components\Helper;
+use mdm\admin\components\RouteHelper;
 use yii\web\ForbiddenHttpException;
 use yii\base\Module;
 use Yii;
@@ -10,39 +11,32 @@ use yii\web\User;
 use yii\di\Instance;
 
 /**
- * Access Control Filter (ACF) is a simple authorization method that is best used by applications that only need some simple access control. 
- * As its name indicates, ACF is an action filter that can be attached to a controller or a module as a behavior. 
- * ACF will check a set of access rules to make sure the current user can access the requested action.
+ * 配置如下
  *
- * To use AccessControl, declare it in the application config as behavior.
- * For example.
- *
+ * @property User $user
  * ```
  * 'as access' => [
  *     'class' => 'mdm\admin\components\AccessControl',
  *     'allowActions' => ['site/login', 'site/error']
  * ]
  * ```
- *
- * @property User $user
- * 
- * @author Misbahul D Munir <misbahuldmunir@gmail.com>
- * @since 1.0
  */
 class AccessControl extends \yii\base\ActionFilter
 {
     /**
-     * @var User User for check access.
+     * @var string 用户检查访问
      */
     private $_user = 'user';
+
     /**
-     * @var array List of action that not need to check access.
+     * @var array 不需要检查访问的操作列表
      */
     public $allowActions = [];
 
     /**
-     * Get user
-     * @return User
+     * 获取用户
+     * @return object|string|User
+     * @throws \yii\base\InvalidConfigException
      */
     public function getUser()
     {
@@ -53,8 +47,8 @@ class AccessControl extends \yii\base\ActionFilter
     }
 
     /**
-     * Set user
-     * @param User|string $user
+     * 设置用户
+     * @param $user
      */
     public function setUser($user)
     {
@@ -68,18 +62,18 @@ class AccessControl extends \yii\base\ActionFilter
     {
         $actionId = $action->getUniqueId();
         $user = $this->getUser();
-        if (Helper::checkRoute('/' . $actionId, Yii::$app->getRequest()->get(), $user)) {
+        if (RouteHelper::checkRoute('/' . $actionId, Yii::$app->getRequest()->get(), $user)) {
             return true;
         }
         $this->denyAccess($user);
     }
 
     /**
-     * Denies the access of the user.
-     * The default implementation will redirect the user to the login page if he is a guest;
-     * if the user is already logged, a 403 HTTP exception will be thrown.
-     * @param  User $user the current user
-     * @throws ForbiddenHttpException if the user is already logged in.
+     * 拒绝用户的访问.
+     * 如果他是客人，默认的实现将把用户重定向到登录页面;
+     * 如果用户已经登录，将会抛出403个HTTP异常。
+     * @param  User $user 当前用户
+     * @throws ForbiddenHttpException
      */
     protected function denyAccess($user)
     {
@@ -91,7 +85,10 @@ class AccessControl extends \yii\base\ActionFilter
     }
 
     /**
-     * @inheritdoc
+     * 返回 true 或者 false 指示过滤器为给定的 action 权限
+     * @param \yii\base\Action $action
+     * @return bool
+     * @throws \yii\base\InvalidConfigException
      */
     protected function isActive($action)
     {
@@ -101,18 +98,16 @@ class AccessControl extends \yii\base\ActionFilter
         }
 
         $user = $this->getUser();
-        if($user->getIsGuest())
-        {
+        if ($user->getIsGuest()) {
             $loginUrl = null;
-            if(is_array($user->loginUrl) && isset($user->loginUrl[0])){
+            if (is_array($user->loginUrl) && isset($user->loginUrl[0])) {
                 $loginUrl = $user->loginUrl[0];
-                }else if(is_string($user->loginUrl)){
-                    $loginUrl = $user->loginUrl;
-                }
-                if(!is_null($loginUrl) && trim($loginUrl,'/') === $uniqueId)
-                {
-                    return false;
-                }
+            } else if (is_string($user->loginUrl)) {
+                $loginUrl = $user->loginUrl;
+            }
+            if (!is_null($loginUrl) && trim($loginUrl, '/') === $uniqueId) {
+                return false;
+            }
         }
 
         if ($this->owner instanceof Module) {

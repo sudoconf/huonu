@@ -7,6 +7,7 @@
 
 namespace backend\modules\system\controllers;
 
+use backend\components\RouteHelper;
 use backend\controllers\BaseController;
 use backend\models\AuthItem;
 use backend\models\searchs\AuthItemSearch;
@@ -115,6 +116,7 @@ class ItemController extends BaseController
     {
         $model = $this->findModel($id);
         Yii::$app->authManager->remove($model->item);
+        RouteHelper::invalidate();
 
         return $this->redirect(['index']);
     }

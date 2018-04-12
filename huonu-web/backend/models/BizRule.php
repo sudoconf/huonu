@@ -67,7 +67,7 @@ class BizRule extends \yii\db\ActiveRecord
     }
 
     /**
-     * Validate class exists
+     * 验证类存在
      */
     public function classExists()
     {

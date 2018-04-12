@@ -7,6 +7,7 @@
 
 namespace backend\modules\system\controllers;
 
+use backend\components\RouteHelper;
 use backend\controllers\BaseController;
 use backend\models\BizRule;
 use backend\models\searchs\BizRuleSearch;
@@ -32,8 +33,8 @@ class RuleController extends BaseController
     }
 
     /**
-     * Lists all AuthItem models.
-     * @return mixed
+     * 列表
+     * @return string
      */
     public function actionIndex()
     {
@@ -47,9 +48,10 @@ class RuleController extends BaseController
     }
 
     /**
-     * Displays a single AuthItem model.
-     * @param  string $id
-     * @return mixed
+     * 详情
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
      */
     public function actionView($id)
     {
@@ -59,14 +61,15 @@ class RuleController extends BaseController
     }
 
     /**
-     * Creates a new AuthItem model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * 添加
+     * @return string|\yii\web\Response
+     * @throws \Exception
      */
     public function actionCreate()
     {
         $model = new BizRule(null);
         if ($model->load(Yii::$app->request->post()) && $model->saveOperation()) {
+            RouteHelper::invalidate();
 
             return $this->redirect(['view', 'id' => $model->name]);
         } else {
@@ -75,15 +78,17 @@ class RuleController extends BaseController
     }
 
     /**
-     * Updates an existing AuthItem model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param  string $id
-     * @return mixed
+     * 修改
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Exception
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
         if ($model->load(Yii::$app->request->post()) && $model->saveOperation()) {
+            RouteHelper::invalidate();
 
             return $this->redirect(['view', 'id' => $model->name]);
         }
@@ -92,25 +97,24 @@ class RuleController extends BaseController
     }
 
     /**
-     * Deletes an existing AuthItem model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param  string $id
-     * @return mixed
+     * 删除
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
      */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
         Yii::$app->authManager->remove($model->item);
+        RouteHelper::invalidate();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the AuthItem model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param  string        $id
-     * @return AuthItem      the loaded model
-     * @throws HttpException if the model cannot be found
+     * @param $id
+     * @return BizRule
+     * @throws NotFoundHttpException
      */
     protected function findModel($id)
     {

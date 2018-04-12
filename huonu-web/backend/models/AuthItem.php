@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use backend\components\RouteHelper;
 use Yii;
 use yii\helpers\Json;
 use yii\rbac\Item;
@@ -177,6 +178,8 @@ class AuthItem extends \yii\db\ActiveRecord
             } else {
                 $manager->update($oldName, $this->_item);
             }
+
+            RouteHelper::invalidate();
             return true;
         } else {
             return false;
@@ -206,6 +209,7 @@ class AuthItem extends \yii\db\ActiveRecord
             }
         }
         if ($success > 0) {
+            RouteHelper::invalidate();
         }
         return $success;
     }
@@ -233,6 +237,7 @@ class AuthItem extends \yii\db\ActiveRecord
             }
         }
         if ($success > 0) {
+            RouteHelper::invalidate();
         }
         return $success;
     }

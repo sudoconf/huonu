@@ -9,16 +9,10 @@ use mdm\admin\models\BizRule as MBizRule;
 use mdm\admin\components\RouteRule;
 use mdm\admin\components\Configs;
 
-/**
- * Description of BizRule
- *
- * @author Misbahul D Munir <misbahuldmunir@gmail.com>
- * @since 1.0
- */
 class BizRuleSearch extends Model
 {
     /**
-     * @var string name of the rule
+     * @var 规则名称
      */
     public $name;
 
@@ -40,13 +34,13 @@ class BizRuleSearch extends Model
     }
 
     /**
+     * 搜索
      * @param $params
      * @return ArrayDataProvider
      */
     public function search($params)
     {
-        /* @var \yii\rbac\Manager $authManager */
-        $authManager = Configs::authManager();
+        $authManager = Yii::$app->authManager;
         $models = [];
         $included = !($this->load($params) && $this->validate() && trim($this->name) !== '');
         foreach ($authManager->getRules() as $name => $item) {
