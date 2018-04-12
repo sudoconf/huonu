@@ -29,7 +29,7 @@ class AdminLoginForm extends Model
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
-            ['verifyCode', 'captcha'],
+            ['verifyCode', 'captcha', 'captchaAction' => '/site/captcha'],
         ];
     }
 

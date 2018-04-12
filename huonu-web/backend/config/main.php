@@ -21,11 +21,12 @@ return [
             'identityClass' => 'backend\models\BaseAdmin',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+            // 'authTimeout' => 86400
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
             'name' => 'advanced-backend',
-            'timeout' => 60,
+            // 'timeout' => 5,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

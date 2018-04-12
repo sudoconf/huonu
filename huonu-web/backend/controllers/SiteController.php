@@ -17,21 +17,17 @@ class SiteController extends BaseController
     public function actions()
     {
         return [
-            // 'captcha' => [
-            //     'class' => 'backend\controllers\CaptchaAction',
-            //     'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            //     'backColor' => 0x000000,//背景颜色
-            //     'maxLength' => 5, //最大显示个数
-            //     'minLength' => 4,//最少显示个数
-            //     'padding' => 3,//间距
-            //     'height' => 50,//高度
-            //     'width' => 90,  //宽度
-            //     'foreColor' => 0xffffff,     //字体颜色
-            //     'offset' => 4        //设置字符偏移量 有效果
-            // ],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
+                // 'class' => 'backend\controllers\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+                'width' => 90,  // 宽度
+                'height' => 50,// 高度
+                'testLimit' => 1,
+                'maxLength' => 6,
+                'minLength' => 6,
+                'padding' => 1,
+                'offset' => 1,
             ],
             'error' => [
                 'class' => 'yii\web\ErrorAction',
