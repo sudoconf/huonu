@@ -7,7 +7,7 @@
 
 namespace backend\models;
 
-use backend\components\Configs;
+use backend\components\CtConstant;
 use backend\components\RouteHelper;
 use backend\components\RouteRule;
 use Exception;
@@ -78,7 +78,7 @@ class Route extends Object
     public function getRoutePrefix()
     {
         if (!$this->_routePrefix) {
-            $this->_routePrefix = Configs::instance()->advanced ? self::PREFIX_ADVANCED : self::PREFIX_BASIC;
+            $this->_routePrefix = RouteHelper::$_advanced ? self::PREFIX_ADVANCED : self::PREFIX_BASIC;
         }
         return $this->_routePrefix;
     }
@@ -105,7 +105,7 @@ class Route extends Object
     {
         $manager = Yii::$app->authManager;
         // Get advanced configuration
-        $advanced = Configs::instance()->advanced;
+        $advanced = RouteHelper::$_advanced;
         if ($advanced) {
             // Use advanced route scheme.
             // Set advanced route prefix.
@@ -173,12 +173,12 @@ class Route extends Object
             $module = Yii::$app->getModule($module);
         }
         $key = [__METHOD__, Yii::$app->id, $module->getUniqueId()];
-        $cache = Configs::instance()->cache;
+        $cache = Yii::$app->cache;
         if ($cache === null || ($result = $cache->get($key)) === false) {
             $result = [];
             $this->getRouteRecursive($module, $result);
             if ($cache !== null) {
-                $cache->set($key, $result, Configs::instance()->cacheDuration, new TagDependency([
+                $cache->set($key, $result, CtConstant::CACHE_DURATION, new TagDependency([
                     'tags' => self::CACHE_TAG,
                 ]));
             }
@@ -310,8 +310,8 @@ class Route extends Object
 
     public static function invalidate()
     {
-        if (Configs::cache() !== null) {
-            TagDependency::invalidate(Configs::cache(), self::CACHE_TAG);
+        if (Yii::$app->cache !== null) {
+            TagDependency::invalidate(Yii::$app->cache, self::CACHE_TAG);
         }
     }
 

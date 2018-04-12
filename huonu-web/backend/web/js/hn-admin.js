@@ -1,5 +1,7 @@
 $(function () {
-    $('#side-menu').metisMenu();
+    $('#side-menu').metisMenu({
+        toggle: false
+    });
 });
 
 $(function () {
@@ -40,7 +42,7 @@ $(function () {
 
 });
 
-$('.create-role-button').click(function () {
+$('.create-user-button').click(function () {
     layer.open({
         type: 1,
         title: '创建角色',
@@ -48,7 +50,7 @@ $('.create-role-button').click(function () {
         shade: false,
         maxmin: false, //开启最大化最小化按钮
         area: ['462px', '430px'],
-        content: $('.layer-form-create-role').html()
+        content: $('.layer-form-create-user').html()
     });
 });
 

@@ -14,9 +14,9 @@ class RouteHelper
     private static $_defaultRoutes;
     private static $_routes;
 
-    private static $_onlyRegisteredRoute = false; // 如果是真的，那么AccessControl只检查路线是否注册。
-    private static $_strict = true; // 如果是假的，那么访问控制将会在没有规则的情况下进行检查
-    private static $_advanced;
+    public static $_onlyRegisteredRoute = false; // 如果是真的，那么AccessControl只检查路线是否注册。
+    public static $_strict = true; // 如果是假的，那么访问控制将会在没有规则的情况下进行检查
+    public static $_advanced;
 
     public static function getRegisteredRoutes()
     {

@@ -8,13 +8,18 @@
 namespace backend\models\searchs;
 
 use Yii;
-use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\db\ActiveRecord;
 
-class AssignmentSearch extends Model
+class AssignmentSearch extends ActiveRecord
 {
     public $id;
     public $username;
+
+    public static function tableName()
+    {
+        return '{{%auth_assignment}}';
+    }
 
     /**
      * @inheritdoc

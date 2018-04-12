@@ -5,10 +5,8 @@ use yii\helpers\Url;
 use yii\grid\GridView;
 use yii\bootstrap\ActiveForm;
 
-$this->title = '智行智投 - 客户报表';
+$this->title = Yii::t('admin', 'Users');
 $this->params['breadcrumbs'][] = $this->title;
-$this->registerMetaTag(['name' => 'keywords', 'content' => '客户报表']);
-$this->registerMetaTag(['name' => 'description', 'content' => '人群复盘列表'], 'description');
 ?>
 
 <div id="page-wrapper">
@@ -49,7 +47,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => '人群复盘列�
                     'id' => 'search-form',
                     'method' => 'get',
                     'action' => Url::toRoute('user/index')
-                    ]); ?>
+                ]); ?>
                 <div class="panel-body form-group">
                     <div class="form-filter">
                         <label class="form-filter-field">用户名：</label>
@@ -115,6 +113,16 @@ $this->registerMetaTag(['name' => 'description', 'content' => '人群复盘列�
                                 'format' => ['date', 'php:Y-m-d H:i:s'],
                             ],
                             [
+                                'attribute' => 'status',
+                                'value' => function ($model) {
+                                    return $model->status == 0 ? 'Inactive' : 'Active';
+                                },
+                                'filter' => [
+                                    0 => 'Inactive',
+                                    10 => 'Active'
+                                ]
+                            ],
+                            [
                                 'class' => 'yii\grid\ActionColumn',
                                 'header' => '操作',
                                 'template' => '{password}{disable}',
@@ -148,44 +156,59 @@ $this->registerMetaTag(['name' => 'description', 'content' => '人群复盘列�
 <!-- 添加管理员弹出框 -->
 <div class="layer-form-create-user" style="display: none">
     <div class="layer-form">
-        <div class="control-group">
-            <div class="controls">
-                <input type="text" class="form-control" placeholder="账号昵称">
-            </div>
-        </div>
 
-        <div class="control-group">
-            <div class="controls">
-                <input type="text" class="form-control" placeholder="密码">
-            </div>
-        </div>
+        <?php $form = ActiveForm::begin([
+            'id' => 'form-signup',
+            'method' => 'post',
+            'action' => Url::toRoute('user/signup'),
+        ]); ?>
+        <?= $form->field($adminModel, 'username')->textInput(['autofocus' => true]) ?>
 
-        <div class="control-group">
-            <div class="controls">
-                <input type="text" class="form-control" placeholder="邮箱">
-            </div>
-        </div>
+        <?= $form->field($adminModel, 'email') ?>
 
-        <div class="control-group">
-            <div class="controls">
-                <select class="form-control">
-                    <option value="">1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-            </div>
-        </div>
+        <?= $form->field($adminModel, 'password')->passwordInput() ?>
 
-        <div class="control-group">
-            <div class="controls">
-                <button type="submit" class="btn btn-default">提交</button>
-                <button type="submit" class="btn btn-default">重置</button>
-            </div>
-        </div>
+        <?= $form->field($adminModel, 'role')->dropDownList($authItem, ['prompt' => '请选择', 'style' => 'width:120px']) ?>
+
+
+        <?= Html::submitButton('提交', ['class' => 'btn btn-primary', 'name' => 'submit-button']) ?>
+        <?= Html::resetButton('重置', ['class' => 'btn btn-primary', 'name' => 'submit-button']) ?>
+
+        <?php ActiveForm::end(); ?>
     </div>
 </div>
+
+<script>
+    $(function () {
+        $(document).on('submit', 'form#form-signup', function () {
+            var form = $(this);
+            //返回错误的表单信息
+            if (form.find('.has-error').length) {
+                return false;
+            }
+            //表单提交
+            $.ajax({
+                url: form.attr('action'),
+                type: 'post',
+                data: form.serialize(),
+                success: function (response) {
+                    console.log(response);
+                    if (response.result) {
+                        layer.alert('保存成功', {icon: 1});
+                        window.location.reload();
+                    } else {
+                        layer.alert('保存失败', {icon: 2});
+                    }
+                },
+                error: function () {
+                    layer.alert('系统错误');
+                    return false;
+                }
+            });
+            return false;
+        });
+    });
+</script>
 
 <!-- 重置密码弹出框 -->
 <div class="layer-form-reset-password" style="display: none">

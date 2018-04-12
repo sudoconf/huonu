@@ -8,7 +8,6 @@
 
 namespace backend\controllers;
 
-use common\components\CtHelper;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -52,23 +51,16 @@ class BaseController extends Controller
      */
     public function beforeAction($action)
     {
-        // 主控制器验证
-        if (parent::beforeAction($action)) {
-            // 验证权限
-            if (!Yii::$app->user->can($action->controller->id.'/'.$action->id) && Yii::$app->getErrorHandler(
-                )->exception === null
-            ) {
-                // 没有权限AJAX返回
-                if (Yii::$app->request->isAjax) {
-                    // CtHelper::response(false, '对不起，您现在还没获得该操作的权限!');
-                }
-
-                // throw new UnauthorizedHttpException('对不起，您现在还没获得该操作的权限!');
-            }
-
-            return true;
+        if (!parent::beforeAction($action)) {
+            return false;
         }
 
-        return false;
+        $controller = Yii::$app->controller->id;
+        $action = Yii::$app->controller->action->id;
+        $permissionName = $controller . '/' . $action;
+        if (!Yii::$app->user->can($permissionName) && Yii::$app->getErrorHandler()->exception === null) {
+            throw new UnauthorizedHttpException('对不起，您现在还没获此操作的权限');
+        }
+        return true;
     }
 }

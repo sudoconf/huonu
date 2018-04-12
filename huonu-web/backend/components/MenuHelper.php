@@ -10,6 +10,19 @@ class MenuHelper
 {
     /**
      * 用于获得指定的用户菜单
+     *
+     * ```
+     * function ($menu) {
+     *    return [
+     *        'label' => $menu['name'],
+     *        'url' => [$menu['route']],
+     *        'options' => $data,
+     *        'items' => $menu['children']
+     *        ]
+     *    ]
+     * }
+     * ```
+     *
      * @param $userId
      * @param null $root
      * @param null $callback
@@ -19,7 +32,7 @@ class MenuHelper
     public static function getAssignedMenu($userId, $root = null, $callback = null, $refresh = false)
     {
         $manager = Yii::$app->authManager;
-        $menus = Menu::find()->asArray()->indexBy('id')->all();
+        $menus = Menu::find()->asArray()->indexBy('id')->orderBy('order desc')->all();
         $key = [__METHOD__, $userId, $manager->defaultRoles];
         $cache = Yii::$app->cache;
 

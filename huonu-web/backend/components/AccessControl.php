@@ -2,8 +2,6 @@
 
 namespace backend\components;
 
-use mdm\admin\components\Helper;
-use mdm\admin\components\RouteHelper;
 use yii\web\ForbiddenHttpException;
 use yii\base\Module;
 use Yii;
