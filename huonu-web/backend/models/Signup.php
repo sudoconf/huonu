@@ -66,6 +66,7 @@ class Signup extends Model
         $user = new Admin();
         $user->username = $this->username;
         $user->email = $this->email;
+        $user->role = $this->role;
         $user->setPassword($this->password);
         $user->generateAuthKey();
 

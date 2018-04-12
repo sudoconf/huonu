@@ -11,6 +11,7 @@ use backend\controllers\BaseController;
 use backend\models\AuthItem;
 use backend\models\searchs\AdminSearch;
 use backend\models\Signup;
+use common\components\CtHelper;
 use Yii;
 use yii\bootstrap\ActiveForm;
 use yii\db\Query;
@@ -47,26 +48,39 @@ class UserController extends BaseController
             ->from(AuthItem::tableName())
             ->where('type=:type', [':type' => 1])
             ->all();
+        $authItem = array_column($authItem, 'name');
+        $newAuthItem = [];
+        if (!empty($authItem)){
+            foreach ($authItem as $k => $v){
+                $newAuthItem[$v] = $v;
+            }
+        }
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'authItem' => array_column($authItem, 'name'),
-            'adminModel' => new Signup()
-        ]);
+        return $this->render(
+            'index',
+            [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'authItem' => $newAuthItem,
+                'adminModel' => new Signup(),
+            ]
+        );
     }
 
+    /**
+     * 添加管理员
+     */
     public function actionSignup()
     {
         $model = new Signup();
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
+        // if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+        //     Yii::$app->response->format = Response::FORMAT_JSON;
+        //
+        //     return ActiveForm::validate($model);
+        // }
 
         if ($model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['status' => $model->signup()];
+            CtHelper::response(200, 'success', $model->signup());
         }
     }
 }

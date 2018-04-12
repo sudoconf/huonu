@@ -89,7 +89,7 @@ return [
             'site/login',
             'site/captcha',
             'site/error',
-            // '*'
+            '*'
         ]
     ],
     'params' => $params,

@@ -55,12 +55,11 @@ class BaseController extends Controller
             return false;
         }
 
-        $controller = Yii::$app->controller->id;
-        $action = Yii::$app->controller->action->id;
-        $permissionName = $controller . '/' . $action;
-        if (!Yii::$app->user->can($permissionName) && Yii::$app->getErrorHandler()->exception === null) {
-            throw new UnauthorizedHttpException('对不起，您现在还没获此操作的权限');
+        $actionId = '/'.$action->getUniqueId();
+        if (!Yii::$app->user->can($actionId) && Yii::$app->getErrorHandler()->exception === null) {
+            // throw new UnauthorizedHttpException('对不起，您现在还没获此操作的权限');
         }
+
         return true;
     }
 }

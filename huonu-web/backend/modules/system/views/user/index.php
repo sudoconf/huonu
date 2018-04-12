@@ -193,7 +193,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 data: form.serialize(),
                 success: function (response) {
                     console.log(response);
-                    if (response.result) {
+                    if (response.data != null) {
                         layer.alert('保存成功', {icon: 1});
                         window.location.reload();
                     } else {
