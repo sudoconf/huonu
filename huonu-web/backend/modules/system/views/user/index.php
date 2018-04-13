@@ -193,7 +193,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 type: 'post',
                 data: {'id': id},
                 success: function (response) {
-                    console.log(response);
+                    console.log(id + '-----------' + dataUrl);
                     if (response.data != null) {
                         layer.alert('操作成功', {icon: 1});
                         window.location.reload();

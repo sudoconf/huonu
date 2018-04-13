@@ -4,6 +4,7 @@ namespace backend\models;
 
 use common\components\CtHelper;
 use Yii;
+use yii\helpers\Json;
 
 /**
  * This is the model class for table "{{%admin}}".
@@ -88,6 +89,7 @@ class Admin extends BaseAdmin
     /**
      * 注册
      * @return Admin|null
+     * @throws \Exception
      * @throws \yii\db\Exception
      */
     public function signup()
@@ -102,12 +104,18 @@ class Admin extends BaseAdmin
             $user->setPassword($this->password);
             $user->generateAuthKey();
 
-            $result = $user->save() ? $user : null;
+            Log::create(Log::TYPE_CREATE, $user);
 
+            if (!$user->validate()) {
+                throw new \Exception(Json::encode($user->getErrors()));
+            }
+
+            $result = $user->save() ? $user : null;
             $transaction->commit();
             return $result;
         } catch (\Exception $e) {
             $transaction->rollBack();
+            exit(Json::encode(CtHelper::response(0, $e->getMessage())));
         }
     }
 

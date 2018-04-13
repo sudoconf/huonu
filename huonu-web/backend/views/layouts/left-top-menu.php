@@ -92,6 +92,9 @@ $tt = MenuHelper::getAssignedMenu(Yii::$app->user->id);
                         <li>
                             <a href="<?= Url::toRoute('/system/menu') ?>">菜单列表</a>
                         </li>
+                        <li>
+                            <a href="<?= Url::toRoute('/system/log') ?>">操作日志</a>
+                        </li>
                     </ul>
                 </li>
             </ul>

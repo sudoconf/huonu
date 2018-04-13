@@ -73,7 +73,8 @@ class UserController extends BaseController
     {
         $model = new Admin();
         if ($model->load(Yii::$app->request->post())) {
-            CtHelper::response(200, 'success', $model->signup());
+            $model->signup();
+            // CtHelper::response(200, 'success', $model->signup());
         }
     }
 
