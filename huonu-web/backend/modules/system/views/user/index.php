@@ -48,40 +48,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     'method' => 'get',
                     'action' => Url::toRoute('user/index')
                 ]); ?>
-                <div class="panel-body form-group">
+                <div class="panel-body form-group form-inline">
                     <div class="form-filter">
                         <label class="form-filter-field">用户名：</label>
                         <div class="form-filter-content">
                             <?= $form->field($searchModel, 'username')->textInput(['placeholder' => $searchModel->getAttributeLabel('username')])->label(false) ?>
                         </div>
                     </div>
-                    <div class="form-filter">
-                        <label class="form-filter-field">角色：</label>
-                        <div class="form-filter-content">
-                            <select class="form-control">
-                                <option value="">1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-filter">
-                        <label class="form-filter-field">状态：</label>
-                        <div class="form-filter-content">
-                            <select class="form-control">
-                                <option value="">1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-filter-btn">
-                        <?= Html::submitButton('搜索', ['class' => 'btn btn-primary']) ?>
-                    </div>
+
+                    <?= $form->field($searchModel, 'role')->dropDownList($authItem, ['prompt' => '请选择', 'style' => 'width:120px']) ?>
+
+
+                    <?= $form->field($searchModel, 'status')->dropDownList($authItem, ['prompt' => '请选择', 'style' => 'width:120px']) ?>
+
+                    <?= Html::submitButton('搜索', ['class' => 'btn btn-primary']) ?>
                 </div>
                 <?php ActiveForm::end(); ?>
 
@@ -169,7 +149,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $form->field($adminModel, 'password')->passwordInput() ?>
 
         <?= $form->field($adminModel, 'role')->dropDownList($authItem, ['prompt' => '请选择', 'style' => 'width:120px']) ?>
-
 
         <?= Html::submitButton('提交', ['class' => 'btn btn-primary', 'name' => 'submit-button']) ?>
         <?= Html::resetButton('重置', ['class' => 'btn btn-primary', 'name' => 'submit-button']) ?>

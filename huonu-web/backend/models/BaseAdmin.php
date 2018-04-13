@@ -77,7 +77,7 @@ class BaseAdmin extends ActiveRecord implements IdentityInterface
             'password_reset_token' => '重新登录密钥',
             'status' => '状态',
             'created_at' => '创建时间',
-            'updated_at' => '修改时间',
+            'update_time' => '修改时间',
         ];
     }
 
