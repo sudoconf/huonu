@@ -77,9 +77,10 @@ class AssignmentController extends BaseController
     }
 
     /**
-     * Displays a single Assignment model.
-     * @param  integer $id
-     * @return mixed
+     * 星期
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
      */
     public function actionView($id)
     {

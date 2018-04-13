@@ -25,9 +25,9 @@ use yii\web\IdentityInterface;
  */
 class BaseAdmin extends ActiveRecord implements IdentityInterface
 {
-    const STATUS_DELETED = 0;
-    const STATUS_INACTIVE = 20;
-    const STATUS_ACTIVE = 10;
+    const STATUS_DELETED = 0; // 已删除
+    const STATUS_INACTIVE = 20; // 不活跃的
+    const STATUS_ACTIVE = 10; // 活跃的
 
     /**
      * @inheritdoc
@@ -54,7 +54,7 @@ class BaseAdmin extends ActiveRecord implements IdentityInterface
     {
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['status', 'in', 'range' => [self::STATUS_INACTIVE, self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
     }
 

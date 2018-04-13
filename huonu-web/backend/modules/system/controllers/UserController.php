@@ -11,7 +11,6 @@ use backend\controllers\BaseController;
 use backend\models\Admin;
 use backend\models\AuthItem;
 use backend\models\searchs\AdminSearch;
-use backend\models\Signup;
 use common\components\CtHelper;
 use Yii;
 use yii\db\Query;
@@ -62,6 +61,7 @@ class UserController extends BaseController
                 'dataProvider' => $dataProvider,
                 'authItem' => $newAuthItem,
                 'adminModel' => new Admin(),
+                'status' => $searchModel->getStatus,
             ]
         );
     }
@@ -72,13 +72,18 @@ class UserController extends BaseController
     public function actionSignup()
     {
         $model = new Admin();
-        // if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-        //     Yii::$app->response->format = Response::FORMAT_JSON;
-        //
-        //     return ActiveForm::validate($model);
-        // }
         if ($model->load(Yii::$app->request->post())) {
             CtHelper::response(200, 'success', $model->signup());
         }
+    }
+
+    /**
+     *
+     */
+    public function actionAjaxChangeStatus()
+    {
+        $id = Yii::$app->request->post('id');
+        $model = new Admin();
+        CtHelper::response(200, 'success', $model->changeStatus($id));
     }
 }

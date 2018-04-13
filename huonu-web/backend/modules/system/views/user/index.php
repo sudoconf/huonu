@@ -49,17 +49,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'action' => Url::toRoute('user/index')
                 ]); ?>
                 <div class="panel-body form-group form-inline">
-                    <div class="form-filter">
-                        <label class="form-filter-field">用户名：</label>
-                        <div class="form-filter-content">
-                            <?= $form->field($searchModel, 'username')->textInput(['placeholder' => $searchModel->getAttributeLabel('username')])->label(false) ?>
-                        </div>
-                    </div>
+                    <?= $form->field($searchModel, 'username')->textInput(['placeholder' => $searchModel->getAttributeLabel('username')])->label(false) ?>
 
                     <?= $form->field($searchModel, 'role')->dropDownList($authItem, ['prompt' => '请选择', 'style' => 'width:120px']) ?>
 
 
-                    <?= $form->field($searchModel, 'status')->dropDownList($authItem, ['prompt' => '请选择', 'style' => 'width:120px']) ?>
+                    <?= $form->field($searchModel, 'status')->dropDownList($status, ['prompt' => '请选择', 'style' => 'width:120px']) ?>
 
                     <?= Html::submitButton('搜索', ['class' => 'btn btn-primary']) ?>
                 </div>
@@ -104,10 +99,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             [
                                 'class' => 'yii\grid\ActionColumn',
-                                'header' => '操作',
+                                'header' => '更多操作',
                                 'template' => '{password}{disable}',
-                                'headerOptions' => ['width' => '200', 'class' => 'padding-left-5px',],
-                                'contentOptions' => ['class' => 'padding-left-5px'],
                                 'buttons' => [
                                     'password' => function ($url, $model, $key) {
                                         return Html::button('重置密码', [
@@ -115,9 +108,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ]);
                                     },
                                     'disable' => function ($url, $model, $key) {
-                                        return Html::button('禁用', [
-                                            'class' => 'btn btn-primary forbidden'
-                                        ]);
+                                        if ($model->status > 0) {
+                                            return Html::button('禁用', [
+                                                'class' => 'btn btn-primary forbidden',
+                                                'value' => $model->id,
+                                                'data-url' => Url::toRoute('user/ajax-change-status')
+                                            ]);
+                                        }
                                     },
                                 ],
                             ],
@@ -186,6 +183,30 @@ $this->params['breadcrumbs'][] = $this->title;
             });
             return false;
         });
+
+        $('.forbidden').click(function () {
+            var id = this.value;
+            var dataUrl = $(this).attr("data-url");
+            //表单提交
+            $.ajax({
+                url: dataUrl,
+                type: 'post',
+                data: {'id': id},
+                success: function (response) {
+                    console.log(response);
+                    if (response.data != null) {
+                        layer.alert('操作成功', {icon: 1});
+                        window.location.reload();
+                    } else {
+                        layer.alert('操作失败', {icon: 2});
+                    }
+                },
+                error: function () {
+                    layer.alert('系统错误');
+                    return false;
+                }
+            });
+        })
     });
 </script>
 

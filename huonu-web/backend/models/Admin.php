@@ -27,6 +27,13 @@ class Admin extends BaseAdmin
 {
     public $password;
 
+    // 获取状态
+    public $getStatus = [
+        self::STATUS_DELETED => '删除',
+        self::STATUS_ACTIVE => '活跃的',
+        self::STATUS_INACTIVE => '不活跃的',
+    ];
+
     /**
      * @inheritdoc
      */
@@ -78,6 +85,11 @@ class Admin extends BaseAdmin
         );
     }
 
+    /**
+     * 注册
+     * @return Admin|null
+     * @throws \yii\db\Exception
+     */
     public function signup()
     {
         $transaction = Yii::$app->db->beginTransaction();
@@ -97,5 +109,35 @@ class Admin extends BaseAdmin
         } catch (\Exception $e) {
             $transaction->rollBack();
         }
+    }
+
+    /**
+     * 修改状态
+     * @param $id
+     * @return null|static
+     * @throws \yii\db\Exception
+     */
+    public function changeStatus($id)
+    {
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+
+            if ($id == Yii::$app->user->getId()) {
+                CtHelper::response(200, '您不能修改自己');
+            }
+            $admin = self::find()->select('id')->where('id=:id', [':id' => $id])->asArray()->one();
+            if (empty($admin)) {
+                CtHelper::response(200, 'false');
+            }
+
+            $fields['status'] = self::STATUS_DELETED;
+            Admin::updateAll($fields, ['id' => $id]);
+
+            $transaction->commit();
+            return self::findOne($id);
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+        }
+
     }
 }
