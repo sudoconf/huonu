@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use common\components\CtHelper;
 use Yii;
 
 /**
@@ -24,6 +25,7 @@ use Yii;
  */
 class Admin extends BaseAdmin
 {
+    public $password;
 
     /**
      * @inheritdoc
@@ -33,14 +35,28 @@ class Admin extends BaseAdmin
         return [
             [['username', 'email', 'password_hash'], 'required'],
             [['status', 'last_time', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'email', 'role'], 'string', 'max' => 64],
+            [['role'], 'string', 'max' => 64],
             [['face', 'address'], 'string', 'max' => 100],
             [['auth_key'], 'string', 'max' => 32],
             [['password_hash', 'password_reset_token'], 'string', 'max' => 255],
             [['last_ip'], 'string', 'max' => 15],
-            [['username'], 'unique'],
-            [['email'], 'unique'],
             [['password_reset_token'], 'unique'],
+
+            ['username', 'trim'],
+            [['username'], 'unique'],
+            ['username', 'unique', 'targetClass' => '\backend\models\Admin', 'message' => '用户名已经被占用了.'],
+            ['username', 'string', 'min' => 2, 'max' => 20],
+
+            ['email', 'trim'],
+            [['email'], 'unique'],
+            ['email', 'email'],
+            ['email', 'string', 'max' => 50],
+            ['email', 'unique', 'targetClass' => '\backend\models\Admin', 'message' => '电子邮件地址已经被占用了.'],
+
+            ['password', 'required'],
+            ['password', 'string', 'min' => 6, 'max' => 20],
+
+            ['role', 'required'],
         ];
     }
 
@@ -58,8 +74,28 @@ class Admin extends BaseAdmin
                 'last_time' => '上一次登录时间',
                 'last_ip' => '上一次登录的IP',
                 'password' => '密码',
-                're_password' => '确认密码',
             ]
         );
+    }
+
+    public function signup()
+    {
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $user = new self();
+            $user->username = $this->username;
+            $user->email = $this->email;
+            $user->role = $this->role;
+            $user->password = $this->password;
+            $user->setPassword($this->password);
+            $user->generateAuthKey();
+
+            $result = $user->save() ? $user : null;
+
+            $transaction->commit();
+            return $result;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+        }
     }
 }

@@ -8,15 +8,14 @@
 namespace backend\modules\system\controllers;
 
 use backend\controllers\BaseController;
+use backend\models\Admin;
 use backend\models\AuthItem;
 use backend\models\searchs\AdminSearch;
 use backend\models\Signup;
 use common\components\CtHelper;
 use Yii;
-use yii\bootstrap\ActiveForm;
 use yii\db\Query;
 use yii\filters\VerbFilter;
-use yii\web\Response;
 
 class UserController extends BaseController
 {
@@ -50,8 +49,8 @@ class UserController extends BaseController
             ->all();
         $authItem = array_column($authItem, 'name');
         $newAuthItem = [];
-        if (!empty($authItem)){
-            foreach ($authItem as $k => $v){
+        if (!empty($authItem)) {
+            foreach ($authItem as $k => $v) {
                 $newAuthItem[$v] = $v;
             }
         }
@@ -62,7 +61,7 @@ class UserController extends BaseController
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 'authItem' => $newAuthItem,
-                'adminModel' => new Signup(),
+                'adminModel' => new Admin(),
             ]
         );
     }
@@ -72,13 +71,12 @@ class UserController extends BaseController
      */
     public function actionSignup()
     {
-        $model = new Signup();
+        $model = new Admin();
         // if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
         //     Yii::$app->response->format = Response::FORMAT_JSON;
         //
         //     return ActiveForm::validate($model);
         // }
-
         if ($model->load(Yii::$app->request->post())) {
             CtHelper::response(200, 'success', $model->signup());
         }
