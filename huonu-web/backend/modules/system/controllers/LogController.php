@@ -3,6 +3,8 @@
 namespace backend\modules\system\controllers;
 
 use backend\controllers\BaseController;
+use backend\models\Admin;
+use common\components\CtHelper;
 use Yii;
 use backend\models\Log;
 use backend\models\searchs\LogSearch;
@@ -50,11 +52,9 @@ class LogController extends BaseController
      * @return string
      * @throws NotFoundHttpException
      */
-    public function actionView($id)
+    public function actionAjaxGetLog($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        return CtHelper::response('200', 'success', $this->find($id));
     }
 
     /**
@@ -63,10 +63,15 @@ class LogController extends BaseController
      * @return null|static
      * @throws NotFoundHttpException
      */
-    protected function findModel($id)
+    protected function find($id)
     {
-        if (($model = Log::findOne($id)) !== null) {
-            return $model;
+        $log = Log::find()->where('id=:id', [':id' => $id])->asArray()->one();
+        if (!empty($log)) {
+            $admin = Admin::findOne($log['created_id']);
+            $log['username'] = $admin->username;
+            $log['type'] = Log::getTypeDescription($log['type']);
+            $log['createdAt'] = date('Y-m-d H:i:s', $log['created_at']);
+            return $log;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');

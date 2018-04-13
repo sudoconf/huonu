@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use \backend\models\Log;
+use \yii\widgets\DetailView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\searchs\AdminLogSearch */
@@ -38,7 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'module',
                     'controller',
                     'action',
-                    'url:url',
+                    // 'url:url',
+                    'url',
                     // 'params',
                     'ip',
                     // 'agent',
@@ -53,7 +56,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         'buttons' => [
                             'info' => function ($url, $model, $key) {
                                 return Html::button('详情', [
-                                    'class' => 'btn btn-primary logo-info'
+                                    'class' => 'btn btn-primary logo-info',
+                                    'value' => $model->id,
+                                    'data-url' => Url::toRoute('log/ajax-get-log')
                                 ]);
                             },
                         ],
@@ -67,48 +72,63 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <script>
-
     $('.logo-info').on('click', function(){
-        var ii = layer.load();
-        //此处用setTimeout演示ajax的回调
-        setTimeout(function(){
-            layer.close(ii);
-        }, 1000);
-
-        layer.open({
-            type: 1,
-            title: '创建角色',
-            shadeClose: true,
-            shade: false,
-            maxmin: false, //开启最大化最小化按钮
-            area: ['462px', '430px'],
-            content: $('.layer-form-create-user').html()
-        });
-
-    });
-
-    $('.logo-info').click(function () {
         var id = this.value;
-        var dataUrl = $(this).attr("data-url");
-        //表单提交
+        var ajaxUrl = $(this).attr("data-url");
+        localStorage.prinpal = "prtens";
         $.ajax({
-            url: dataUrl,
-            type: 'post',
+            url: ajaxUrl,
+            type: 'get',
             data: {'id': id},
-            success: function (response) {
-                console.log(id + '-----------' + dataUrl);
-                if (response.data != null) {
-                    layer.alert('操作成功', {icon: 1});
-                    window.location.reload();
-                } else {
-                    layer.alert('操作失败', {icon: 2});
-                }
+            beforeSend: function () {
+                i = SHOW_LOAD_LAYER();
             },
-            error: function () {
-                layer.alert('系统错误');
-                return false;
+            success: function (msg) {
+                CLOSE_LOAD_LAYER(i);
+                console.log(msg);
+                var html = '<div class="layer-form-log-info"><div class="layer-form"><div class="form-group"><label class="control-label">操作用户</label><input type="text" class="form-control" value="'+ msg.data.username +'" readonly><p class="help-block"></p></div>';
+                    html += '<div class="form-group"><label class="control-label">日志类型</label><input type="text" class="form-control" value="'+ msg.data.type + '" readonly><p class="help-block"></p></div>';
+
+                    html += '<div class="form-group"><label class="control-label">模块</label><input type="text" class="form-control" value="'+ msg.data.module + '" readonly><p class="help-block"></p></div>';
+
+                    html += '<div class="form-group"><label class="control-label">控制器</label><input type="text" class="form-control" value="'+ msg.data.controller + '" readonly><p class="help-block"></p></div>';
+
+                    html += '<div class="form-group"><label class="control-label">方法</label><input type="text" class="form-control" value="'+ msg.data.action + '" readonly><p class="help-block"></p></div>';
+
+                    html += '<div class="form-group"><label class="control-label">请求地址</label><input type="text" class="form-control" value="'+ msg.data.url + '" readonly><p class="help-block"></p></div>';
+
+                    html += "<div class='form-group'><label class='control-label'>请求参数</label><textarea class='form-control' readonly>"+msg.data.params+"</textarea><p class='help-block'></p></div>";
+
+                    html += '<div class="form-group"><label class="control-label">操作用户IP</label><input type="text" class="form-control" value="'+ msg.data.ip + '" readonly><p class="help-block"></p></div>';
+
+                    html += "<div class='form-group'><label class='control-label'>操作用户浏览器代理商</label><textarea class='form-control' readonly>"+msg.data.agent+"</textarea><p class='help-block'></p></div>";
+
+                    html += '<div class="form-group"><label class="control-label">创建时间</label><input type="text" class="form-control" value="'+ msg.data.createdAt + '" readonly><p class="help-block"></p></div></div></div>';
+                layer.open({
+                    type: 1,
+                    title: '日志详情',
+                    shadeClose: true,
+                    shade: 0.5, // 遮罩
+                    anim: 1, // 动画
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ['800px', '430px'],
+                    content: html,
+                    end: function() {
+                        if(localStorage.prinpal) {
+                            localStorage.removeItem('prinpal')
+                        }
+                    }
+                });
+
+            },
+            error: function (e, jqxhr, settings, exception) {
+                layer.msg('加载失败！', {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function(){
+                    CLOSE_LOAD_LAYER(i);
+                });
             }
         });
-    })
-
+    });
 </script>
