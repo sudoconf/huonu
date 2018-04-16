@@ -12,7 +12,7 @@ use yii\rbac\Rule;
  * @author Misbahul D Munir <misbahuldmunir@gmail.com>
  * @since 1.0
  */
-class BizRule extends \yii\db\ActiveRecord
+class BizRule extends \yii\base\Model
 {
     /**
      * @var string name of the rule
