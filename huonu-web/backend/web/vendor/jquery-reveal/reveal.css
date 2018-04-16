@@ -23,7 +23,7 @@
 		width: auto;
 		background: #fff no-repeat -200px -80px;
 		position: absolute;
-		z-index: 101;
+		z-index: 9999;
 		/*padding: 30px 40px 34px;*/
 		padding-top: 30px;
 		-moz-border-radius: 5px;

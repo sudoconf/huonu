@@ -97,6 +97,31 @@ $tt = MenuHelper::getAssignedMenu(Yii::$app->user->id);
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="fa fa-bar-chart-o fa-fw"></i> 客户报表
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="<?= Url::toRoute('/report/default') ?>">人群复盘列表</a>
+                        </li>
+                        <li>
+                            <a href="<?= Url::toRoute('/system/user') ?>">数据同步</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="fa fa-bar-chart-o fa-fw"></i> 客户计划
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="<?= Url::toRoute('/plan/default') ?>">计划列表</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
         <!-- /.sidebar-collapse -->

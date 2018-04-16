@@ -1,16 +1,16 @@
 <?php
 
-namespace backend\modules\system;
+namespace backend\modules\report;
 
 /**
- * system module definition class
+ * report module definition class
  */
-class systemModule extends \yii\base\Module
+class ReportModule extends \yii\base\Module
 {
     /**
      * @inheritdoc
      */
-    public $controllerNamespace = 'backend\modules\system\controllers';
+    public $controllerNamespace = 'backend\modules\report\controllers';
 
     /**
      * @inheritdoc

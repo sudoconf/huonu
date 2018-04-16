@@ -77,11 +77,6 @@ return [
             ],
         ],
     ],
-    'modules' => [
-        'system' => [
-            'class' => 'backend\modules\system\systemModule',
-        ],
-    ],
     'as access' => [
         'class' => 'backend\components\AccessControl',
         'allowActions' => [
@@ -91,6 +86,17 @@ return [
             'site/error',
             // '*'
         ]
+    ],
+    'modules' => [
+        'system' => [
+            'class' => 'backend\modules\system\SystemModule',
+        ],
+        'report' => [
+            'class' => 'backend\modules\report\ReportModule',
+        ],
+        'plan' => [
+            'class' => 'backend\modules\plan\PlanModule',
+        ],
     ],
     'params' => $params,
 ];
