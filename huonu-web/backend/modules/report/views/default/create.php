@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 ?>
 <?= Html::cssFile('@web/vendor/daterangepicker/daterangepicker.css') ?>
@@ -19,7 +20,7 @@ use yii\helpers\Html;
         <ul class="page-breadcrumb">
             <li>
                 <i class="fa fa-home"></i>
-                <a href="index.html">Home</a>
+                <a href="<?= Url::toRoute('/site') ?>">Home</a>
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
