@@ -44,23 +44,16 @@ use yii\helpers\Url;
                         <ul class="nav nav-tabs">
                             <li class="active">
                                 <a href="#panel-807395" data-toggle="tab" contenteditable="true">
-                                    <i class="creat-step">1</i>
+                                    <i class="create-step">1</i>
                                     <i class="fa fa-bar-chart-o fa-fw"></i>
                                     设置参数
                                 </a>
                             </li>
                             <li class="">
                                 <a href="#panel-792912" data-toggle="tab" contenteditable="true">
-                                    <i class="creat-step">2</i>
+                                    <i class="create-step">2</i>
                                     <i class="fa fa-bar-chart-o fa-fw"></i>
                                     添加测略组
-                                </a>
-                            </li>
-                            <li class="">
-                                <a href="#panel-792912" data-toggle="tab" contenteditable="true">
-                                    <i class="creat-step">3</i>
-                                    <i class="fa fa-bar-chart-o fa-fw"></i>
-                                    生成报表
                                 </a>
                             </li>
                         </ul>
@@ -68,15 +61,17 @@ use yii\helpers\Url;
                         <div class="tab-content">
 
                             <div class="tab-pane active" id="panel-807395" contenteditable="true">
+                                <?php $form = \yii\bootstrap\ActiveForm::begin(); ?>
                                 <div class="form-group form-inline">
                                     <div class="control-group">
                                         <span>复盘名称</span>
-                                        <input type="text" class="form-control" placeholder="复盘名称">
+                                        <input type="text" class="form-control" placeholder="复盘名称" name="">
                                     </div>
 
                                     <div class="control-group">
                                         <span>店铺选择</span>
-                                        <input type="text" class="form-control" placeholder="店铺选择">
+                                        <input type="text" id="taobao_name" name="taobao_name" class="form-control" placeholder="店铺选择">
+                                        <input type="hidden" name="taobao_id" id="taobao_id" value="">
                                     </div>
 
                                     <div class="control-group">
@@ -102,14 +97,16 @@ use yii\helpers\Url;
                                     <div class="control-group">
                                         <span>数据周期</span>
                                         <label class="form-inline">
-                                            <input type="radio" value="1" checked="checked" name="group">3天
-                                            <input type="radio" value="2" name="group">7天
-                                            <input type="radio" value="2" name="group">15天
+                                            <input type="radio" value="1" checked="checked" name="group1">3天
+                                            <input type="radio" value="2" name="group1">7天
+                                            <input type="radio" value="2" name="group1">15天
                                         </label>
                                     </div>
 
-                                    <input type="button" value="下一步，添加对比组" class="btn btn-primary">
+                                    <input type="submit" value="下一步，添加对比组" class="btn btn-primary">
                                 </div>
+                                >
+                                <?php \yii\bootstrap\ActiveForm::end(); ?>
                             </div>
 
                             <div class="tab-pane" id="panel-792912" contenteditable="true">
@@ -181,76 +178,68 @@ use yii\helpers\Url;
                 <div class="control-group">
                     <span>消耗</span>
                     <label class="form-inline">
-                        <input type="radio" value="1" checked="checked" name="group">消耗
+                        <input type="checkbox" name="field[]" value="charge" checked="checked">消耗
                     </label>
                 </div>
 
                 <div class="control-group">
                     <span>触达</span>
                     <label class="form-inline">
-                        <input type="radio" value="1" checked="checked" name="group">展现量
+                        <input type="checkbox" name="field[]" value="ad_pv" checked="checked">展现量
                     </label>
                 </div>
 
                 <div class="control-group">
                     <span>兴趣</span>
                     <label class="form-inline">
-                        <input type="radio" value="1" checked="checked" name="group">点击量
-                        <input type="radio" value="1" checked="checked" name="group">访客
+                        <input type="checkbox" name="field[]" value="click" checked="checked">点击量
+                        <input type="checkbox" name="field[]" value="uv" checked="checked">访客
                     </label>
                 </div>
 
                 <div class="control-group">
                     <span>意向</span>
                     <label class="form-inline">
-                        <input type="radio" value="1" checked="checked" name="group">深度进店
-                        <input type="radio" value="1" checked="checked" name="group">访问时长
-                        <input type="radio" value="1" checked="checked" name="group">访问页面数
-                    </label>
-                </div>
-
-                <div class="control-group">
-                    <span>兴趣</span>
-                    <label class="form-inline">
-                        <input type="radio" value="1" checked="checked" name="group">点击量
-                        <input type="radio" value="1" checked="checked" name="group">访客
+                        <input type="checkbox" name="field[]" value="deep_inshop_uv">深度进店
+                        <input type="checkbox" name="field[]" value="avg_access_time">访问时长
+                        <input type="checkbox" name="field[]" value="avg_access_page_num">访问页面数
                     </label>
                 </div>
 
                 <div class="control-group">
                     <span>行动</span>
                     <label class="form-inline">
-                        <input type="radio" value="1" checked="checked" name="group">收藏宝贝量
-                        <input type="radio" value="1" checked="checked" name="group">收藏店铺量
-                        <input type="radio" value="1" checked="checked" name="group">添加购物车量
-                        <input type="radio" value="1" checked="checked" name="group">拍下订单量
-                        <input type="radio" value="1" checked="checked" name="group">拍下订单金额<br>
-                        <input type="radio" value="1" checked="checked" name="group">商品收藏率
-                        <input type="radio" value="1" checked="checked" name="group">商品加购率
-                        <input type="radio" value="1" checked="checked" name="group">商品收藏成本
-                        <input type="radio" value="1" checked="checked" name="group">商品加购成本
-                        <input type="radio" value="1" checked="checked" name="group">商品收藏加购成本
+                        <input type="checkbox" name="field[]" value="inshop_item_col_num" checked="checked">收藏宝贝量
+                        <input type="checkbox" name="field[]" value="dir_shop_col_num" checked="checked">收藏店铺量
+                        <input type="checkbox" name="field[]" value="cart_num" checked="checked">添加购物车量
+                        <input type="checkbox" name="field[]" value="gmv_inshop_num">拍下订单量
+                        <input type="checkbox" name="field[]" value="gmv_inshop_amt">拍下订单金额<br>
+                        <input type="checkbox" name="field[]" value="commodity_collection_rate">商品收藏率
+                        <input type="checkbox" name="field[]" value="purchase_rate_of_goods">商品加购率
+                        <input type="checkbox" name="field[]" value="commodity_collection_cost">商品收藏成本
+                        <input type="checkbox" name="field[]" value="purchase_cost_of_goods">商品加购成本
+                        <input type="checkbox" name="field[]" value="purchase_cost_of_goods_collection">商品收藏加购成本
                     </label>
                 </div>
 
                 <div class="control-group">
                     <span>成交</span>
                     <label class="form-inline">
-                        <input type="radio" value="1" checked="checked" name="group">成交订单量
-                        <input type="radio" value="1" checked="checked" name="group">成交订单金额
-                        <input type="radio" value="1" checked="checked" name="group">订单平均成本
-                        <input type="radio" value="1" checked="checked" name="group">订单平均金额
+                        <input type="checkbox" name="field[]" value="alipay_in_shop_num">成交订单量
+                        <input type="checkbox" name="field[]" value="alipay_inshop_amt">成交订单金额
+                        <input type="checkbox" name="field[]" value="average_cost_of_order">订单平均成本
+                        <input type="checkbox" name="field[]" value="order_average_amount">订单平均金额
                     </label>
                 </div>
 
                 <div class="control-group">
                     <span>衍生指标</span>
                     <label class="form-inline">
-                        <input type="radio" value="1" checked="checked" name="group">千次展现成本
-                        <input type="radio" value="1" checked="checked" name="group">点击率
-                        <input type="radio" value="1" checked="checked" name="group">点击单价
-                        <input type="radio" value="1" checked="checked" name="group">点击转化率
-                        <input type="radio" value="1" checked="checked" name="group">投资回报率
+                        <input type="checkbox" name="field[]" value="ecpm" checked="checked">千次展现成本
+                        <input type="checkbox" name="field[]" value="ctr" checked="checked">点击率
+                        <input type="checkbox" name="field[]" value="ecpc" checked="checked">点击单价
+                        <input type="checkbox" name="field[]" value="cvr" checked="checked">点击转化率
+                        <input type="checkbox" name="field[]" value="roi" checked="checked">投资回报率
                     </label>
                 </div>
 
@@ -279,11 +268,11 @@ use yii\helpers\Url;
                         <li class="list-group-item">收藏宝贝量</li>
                         <li class="list-group-item">收藏店铺量</li>
                         <li class="list-group-item">添加购物车量</li>
-                        <li class="list-group-item">投资回报率</li>
                         <li class="list-group-item">千次展现成本</li>
                         <li class="list-group-item">点击率</li>
                         <li class="list-group-item">点击单价</li>
                         <li class="list-group-item">点击转化率</li>
+                        <li class="list-group-item">投资回报率</li>
                     </ul>
                 </div>
             </div>
@@ -291,6 +280,12 @@ use yii\helpers\Url;
     </div>
     <a class="close-reveal-modal">&#215;</a>
 </div>
+
+<!-- 引入jQuery的js文件 -->
+<link rel="stylesheet" href="http://apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+<script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+<!-- 引入jQuery UI的js文件 -->
+<?= Html::jsFile('@web/vendor/jquery-ui/jquery-ui.js') ?>
 
 <?= Html::jsFile('@web/vendor/daterangepicker/moment.js') ?>
 <?= Html::jsFile('@web/vendor/daterangepicker/daterangepicker.js') ?>
@@ -300,6 +295,7 @@ use yii\helpers\Url;
 <?= Html::jsFile('@web/vendor/jquery-reveal/jquery.reveal.js') ?>
 <!-- 拖动 jquery-sortable.js -->
 <?= Html::jsFile('@web/vendor/jquery-sortable/jquery-sortable.js') ?>
+
 <script>
 
     // 时间段选择
@@ -341,4 +337,50 @@ use yii\helpers\Url;
 
     // 拖动排序
     $('ul.custom-fields').sortable();
+
+    $('#taobao_name').autocomplete({
+        minChars: 0,
+        max: 5,
+        autoFill: true,
+        mustMatch: true,
+        matchContains: true,
+        scrollHeight: 220,
+        minLength: 1,  // 输入框字符个等于2时开始查询
+        source: function (request, response) {
+            $.ajax({
+                url: 'ajax-get-shop.html', // 后台请求路径
+                dataType: "json",
+                data: {
+                    "inputStr": request.term    // 获取输入框内容
+                },
+                success: function (res) {
+                    if (res.data != '') {
+                        response($.map(res.data, function (item) { // 此处是将返回数据转换为 JSON对象，并给每个下拉项补充对应参数
+                            // console.log(item.taobao_user_id);
+                            return {
+                                label: item.taobao_user_nick,//下拉框显示值
+                                value: item.taobao_user_nick,//选中后，填充到下拉框的值
+                                id: item.taobao_user_id,
+                            }
+                        }));
+                    }
+                },
+                focus: function (event, ui) {
+                    $('#taobao_name').val(ui.item.name);
+                    return false;
+                },
+                select: function (event, ui) {
+                    console.log(1111111);
+                    $('#taobao_name').val(ui.item.name);
+                    $('#taobao_id').attr('value', ui.item.id);
+                    return false;
+                },
+            });
+        },
+        messages: {
+            noResults: '',
+            results: function () {
+            }
+        }
+    });
 </script>
