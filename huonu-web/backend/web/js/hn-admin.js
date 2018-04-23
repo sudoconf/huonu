@@ -82,9 +82,11 @@ function SHOW_LOAD_LAYER(){
         layer.close(ii);
     }, 1000);
 }
+// 关闭
 function CLOSE_LOAD_LAYER(index){
     layer.close(index);
 }
+
 
 // 客户计划
 $('.plan-table tr:even').hover(function () {

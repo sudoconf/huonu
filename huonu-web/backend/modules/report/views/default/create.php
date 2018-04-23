@@ -70,8 +70,9 @@ use yii\helpers\Url;
 
                                     <div class="control-group">
                                         <span>店铺选择</span>
-                                        <input type="text" id="taobao_name" name="taobao_name" class="form-control" placeholder="店铺选择">
-                                        <input type="hidden" id="taobao_id"  name="taobao_id">
+                                        <input type="text" id="taobao_name" name="taobao_name" class="form-control"
+                                               placeholder="店铺选择">
+                                        <input type="hidden" id="taobao_id" name="taobao_id">
                                     </div>
 
                                     <div class="control-group">
@@ -306,38 +307,46 @@ use yii\helpers\Url;
         scrollHeight: 220,
         minLength: 1,  // 输入框字符个等于2时开始查询
         source: function (request, response) {
+            var inputStr = request.term; // request.term 放在ajax 里面会加载俩次
             $.ajax({
                 url: 'ajax-get-shop.html', // 后台请求路径
                 dataType: "json",
                 data: {
-                    "inputStr": request.term    // 获取输入框内容
+                    "inputStr": inputStr    // 获取输入框内容
                 },
                 success: function (res) {
                     if (res.data != '') {
                         response($.map(res.data, function (item) { // 此处是将返回数据转换为 JSON对象，并给每个下拉项补充对应参数
-                            // console.log(item.taobao_user_id);
+                            // console.log(item.taobao_user_nick);
                             return {
-                                label: item.taobao_user_nick,//下拉框显示值
-                                value: item.taobao_user_nick,//选中后，填充到下拉框的值
-                                id: item.taobao_user_id,
+                                label: item.taobao_user_nick,   // 下拉框显示值
+                                value: item.taobao_user_nick,   // 选中后，填充到下拉框的值
                             }
                         }));
                     }
                 },
-                focus: function (event, ui) {
-                    $('#taobao_name').val(ui.item.name);
-                    return false;
-                },
-                select: function (event, ui) {
-                    console.log(ui);
-                    $('#taobao_name').val(ui.item.name);
-                    $('#taobao_id').val(ui.item.id);
-                    return false;
-                },
-                search: function () {
-                    $('#taobao_id').val('');
+                error: function (XmlHttpRequest, textStatus, errorThrown) {
+                    layer.msg('网络异常 请稍后再试',
+                        {
+                            icon: 5,
+                            shade: [0.8, '#f5f5f5'],
+                            time: 1000
+                        }
+                    );
                 }
             });
+        },
+        focus: function (event, ui) {
+            $('#taobao_name').val(ui.item.label);
+            return false;
+        },
+        select: function (event, ui) {
+            $('#taobao_name').val(ui.item.label);
+            $('#taobao_id').val(ui.item.id);
+            return false;
+        },
+        search: function () {
+            $('#taobao_id').val('');
         },
         messages: {
             noResults: '',
