@@ -106,7 +106,6 @@ use yii\helpers\Url;
 
                                     <input type="submit" value="下一步，添加对比组" class="btn btn-primary">
                                 </div>
-                                >
                                 <?php \yii\bootstrap\ActiveForm::end(); ?>
                             </div>
 
@@ -302,7 +301,6 @@ use yii\helpers\Url;
         minChars: 0,
         max: 5,
         autoFill: true,
-        mustMatch: true,
         matchContains: true,
         scrollHeight: 220,
         minLength: 1,  // 输入框字符个等于2时开始查询

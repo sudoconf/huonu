@@ -62,7 +62,7 @@ class DefaultController extends BaseController
         $shop = AuthorizeUser::find()
             ->where(['like', 'taobao_user_nick', $inputStr])
         ->asArray()->all();
-        // CtHelper::response(200, 'success', $shop);
+        CtHelper::response(200, 'success', $shop);
     }
 
     // 第二步
