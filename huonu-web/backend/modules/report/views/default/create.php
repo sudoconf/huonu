@@ -71,7 +71,7 @@ use yii\helpers\Url;
                                     <div class="control-group">
                                         <span>店铺选择</span>
                                         <input type="text" id="taobao_name" name="taobao_name" class="form-control" placeholder="店铺选择">
-                                        <input type="hidden" name="taobao_id" id="taobao_id" value="">
+                                        <input type="hidden" id="taobao_id"  name="taobao_id">
                                     </div>
 
                                     <div class="control-group">
@@ -110,48 +110,7 @@ use yii\helpers\Url;
                             </div>
 
                             <div class="tab-pane" id="panel-792912" contenteditable="true">
-                                <div class="form-group form-inline">
-                                    <div class="control-group">
-                                        <span>复盘名称</span>
-                                        <input type="text" class="form-control" placeholder="复盘名称">
-                                    </div>
 
-                                    <div class="control-group">
-                                        <span>店铺选择</span>
-                                        <input type="text" class="form-control" placeholder="店铺选择">
-                                    </div>
-
-                                    <div class="control-group">
-                                        <span>时间选择</span>
-                                        <input type="text" value="" class="form-control select-time" name="select-time">
-                                    </div>
-
-                                    <div class="control-group">
-                                        <span>字段选择</span>
-                                        <a href="#" data-reveal-id="field-select" data-animation="fade">
-                                            <i class="fa fa-gear fa-fw"></i>
-                                        </a>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <span>效果模型</span>
-                                        <label class="form-inline">
-                                            <input type="radio" value="1" checked="checked" name="group">点击效果
-                                            <input type="radio" value="2" name="group">展示效果
-                                        </label>
-                                    </div>
-
-                                    <div class="control-group">
-                                        <span>数据周期</span>
-                                        <label class="form-inline">
-                                            <input type="radio" value="1" checked="checked" name="group">3天
-                                            <input type="radio" value="2" name="group">7天
-                                            <input type="radio" value="2" name="group">15天
-                                        </label>
-                                    </div>
-
-                                    <input type="button" value="下一步，添加对比组" class="btn btn-primary">
-                                </div>
                             </div>
 
                         </div>
@@ -370,11 +329,14 @@ use yii\helpers\Url;
                     return false;
                 },
                 select: function (event, ui) {
-                    console.log(1111111);
+                    console.log(ui);
                     $('#taobao_name').val(ui.item.name);
-                    $('#taobao_id').attr('value', ui.item.id);
+                    $('#taobao_id').val(ui.item.id);
                     return false;
                 },
+                search: function () {
+                    $('#taobao_id').val('');
+                }
             });
         },
         messages: {
