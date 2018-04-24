@@ -57,7 +57,7 @@ class BaseController extends Controller
 
         $actionId = '/'.$action->getUniqueId();
         if (!Yii::$app->user->can($actionId) && Yii::$app->getErrorHandler()->exception === null) {
-            throw new UnauthorizedHttpException('对不起，您现在还没获此操作的权限');
+            // throw new UnauthorizedHttpException('对不起，您现在还没获此操作的权限');
         }
 
         return true;

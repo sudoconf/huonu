@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="prtens">
+
+    <title>智行智投 - 客户计划 - 创建复盘 - 客户广告投放管理平台</title>
+
+    <link href="./asset/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="./asset/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    
+    <!-- Custom Fonts -->
+    <link href="./asset/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    <link href="./asset/vendor/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css">
+    
+    <link href="./asset/vendor/jquery-reveal/reveal.css" rel="stylesheet" type="text/css">
+
+    <link href="./asset/css/hn-admin.css" rel="stylesheet">
+</head>
+
+<body>
+<div id="wrapper">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">智行智投</a>
+        </div>
+        <!-- /.navbar-header -->
+
+        <ul class="nav navbar-top-links navbar-right">
+            <!-- /.dropdown -->
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li><a href="#"><i class="fa fa-user fa-fw"></i> 用户信息</a>
+                    </li>
+                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> 设置</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> 退出</a>
+                    </li>
+                </ul>
+                <!-- /.dropdown-user -->
+            </li>
+            <!-- /.dropdown -->
+        </ul>
+
+        <div class="navbar-default sidebar" role="navigation">
+
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li>
+                        <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> 控制盘</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 账号管理<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="user.html">账号列表</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 客户报表<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="report.html">人群复盘列表</a>
+                            </li>
+                            <li>
+                                <a href="data-synchronism.html">数据同步</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 客户计划<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="plan.html">计划列表</a>
+                            </li>
+                        </ul>
+                    </li>
+    
+                    <li>
+                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 系统管理<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="#">用户列表</a>
+                            </li>
+                            <li>
+                                <a href="#">角色列表</a>
+                            </li>
+                            <li>
+                                <a href="#">权限列表</a>
+                            </li>
+                            <li>
+                                <a href="#">路由列表</a>
+                            </li>
+                            <li>
+                                <a href="#">规则列表</a>
+                            </li>
+                            <li>
+                                <a href="#">菜单列表</a>
+                            </li>
+                            <li>
+                                <a href="#">备份数据库</a>
+                            </li>
+                            <li>
+                                <a href="#">还原数据库</a>
+                            </li>
+                        </ul>
+                    </li>
+    
+                    <li>
+                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 日志管理<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="#">日志列表</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.sidebar-collapse -->
+
+        </div>
+        <!-- /.navbar-static-side -->
+
+    </nav>
+
+
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-title">
+                    客户计划 <small>创建复盘</small>
+                </h3>
+            </div>
+        </div>
+
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <i class="fa fa-home"></i>
+                    <a href="index.html">Home</a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a href="#">客户计划</a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a href="#">创建复盘</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel">
+                    
+                    <div class="view">
+                        <div class="tabbable" >
+                            
+                            <!-- Only required for left/right tabs -->
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#panel-807395" data-toggle="tab" contenteditable="false">
+                                        <i class="creat-step">1</i>
+                                        <i class="fa fa-bar-chart-o fa-fw"></i>
+                                        设置参数
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="#panel-792912" data-toggle="tab" contenteditable="true">
+                                        <i class="creat-step">2</i>
+                                        <i class="fa fa-bar-chart-o fa-fw"></i>
+                                        添加测略组
+                                    </a>
+                                </li>
+                            </ul>
+                            
+                            <div class="tab-content">
+                                
+                                <div class="tab-pane active" id="panel-807395" contenteditable="false">
+                                </div>
+                                
+                                <div class="tab-pane" id="panel-792912" contenteditable="true">
+                                    <div class="form-group">
+                                        
+                                        <div class="control-group text-center">
+                                            <span>未添加策略组</span>
+                                        </div>
+        
+                                        <div class="control-group text-center">
+                                            <input type="button" value="添加对比组" class="btn btn-primary">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+
+<!-- 字段选择 -->
+<div id="field-select" class="reveal-modal">
+    <div class="field-box-title col-lt-6">
+    
+        <div class="field-box-title-head">
+            选择数据字段
+        </div>
+        
+        <div class="field-box-title-center">
+            <div class="form-group form-inline">
+        
+                <div class="control-group">
+                    <span>消耗</span>
+                    <label class="form-inline">
+                        <input type="radio" value="1" checked="checked" name="group">消耗
+                    </label>
+                </div>
+        
+                <div class="control-group">
+                    <span>触达</span>
+                    <label class="form-inline">
+                        <input type="radio" value="1" checked="checked" name="group">展现量
+                    </label>
+                </div>
+    
+                <div class="control-group">
+                    <span>兴趣</span>
+                    <label class="form-inline">
+                        <input type="radio" value="1" checked="checked" name="group">点击量
+                        <input type="radio" value="1" checked="checked" name="group">访客
+                    </label>
+                </div>
+    
+                <div class="control-group">
+                    <span>意向</span>
+                    <label class="form-inline">
+                        <input type="radio" value="1" checked="checked" name="group">深度进店
+                        <input type="radio" value="1" checked="checked" name="group">访问时长
+                        <input type="radio" value="1" checked="checked" name="group">访问页面数
+                    </label>
+                </div>
+    
+                <div class="control-group">
+                    <span>兴趣</span>
+                    <label class="form-inline">
+                        <input type="radio" value="1" checked="checked" name="group">点击量
+                        <input type="radio" value="1" checked="checked" name="group">访客
+                    </label>
+                </div>
+    
+                <div class="control-group">
+                    <span>行动</span>
+                    <label class="form-inline">
+                        <input type="radio" value="1" checked="checked" name="group">收藏宝贝量
+                        <input type="radio" value="1" checked="checked" name="group">收藏店铺量
+                        <input type="radio" value="1" checked="checked" name="group">添加购物车量
+                        <input type="radio" value="1" checked="checked" name="group">拍下订单量
+                        <input type="radio" value="1" checked="checked" name="group">拍下订单金额<br>
+                        <input type="radio" value="1" checked="checked" name="group">商品收藏率
+                        <input type="radio" value="1" checked="checked" name="group">商品加购率
+                        <input type="radio" value="1" checked="checked" name="group">商品收藏成本
+                        <input type="radio" value="1" checked="checked" name="group">商品加购成本
+                        <input type="radio" value="1" checked="checked" name="group">商品收藏加购成本
+                    </label>
+                </div>
+    
+                <div class="control-group">
+                    <span>成交</span>
+                    <label class="form-inline">
+                        <input type="radio" value="1" checked="checked" name="group">成交订单量
+                        <input type="radio" value="1" checked="checked" name="group">成交订单金额
+                        <input type="radio" value="1" checked="checked" name="group">订单平均成本
+                        <input type="radio" value="1" checked="checked" name="group">订单平均金额
+                    </label>
+                </div>
+    
+                <div class="control-group">
+                    <span>衍生指标</span>
+                    <label class="form-inline">
+                        <input type="radio" value="1" checked="checked" name="group">千次展现成本
+                        <input type="radio" value="1" checked="checked" name="group">点击率
+                        <input type="radio" value="1" checked="checked" name="group">点击单价
+                        <input type="radio" value="1" checked="checked" name="group">点击转化率
+                        <input type="radio" value="1" checked="checked" name="group">投资回报率
+                    </label>
+                </div>
+        
+            </div>
+        </div>
+    </div>
+    <div class="field-box-title col-lt-6">
+        <div class="field-box-title-head">
+            自定义字段
+        </div>
+    
+        <div class="field-box-title-center">
+            <div class="form-group form-inline">
+            
+                <div class="control-group">
+                    <span>可拖动排序</span>
+                    <input type="button" value="清空" class="btn btn-primary pull-right">
+                </div>
+    
+                <div class="control-group">
+                    <ul class="list-group custom-fields">
+                        <li class="list-group-item">消耗</li>
+                        <li class="list-group-item">展现量</li>
+                        <li class="list-group-item">点击量</li>
+                        <li class="list-group-item">访客</li>
+                        <li class="list-group-item">收藏宝贝量</li>
+                        <li class="list-group-item">收藏店铺量</li>
+                        <li class="list-group-item">添加购物车量</li>
+                        <li class="list-group-item">投资回报率</li>
+                        <li class="list-group-item">千次展现成本</li>
+                        <li class="list-group-item">点击率</li>
+                        <li class="list-group-item">点击单价</li>
+                        <li class="list-group-item">点击转化率</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="close-reveal-modal">&#215;</a>
+</div>
+
+<!-- jQuery -->
+<script src="./asset/vendor/jquery/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="./asset/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="./asset/vendor/metisMenu/metisMenu.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="./asset/vendor/layer/layer.js"></script>
+
+<!-- daterangepicker -->
+<script src="./asset/vendor/daterangepicker/moment.js"></script>
+<script src="./asset/vendor/daterangepicker/daterangepicker.js"></script>
+
+<!-- 弹出层 reveal.js -->
+<script src="./asset/vendor/jquery-reveal/jquery.reveal.js"></script>
+
+<!-- 拖动 jquery-sortable.js -->
+<script src="./asset/vendor/jquery-sortable/jquery-sortable.js"></script>
+
+<script src="./asset/js/hn-admin.js"></script>
+
+</body>
+</html>

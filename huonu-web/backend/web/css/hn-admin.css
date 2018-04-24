@@ -679,23 +679,30 @@ table.dataTable thead .sorting:after {
 .control-group ul {
     margin-top: 25px;
 }
+
 .control-group ul li {
     margin-top: 5px;
 }
 
 /*拖动样式*/
 /*body.dragging, body.dragging * {*/
-    /*cursor: move !important;*/
+/*cursor: move !important;*/
 /*}*/
 .dragged {
     position: absolute;
     opacity: 1;
     z-index: 2000;
 }
+
 ul.custom-fields li.placeholder {
     position: relative;
     list-style: none;
 }
+
 ul.custom-fields li.placeholder:before {
     position: absolute;
+}
+
+.control-group .select-time {
+    width: 300px
 }
