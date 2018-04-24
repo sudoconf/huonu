@@ -200,7 +200,7 @@
                             <td>Win 95+</td>
                             <td class="center">4</td>
                         </tr>
-                        <tr class="odd gradeX cur-table-operation-tr">
+                        <tr class="odd gradeX cur-table-operation-tr" style="display: none;">
                             <td colspan="12">
                                 <a>详情</a>
                                 <a>复制</a>
@@ -247,7 +247,7 @@
                             <td>Win 95+</td>
                             <td class="center">4</td>
                         </tr>
-                        <tr class="odd gradeX cur-table-operation-tr">
+                        <tr class="odd gradeX cur-table-operation-tr" style="display: none;">
                             <td colspan="12">
                                 <a>详情</a>
                                 <a>复制</a>

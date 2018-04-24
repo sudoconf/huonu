@@ -96,7 +96,7 @@ $('.plan-table tr:even').hover(function () {
 });
 
 $('.ux-status-handle').hover(function () {
-    $('.ux-status-info').show();
+    $(this).find('.ux-status-info').show();
 }, function () {
-    $('.ux-status-info').hide();
+    $(this).find('.ux-status-info').hide();
 });

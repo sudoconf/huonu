@@ -305,12 +305,11 @@ use yii\helpers\Url;
         scrollHeight: 220,
         minLength: 1,  // 输入框字符个等于2时开始查询
         source: function (request, response) {
-            var inputStr = request.term; // request.term 放在ajax 里面会加载俩次
             $.ajax({
                 url: 'ajax-get-shop.html', // 后台请求路径
                 dataType: "json",
                 data: {
-                    "inputStr": inputStr    // 获取输入框内容
+                    "inputStr": 'sss'// request.term    // 获取输入框内容
                 },
                 success: function (res) {
                     if (res.data != '') {
@@ -319,6 +318,7 @@ use yii\helpers\Url;
                             return {
                                 label: item.taobao_user_nick,   // 下拉框显示值
                                 value: item.taobao_user_nick,   // 选中后，填充到下拉框的值
+                                id: item.taobao_user_id // 其它的值
                             }
                         }));
                     }
