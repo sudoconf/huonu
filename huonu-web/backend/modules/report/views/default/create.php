@@ -445,7 +445,7 @@ use yii\helpers\Url;
                     type: 1,
                     title: '添加策略组',
                     shadeClose: true,
-                    shade: [0.8, '#f5f5f5'],
+                    shade: [0.5],
                     maxmin: false, //开启最大化最小化按钮
                     area: ['462px', '430px'],
                     content: $('.add-survey-group-html').html()
