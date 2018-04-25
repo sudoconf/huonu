@@ -75,7 +75,6 @@ $this->params['breadcrumbs'][] = $this->title;
     $('.logo-info').on('click', function(){
         var id = this.value;
         var ajaxUrl = $(this).attr("data-url");
-        localStorage.prinpal = "prtens";
         $.ajax({
             url: ajaxUrl,
             type: 'get',
@@ -113,11 +112,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     maxmin: false, //开启最大化最小化按钮
                     area: ['800px', '430px'],
                     content: html,
-                    end: function() {
-                        if(localStorage.prinpal) {
-                            localStorage.removeItem('prinpal')
-                        }
-                    }
                 });
 
             },
