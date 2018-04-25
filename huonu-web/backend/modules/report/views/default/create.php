@@ -42,14 +42,15 @@ use yii\helpers\Url;
 
                         <ul class="nav nav-tabs">
                             <li class="active">
-                                <a href="#set-up-parameters" data-toggle="tab" data-placement="top" title="设置参数"><!--去掉 data-toggle="tab" 就不能切换了-->
+                                <a href="#set-up-parameters" data-toggle="tab" data-placement="top" title="设置参数">
+                                    <!--去掉 data-toggle="tab" 就不能切换了-->
                                     <i class="create-step">1</i>
                                     <i class="fa fa-bar-chart-o fa-fw"></i>
                                     设置参数
                                 </a>
                             </li>
                             <li class="">
-                                <a href="#add-survey-group" title="添加测略组">
+                                <a href="#add-survey-group" data-toggle="tab" data-placement="top" title="添加测略组">
                                     <i class="create-step">2</i>
                                     <i class="fa fa-bar-chart-o fa-fw"></i>
                                     添加测略组
@@ -76,7 +77,8 @@ use yii\helpers\Url;
 
                                     <div class="control-group">
                                         <span>时间选择</span>
-                                        <input type="text" placeholder="请选择时间" class="form-control select-time" name="select-time">
+                                        <input type="text" placeholder="请选择时间" class="form-control select-time"
+                                               name="select-time">
                                     </div>
 
                                     <div class="control-group">
@@ -98,68 +100,94 @@ use yii\helpers\Url;
                                                         <div class="control-group">
                                                             <span>消耗</span>
                                                             <label class="form-inline">
-                                                                <input type="checkbox" name="field[]" value="charge" checked="checked">消耗
+                                                                <input type="checkbox" name="field[]" value="charge"
+                                                                       checked="checked">消耗
                                                             </label>
                                                         </div>
 
                                                         <div class="control-group">
                                                             <span>触达</span>
                                                             <label class="form-inline">
-                                                                <input type="checkbox" name="field[]" value="ad_pv" checked="checked">展现量
+                                                                <input type="checkbox" name="field[]" value="ad_pv"
+                                                                       checked="checked">展现量
                                                             </label>
                                                         </div>
 
                                                         <div class="control-group">
                                                             <span>兴趣</span>
                                                             <label class="form-inline">
-                                                                <input type="checkbox" name="field[]" value="click" checked="checked">点击量
-                                                                <input type="checkbox" name="field[]" value="uv" checked="checked">访客
+                                                                <input type="checkbox" name="field[]" value="click"
+                                                                       checked="checked">点击量
+                                                                <input type="checkbox" name="field[]" value="uv"
+                                                                       checked="checked">访客
                                                             </label>
                                                         </div>
 
                                                         <div class="control-group">
                                                             <span>意向</span>
                                                             <label class="form-inline">
-                                                                <input type="checkbox" name="field[]" value="deep_inshop_uv">深度进店
-                                                                <input type="checkbox" name="field[]" value="avg_access_time">访问时长
-                                                                <input type="checkbox" name="field[]" value="avg_access_page_num">访问页面数
+                                                                <input type="checkbox" name="field[]"
+                                                                       value="deep_inshop_uv">深度进店
+                                                                <input type="checkbox" name="field[]"
+                                                                       value="avg_access_time">访问时长
+                                                                <input type="checkbox" name="field[]"
+                                                                       value="avg_access_page_num">访问页面数
                                                             </label>
                                                         </div>
 
                                                         <div class="control-group">
                                                             <span>行动</span>
                                                             <label class="form-inline">
-                                                                <input type="checkbox" name="field[]" value="inshop_item_col_num" checked="checked">收藏宝贝量
-                                                                <input type="checkbox" name="field[]" value="dir_shop_col_num" checked="checked">收藏店铺量
-                                                                <input type="checkbox" name="field[]" value="cart_num" checked="checked">添加购物车量
-                                                                <input type="checkbox" name="field[]" value="gmv_inshop_num">拍下订单量
-                                                                <input type="checkbox" name="field[]" value="gmv_inshop_amt">拍下订单金额<br>
-                                                                <input type="checkbox" name="field[]" value="commodity_collection_rate">商品收藏率
-                                                                <input type="checkbox" name="field[]" value="purchase_rate_of_goods">商品加购率
-                                                                <input type="checkbox" name="field[]" value="commodity_collection_cost">商品收藏成本
-                                                                <input type="checkbox" name="field[]" value="purchase_cost_of_goods">商品加购成本
-                                                                <input type="checkbox" name="field[]" value="purchase_cost_of_goods_collection">商品收藏加购成本
+                                                                <input type="checkbox" name="field[]"
+                                                                       value="inshop_item_col_num" checked="checked">收藏宝贝量
+                                                                <input type="checkbox" name="field[]"
+                                                                       value="dir_shop_col_num" checked="checked">收藏店铺量
+                                                                <input type="checkbox" name="field[]" value="cart_num"
+                                                                       checked="checked">添加购物车量
+                                                                <input type="checkbox" name="field[]"
+                                                                       value="gmv_inshop_num">拍下订单量
+                                                                <input type="checkbox" name="field[]"
+                                                                       value="gmv_inshop_amt">拍下订单金额<br>
+                                                                <input type="checkbox" name="field[]"
+                                                                       value="commodity_collection_rate">商品收藏率
+                                                                <input type="checkbox" name="field[]"
+                                                                       value="purchase_rate_of_goods">商品加购率
+                                                                <input type="checkbox" name="field[]"
+                                                                       value="commodity_collection_cost">商品收藏成本
+                                                                <input type="checkbox" name="field[]"
+                                                                       value="purchase_cost_of_goods">商品加购成本
+                                                                <input type="checkbox" name="field[]"
+                                                                       value="purchase_cost_of_goods_collection">商品收藏加购成本
                                                             </label>
                                                         </div>
 
                                                         <div class="control-group">
                                                             <span>成交</span>
                                                             <label class="form-inline">
-                                                                <input type="checkbox" name="field[]" value="alipay_in_shop_num">成交订单量
-                                                                <input type="checkbox" name="field[]" value="alipay_inshop_amt">成交订单金额
-                                                                <input type="checkbox" name="field[]" value="average_cost_of_order">订单平均成本
-                                                                <input type="checkbox" name="field[]" value="order_average_amount">订单平均金额
+                                                                <input type="checkbox" name="field[]"
+                                                                       value="alipay_in_shop_num">成交订单量
+                                                                <input type="checkbox" name="field[]"
+                                                                       value="alipay_inshop_amt">成交订单金额
+                                                                <input type="checkbox" name="field[]"
+                                                                       value="average_cost_of_order">订单平均成本
+                                                                <input type="checkbox" name="field[]"
+                                                                       value="order_average_amount">订单平均金额
                                                             </label>
                                                         </div>
 
                                                         <div class="control-group">
                                                             <span>衍生指标</span>
                                                             <label class="form-inline">
-                                                                <input type="checkbox" name="field[]" value="ecpm" checked="checked">千次展现成本
-                                                                <input type="checkbox" name="field[]" value="ctr" checked="checked">点击率
-                                                                <input type="checkbox" name="field[]" value="ecpc" checked="checked">点击单价
-                                                                <input type="checkbox" name="field[]" value="cvr" checked="checked">点击转化率
-                                                                <input type="checkbox" name="field[]" value="roi" checked="checked">投资回报率
+                                                                <input type="checkbox" name="field[]" value="ecpm"
+                                                                       checked="checked">千次展现成本
+                                                                <input type="checkbox" name="field[]" value="ctr"
+                                                                       checked="checked">点击率
+                                                                <input type="checkbox" name="field[]" value="ecpc"
+                                                                       checked="checked">点击单价
+                                                                <input type="checkbox" name="field[]" value="cvr"
+                                                                       checked="checked">点击转化率
+                                                                <input type="checkbox" name="field[]" value="roi"
+                                                                       checked="checked">投资回报率
                                                             </label>
                                                         </div>
 
@@ -174,7 +202,8 @@ use yii\helpers\Url;
                                                 <div class="field-box-title-center">
                                                     <div class="control-group">
                                                         <span>可拖动排序</span>
-                                                        <input type="button" value="清空" class="btn btn-primary pull-right">
+                                                        <input type="button" value="清空"
+                                                               class="btn btn-primary pull-right">
                                                     </div>
 
                                                     <div class="control-group">
@@ -225,15 +254,22 @@ use yii\helpers\Url;
                                 <div class="form-group">
 
                                     <div class="control-group">
-                                        <input type="button" value="添加对比组" class="btn btn-primary">
+                                        <input type="button" value="添加策略组" class="btn btn-primary add-survey-group">
                                     </div>
 
                                     <div class="control-group text-center">
                                         <span>未添加策略组</span>
                                     </div>
 
-                                    <input type="submit" value="下一步，生成报表" class="btn btn-primary">
-                                    <input type="submit" value="上一步" class="btn btn-primary">
+                                    <div class="control-group">
+                                        <span>未添加策略组</span>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <input type="submit" value="下一步，生成报表" class="btn btn-primary">
+                                        <input type="submit" value="上一步" class="btn btn-primary">
+                                    </div>
+
                                 </div>
                             </div>
 
@@ -245,6 +281,12 @@ use yii\helpers\Url;
         </div>
     </div>
 
+</div>
+
+<div class="control-group add-survey-group-html" style="display: none">
+    <ul class="list-group">
+        <li class="control-group"><input type="checkbox"><span>全选</span></li>
+    </ul>
 </div>
 
 <!-- 引入jQuery的js文件 -->
@@ -364,4 +406,44 @@ use yii\helpers\Url;
             }
         }
     });
+
+    $('.add-survey-group').click(function () {
+
+        var stop = true;
+        var start = 0;
+        function getData() {
+            
+        }
+
+        $.ajax({
+            url: 'ajax-get-target.html',
+            type: 'post',
+            dataType: 'json',
+            data: {
+                'page': ''
+            },
+            success: function (res) {
+
+                layer.open({
+                    type: 1,
+                    title: '添加策略组',
+                    shadeClose: true,
+                    shade: [0.8, '#f5f5f5'],
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ['462px', '430px'],
+                    content: $('.add-survey-group-html').html()
+                });
+            },
+            error: function () {
+                layer.msg('网络异常 请稍后再试',
+                    {
+                        icon: 5,
+                        shade: [0.8, '#f5f5f5'],
+                        time: 1000
+                    }
+                );
+            }
+        });
+
+    })
 </script>

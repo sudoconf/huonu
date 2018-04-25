@@ -61,7 +61,14 @@ class DefaultController extends BaseController
         $inputStr = Yii::$app->request->get('inputStr');
         $shop = AuthorizeUser::find()
             ->where(['like', 'taobao_user_nick', $inputStr])
-        ->asArray()->all();
+            ->asArray()->all();
+        CtHelper::response(200, 'success', $shop);
+    }
+
+    // 第二步 ajax 获取定向列表
+    public function actionAjaxGetTarget()
+    {
+        $shop = AuthorizeUser::find()->asArray()->all();
         CtHelper::response(200, 'success', $shop);
     }
 

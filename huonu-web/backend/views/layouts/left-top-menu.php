@@ -107,7 +107,7 @@ $tt = MenuHelper::getAssignedMenu(Yii::$app->user->id);
                             <a href="<?= Url::toRoute('/report/default') ?>">人群复盘列表</a>
                         </li>
                         <li>
-                            <a href="<?= Url::toRoute('/system/user') ?>">数据同步</a>
+                            <a href="<?= Url::toRoute('/report/data-sync') ?>">数据同步</a>
                         </li>
                     </ul>
                 </li>
