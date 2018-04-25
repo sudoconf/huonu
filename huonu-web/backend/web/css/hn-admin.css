@@ -706,3 +706,21 @@ ul.custom-fields li.placeholder:before {
 .control-group .select-time {
     width: 300px
 }
+
+/*策略组*/
+.card {
+    float: left;
+    width: 33.333%;
+    padding: .75rem;
+    margin-bottom: 2rem;
+    border: 0;
+}
+
+.card-text {
+    font-size: 85%;
+}
+
+.strategic-group {
+    background-color: #669BD4;
+    border-radius: 5px 5px 0 0;
+}
