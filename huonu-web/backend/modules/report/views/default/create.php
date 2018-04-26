@@ -327,6 +327,8 @@ use yii\helpers\Url;
             </div>
         </div>
     </form>
+
+
 </div>
 
 <!-- 引入jQuery的js文件 -->
@@ -451,10 +453,9 @@ use yii\helpers\Url;
         var htmlStr = "";
         $.ajax({
             url: 'ajax-get-target.html',
-            type: 'post',
+            type: 'get',
             dataType: 'json',
             success: function (res) {
-                console.log(res)
                 for (var i = 0; i < res.data.length; i++) {
                     htmlStr += '<li class="control-group"><input class="check-box" type="checkbox" value="' + res.data[i].taobao_user_id + '"><span>' + res.data[i].taobao_user_nick + '</span></li>';
                 }
@@ -465,6 +466,7 @@ use yii\helpers\Url;
                     shadeClose: true,
                     shade: [0.5],
                     maxmin: false, //开启最大化最小化按钮
+
                     area: ['580px', '500px'],
                     content: $('.add-survey-group-html').html()
                 });
@@ -479,6 +481,7 @@ use yii\helpers\Url;
                 );
             }
         });
+
     });
 
     // 失败的愿意是英文我这里是动态加载的
@@ -500,13 +503,14 @@ use yii\helpers\Url;
             checkbox.prop("checked", false);
         }
     });
-
     $(document).on('click', '.add-survey-group-operate', function () {
-
-        $.each($(".check-box").is(':checked'), function () {
-            console.log($(this).val());
+        var arr = [];
+        $('.check-box').each(function(index, el) {
+            if($(this).is(':checked')){
+                arr.push($(this).val());
+            }
+            
         });
-
-    });
-
+        console.log(arr)
+    })
 </script>
