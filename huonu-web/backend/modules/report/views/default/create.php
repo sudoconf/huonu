@@ -304,12 +304,43 @@ use yii\helpers\Url;
 
 </div>
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<div class="form-group add-survey-group-html" style="display: none">
+    <form class="form-horizontal" role="form">
+        <div class="control-group">
+            <label for="firstname" class="col-sm-3 control-label">策略组名称</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="firstname" placeholder="请输入策略组名称">
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="lastname" class="col-sm-3 control-label">选择定向人群</label>
+            <div class="col-sm-9">
+                <ul class="list-group" id="addhtml">
+                    <li class="control-group"><input type="checkbox" id="select-all"><span>全选</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <input type="submit" value="添加" class="btn btn-primary">
+            </div>
+        </div>
+    </form>
+=======
+>>>>>>> d2aad13387316b898c788b0fd411dbc37d727b83
 <div class="control-group add-survey-group-html" style="display: none">
     <div class="pre-scrollable">
         <ul class="list-group" id="addhtml">
             <li class="control-group"><input type="checkbox" id="select-all"><span>全选</span></li>
         </ul>
     </div>
+<<<<<<< HEAD
+=======
+>>>>>>> d750cd579abda29e38724ab4959d857f10a5f0cb
+>>>>>>> d2aad13387316b898c788b0fd411dbc37d727b83
 </div>
 
 <!-- 引入jQuery的js文件 -->
@@ -436,13 +467,20 @@ use yii\helpers\Url;
             url: 'ajax-get-target.html',
             type: 'post',
             dataType: 'json',
-            data: {
-                'page': ''
-            },
             success: function (res) {
                 console.log(res)
+<<<<<<< HEAD
                 for(var i=0;i<res.data.length;i++){
                     htmls+='<li class="control-group"><input class="check-box" type="checkbox" value="'+res.data[i].taobao_user_id+'"><span>'+res.data[i].taobao_user_nick+'</span></li>'
+=======
+<<<<<<< HEAD
+                for (var i = 0; i < res.data.length; i++) {
+                    htmls += '<li class="control-group"><input class="check-box" type="checkbox" value="' + res.data[i].taobao_user_id + '"><span>' + res.data[i].taobao_user_nick + '</span></li>'
+=======
+                for(var i=0;i<res.data.length;i++){
+                    htmls+='<li class="control-group"><input class="check-box" type="checkbox" value="'+res.data[i].taobao_user_id+'"><span>'+res.data[i].taobao_user_nick+'</span></li>'
+>>>>>>> d750cd579abda29e38724ab4959d857f10a5f0cb
+>>>>>>> d2aad13387316b898c788b0fd411dbc37d727b83
                 }
                 $('#addhtml').append(htmls)
                 layer.open({
@@ -476,6 +514,28 @@ use yii\helpers\Url;
         }
         
     })
+<<<<<<< HEAD
+=======
 
+    // 失败的愿意是英文我这里是动态加载的
+    // $('#select-all').click(function () {
+    //     //全选按钮选中状态，索引0取document对象
+    //     var selectAll = $(this)[0].checked;
+    //     console.log(selectAll);
+    //     //操作所有复选框的选中状态
+    //     var checkbox = $(".check-box");
+    //     console.log(checkbox);
+    //     checkbox.prop("checked", selectAll);
+    // })
+    $(document).on('click', '#select-all', function () {
+        var checkbox = $(".check-box");
+        if ($(this).is(':checked')) {
+            checkbox.prop("checked", true);
+        } else {
+            checkbox.prop("checked", false);
+        }
+>>>>>>> d2aad13387316b898c788b0fd411dbc37d727b83
+
+    })
 
 </script>
