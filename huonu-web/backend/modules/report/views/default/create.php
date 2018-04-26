@@ -304,6 +304,7 @@ use yii\helpers\Url;
 
 </div>
 
+<!--弹窗添加策略组-->
 <div class="form-group add-survey-group-html" style="display: none">
     <form class="form-horizontal" role="form">
         <div class="control-group">
@@ -315,7 +316,7 @@ use yii\helpers\Url;
         <div class="control-group">
             <label for="lastname" class="col-sm-3 control-label">选择定向人群</label>
             <div class="col-sm-9">
-                <ul class="list-group" id="addhtml">
+                <ul class="list-group pre-scrollable" id="addhtml">
                     <li class="control-group"><input type="checkbox" id="select-all"><span>全选</span></li>
                 </ul>
             </div>
@@ -490,6 +491,7 @@ use yii\helpers\Url;
     //     console.log(checkbox);
     //     checkbox.prop("checked", selectAll);
     // })
+
     $(document).on('click', '#select-all', function () {
         var checkbox = $(".check-box");
         if ($(this).is(':checked')) {
@@ -497,11 +499,14 @@ use yii\helpers\Url;
         } else {
             checkbox.prop("checked", false);
         }
-    })
+    });
 
-    $('.add-survey-group-operate').click(function () {
-        alert(11111111);
-        
-    })
+    $(document).on('click', '.add-survey-group-operate', function () {
+
+        $.each($(".check-box").is(':checked'), function () {
+            console.log($(this).val());
+        });
+
+    });
 
 </script>
