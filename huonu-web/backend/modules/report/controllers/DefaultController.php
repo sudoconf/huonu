@@ -46,10 +46,9 @@ class DefaultController extends BaseController
     }
 
     // 创建第一步
-    public function actionCreate()
+    public function actionSetParameter()
     {
         $model = new Multitray();
-        // print_r(Yii::$app->request->post());die;
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -65,6 +64,13 @@ class DefaultController extends BaseController
         CtHelper::response(200, 'success', $shop);
     }
 
+    // 保存第一步骤的数据
+    public function actionAjaxSaveSetParameter()
+    {
+        $data = Yii::$app->request->post();
+        return CtHelper::response('true','000', $data);
+    }
+
     // 第二步 ajax 获取定向列表
     public function actionAjaxGetTarget()
     {
@@ -72,8 +78,8 @@ class DefaultController extends BaseController
         CtHelper::response(200, 'success', $shop);
     }
 
-    // 第二步
-    public function actionCreateTwo()
+    // 保存第二步骤的数据
+    public function actionAjaxSaveStrategyGroup()
     {
     }
 
