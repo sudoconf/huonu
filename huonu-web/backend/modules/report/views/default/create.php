@@ -501,6 +501,7 @@ use yii\helpers\Url;
 
     $('.add-survey-group-operate').click(function () {
         alert(11111111);
+        
     })
 
 </script>
