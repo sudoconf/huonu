@@ -480,12 +480,28 @@ use yii\helpers\Url;
 
 </div>
 
-<div class="control-group add-survey-group-html" style="display: none">
-    <div class="pre-scrollable">
-        <ul class="list-group" id="addhtml">
-            <li class="control-group"><input type="checkbox"><span>全选</span></li>
-        </ul>
-    </div>
+<div class="form-group add-survey-group-html" style="display: none">
+    <form class="form-horizontal" role="form">
+        <div class="control-group">
+            <label for="firstname" class="col-sm-3 control-label">策略组名称</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="firstname" placeholder="请输入策略组名称">
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="lastname" class="col-sm-3 control-label">选择定向人群</label>
+            <div class="col-sm-9">
+                <ul class="list-group" id="addhtml">
+                    <li class="control-group"><input type="checkbox"><span>全选</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <input type="submit" value="添加" class="btn btn-primary">
+            </div>
+        </div>
+    </form>
 </div>
 
 <!-- 引入jQuery的js文件 -->
@@ -627,7 +643,7 @@ use yii\helpers\Url;
                     shadeClose: true,
                     shade: [0.5],
                     maxmin: false, //开启最大化最小化按钮
-                    area: ['462px', '430px'],
+                    area: ['580px', '500px'],
                     content: $('.add-survey-group-html').html()
                 });
             },
