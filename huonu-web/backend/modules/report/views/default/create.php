@@ -284,6 +284,182 @@ use yii\helpers\Url;
                                                 </ul>
                                             </div>
                                         </div>
+                                        <div class="card">
+                                            <div class="strategic-group">
+                                                <span class="list-group-item active">
+                                                    <a href="javascript:;" class="badge"><i
+                                                                class="fa fa-times">删除</i></a>
+                                                    <a href="javascript:;" class="badge"><i
+                                                                class="fa fa-edit">编辑</i></a>
+                                                    <h4 class="list-group-item-heading">
+                                                        入门网站包
+                                                    </h4>
+                                                </span>
+                                            </div>
+                                            <div class="pre-scrollable">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">免费域名注册</li>
+                                                    <li class="list-group-item">免费 Window 空间托管</li>
+                                                    <li class="list-group-item">图像的数量</li>
+                                                    <li class="list-group-item">24*7 支持</li>
+                                                    <li class="list-group-item">每年更新成本</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="strategic-group">
+                                                <span class="list-group-item active">
+                                                    <a href="javascript:;" class="badge"><i
+                                                                class="fa fa-times">删除</i></a>
+                                                    <a href="javascript:;" class="badge"><i
+                                                                class="fa fa-edit">编辑</i></a>
+                                                    <h4 class="list-group-item-heading">
+                                                        入门网站包
+                                                    </h4>
+                                                </span>
+                                            </div>
+                                            <div class="pre-scrollable">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">免费域名注册</li>
+                                                    <li class="list-group-item">免费 Window 空间托管</li>
+                                                    <li class="list-group-item">图像的数量</li>
+                                                    <li class="list-group-item">24*7 支持</li>
+                                                    <li class="list-group-item">每年更新成本</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="strategic-group">
+                                                <span class="list-group-item active">
+                                                    <a href="javascript:;" class="badge"><i
+                                                                class="fa fa-times">删除</i></a>
+                                                    <a href="javascript:;" class="badge"><i
+                                                                class="fa fa-edit">编辑</i></a>
+                                                    <h4 class="list-group-item-heading">
+                                                        入门网站包
+                                                    </h4>
+                                                </span>
+                                            </div>
+                                            <div class="pre-scrollable">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">免费域名注册</li>
+                                                    <li class="list-group-item">免费 Window 空间托管</li>
+                                                    <li class="list-group-item">图像的数量</li>
+                                                    <li class="list-group-item">24*7 支持</li>
+                                                    <li class="list-group-item">每年更新成本</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="strategic-group">
+                                                <span class="list-group-item active">
+                                                    <a href="javascript:;" class="badge"><i
+                                                                class="fa fa-times">删除</i></a>
+                                                    <a href="javascript:;" class="badge"><i
+                                                                class="fa fa-edit">编辑</i></a>
+                                                    <h4 class="list-group-item-heading">
+                                                        入门网站包
+                                                    </h4>
+                                                </span>
+                                            </div>
+                                            <div class="pre-scrollable">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">免费域名注册</li>
+                                                    <li class="list-group-item">免费 Window 空间托管</li>
+                                                    <li class="list-group-item">图像的数量</li>
+                                                    <li class="list-group-item">24*7 支持</li>
+                                                    <li class="list-group-item">每年更新成本</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="strategic-group">
+                                                <span class="list-group-item active">
+                                                    <a href="javascript:;" class="badge"><i
+                                                                class="fa fa-times">删除</i></a>
+                                                    <a href="javascript:;" class="badge"><i
+                                                                class="fa fa-edit">编辑</i></a>
+                                                    <h4 class="list-group-item-heading">
+                                                        入门网站包
+                                                    </h4>
+                                                </span>
+                                            </div>
+                                            <div class="pre-scrollable">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">免费域名注册</li>
+                                                    <li class="list-group-item">免费 Window 空间托管</li>
+                                                    <li class="list-group-item">图像的数量</li>
+                                                    <li class="list-group-item">24*7 支持</li>
+                                                    <li class="list-group-item">每年更新成本</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="strategic-group">
+                                                <span class="list-group-item active">
+                                                    <a href="javascript:;" class="badge"><i
+                                                                class="fa fa-times">删除</i></a>
+                                                    <a href="javascript:;" class="badge"><i
+                                                                class="fa fa-edit">编辑</i></a>
+                                                    <h4 class="list-group-item-heading">
+                                                        入门网站包
+                                                    </h4>
+                                                </span>
+                                            </div>
+                                            <div class="pre-scrollable">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">免费域名注册</li>
+                                                    <li class="list-group-item">免费 Window 空间托管</li>
+                                                    <li class="list-group-item">图像的数量</li>
+                                                    <li class="list-group-item">24*7 支持</li>
+                                                    <li class="list-group-item">每年更新成本</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="strategic-group">
+                                                <span class="list-group-item active">
+                                                    <a href="javascript:;" class="badge"><i
+                                                                class="fa fa-times">删除</i></a>
+                                                    <a href="javascript:;" class="badge"><i
+                                                                class="fa fa-edit">编辑</i></a>
+                                                    <h4 class="list-group-item-heading">
+                                                        入门网站包
+                                                    </h4>
+                                                </span>
+                                            </div>
+                                            <div class="pre-scrollable">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">免费域名注册</li>
+                                                    <li class="list-group-item">免费 Window 空间托管</li>
+                                                    <li class="list-group-item">图像的数量</li>
+                                                    <li class="list-group-item">24*7 支持</li>
+                                                    <li class="list-group-item">每年更新成本</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="strategic-group">
+                                                <span class="list-group-item active">
+                                                    <a href="javascript:;" class="badge"><i
+                                                                class="fa fa-times">删除</i></a>
+                                                    <a href="javascript:;" class="badge"><i
+                                                                class="fa fa-edit">编辑</i></a>
+                                                    <h4 class="list-group-item-heading">
+                                                        入门网站包
+                                                    </h4>
+                                                </span>
+                                            </div>
+                                            <div class="pre-scrollable">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">免费域名注册</li>
+                                                    <li class="list-group-item">免费 Window 空间托管</li>
+                                                    <li class="list-group-item">图像的数量</li>
+                                                    <li class="list-group-item">24*7 支持</li>
+                                                    <li class="list-group-item">每年更新成本</li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="control-group">
@@ -306,7 +482,7 @@ use yii\helpers\Url;
 
 <div class="control-group add-survey-group-html" style="display: none">
     <div class="pre-scrollable">
-        <ul class="list-group">
+        <ul class="list-group" id="addhtml">
             <li class="control-group"><input type="checkbox"><span>全选</span></li>
         </ul>
     </div>
@@ -431,7 +607,7 @@ use yii\helpers\Url;
     });
 
     $('.add-survey-group').click(function () {
-
+        var htmls = "";
         $.ajax({
             url: 'ajax-get-target.html',
             type: 'post',
@@ -440,7 +616,11 @@ use yii\helpers\Url;
                 'page': ''
             },
             success: function (res) {
-
+                console.log(res)
+                for (var i = 0; i < res.data.length; i++) {
+                    htmls += '<li class="control-group"><input type="checkbox" value="' + res.data[i].taobao_user_id + '"><span>' + res.data[i].taobao_user_nick + '</span></li>'
+                }
+                $('#addhtml').append(htmls)
                 layer.open({
                     type: 1,
                     title: '添加策略组',
