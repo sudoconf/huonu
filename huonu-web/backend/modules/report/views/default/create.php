@@ -304,8 +304,6 @@ use yii\helpers\Url;
 
 </div>
 
-=======
-<<<<<<< HEAD
 <div class="form-group add-survey-group-html" style="display: none">
     <form class="form-horizontal" role="form">
         <div class="control-group">
@@ -451,18 +449,16 @@ use yii\helpers\Url;
     });
 
     $('.add-survey-group').click(function () {
-        var htmls = "";
+        var htmlStr = "";
         $.ajax({
             url: 'ajax-get-target.html',
-            type: 'post',
+            type: 'get',
             dataType: 'json',
             success: function (res) {
-                console.log(res)
-
-
-                    htmls += '<li class="control-group"><input class="check-box" type="checkbox" value="' + res.data[i].taobao_user_id + '"><span>' + res.data[i].taobao_user_nick + '</span></li>';
-
-                $('#addhtml').append(htmls)
+                for (var i = 0; i < res.data.length; i++) {
+                    htmlStr += '<li class="control-group"><input class="check-box" type="checkbox" value="' + res.data[i].taobao_user_id + '"><span>' + res.data[i].taobao_user_nick + '</span></li>';
+                }
+                $('#addhtml').append(htmlStr)
                 layer.open({
                     type: 1,
                     title: '添加策略组',
@@ -505,10 +501,16 @@ use yii\helpers\Url;
             checkbox.prop("checked", false);
         }
     })
-
-    $('.add-survey-group-operate').click(function () {
-        alert(11111111);
-        
+    $(document).on('click', '.add-survey-group-operate', function () {
+        var arr = [];
+        $('.check-box').each(function(index, el) {
+            if($(this).is(':checked')){
+                arr.push($(this).val());
+            }
+            
+        });
+        console.log(arr)
     })
+
 
 </script>
