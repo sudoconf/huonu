@@ -40,7 +40,7 @@ use yii\helpers\Url;
                 <div class="view">
                     <div class="tabbable">
 
-                        <ul class="nav nav-tabs">
+                        <ul class="nav nav-tabs" id="myTab">
                             <li class="active">
                                 <a href="#set-up-parameters" data-toggle="tab" data-placement="top" title="设置参数">
                                     <!--去掉 data-toggle="tab" 就不能切换了-->
@@ -49,7 +49,7 @@ use yii\helpers\Url;
                                     设置参数
                                 </a>
                             </li>
-                            <li class="">
+                            <li class="disabled">
                                 <a href="#add-survey-group" data-toggle="tab" data-placement="top" title="添加测略组">
                                     <i class="create-step">2</i>
                                     <i class="fa fa-bar-chart-o fa-fw"></i>
@@ -84,6 +84,8 @@ use yii\helpers\Url;
                                         <span>时间选择</span>
                                         <input type="text" placeholder="请选择时间" class="form-control select-time"
                                                name="multitray_time">
+                                        <input type="hidden" name="multitray_start_time" id="multitray-start-time"/>
+                                        <input type="hidden" name="multitray_end_time" id="multitray-end-time"/>
                                     </div>
 
                                     <div class="control-group">
@@ -308,7 +310,7 @@ use yii\helpers\Url;
                                     </div>
 
                                 </div>
-                            </div>
+                            </div st>
 
                         </div>
                     </div>
@@ -367,17 +369,35 @@ use yii\helpers\Url;
 
 <script>
 
+    $('#myTab a:first').tab('show'); // 初始化显示哪个tab
+
+    $('#myTab a').click(function (e) {
+        e.preventDefault(); // 阻止a链接的跳转行为
+        $(this).tab('show'); // 显示当前选中的链接及关联的content
+    });
+
     $("[data-toggle='tab']").tooltip(); // 工具提示（Tooltip）插件 - 锚
 
     // 时间段选择
     var cb = function (start, end, label) {
         $('.select-time span').html(start.format('YYYY-MM-DD HH:mm:ss'));
-    };
 
+        //赋值给隐藏输入框
+        $('#multitray-start-time').html(start.format('YYYY-MM-DD HH:mm:ss'));
+        $('#multitray-end-time').html(end.format('YYYY-MM-DD HH:mm:ss'));
+    };
     var optionSet = {
-        'startDate': moment().hours(4).minutes(0).seconds(0),
+        'timePicker': true, //显示时间
+        'timePicker24Hour': true, //时间制
+        'timePickerSeconds': true, //时间显示到秒
+        'showDropdowns': true,
+        'showWeekNumbers': true,
+        'startDate': moment(),
         'endDate': moment().endOf('day'),
-        'timePicker': true,
+        'opens': 'right',
+        'drops': 'down',
+        'format': 'YYYY-MM-DD HH:mm:ss',
+        'autoUpdateInput': false, // 当前默认时间
         'ranges': {
             // '最近1小时': [moment().subtract('hours',1), moment()],
             '今天': [moment().startOf('day'), moment()],
@@ -386,11 +406,13 @@ use yii\helpers\Url;
             '15天': [moment().subtract(15, 'days').startOf('day'), moment().endOf('day')],
             '30天': [moment().subtract(30, 'days').startOf('day'), moment().endOf('day')],
             '这个月': [moment().startOf('month').startOf('day'), moment().endOf('month').endOf('day')],
-            '上个月': [moment().subtract(1, 'month').startOf('month').startOf('day'), moment().subtract(1, 'month').endOf('month').endOf('day')]
+            '上个月': [moment().subtract(1, 'month').startOf('month').startOf('day'), moment().subtract(1, 'month').endOf('month').endOf('day')],
+            // '近俩个月': [moment().subtract(2, 'month').startOf('month').startOf('day'), moment().subtract(1, 'month').endOf('month').endOf('day')],
+            '近三个月': [moment().subtract(3, 'month').startOf('month').startOf('day'), moment().subtract(1, 'month').endOf('month').endOf('day')]
         },
         'locale': {
             'format': 'YYYY-MM-DD HH:mm:ss',
-            "separator": " - ",
+            "separator": " 至 ",
             "applyLabel": "确定",
             "cancelLabel": "取消",
             "fromLabel": "起始时间",
@@ -400,9 +422,6 @@ use yii\helpers\Url;
             'daysOfWeek': ['日', '一', '二', '三', '四', '五', '六'],
             'monthNames': ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
         },
-        'opens': 'right',
-        'drops': 'down',
-        'format': 'YYYY-MM-DD HH:mm:ss',
     };
     $('.select-time').daterangepicker(optionSet, cb);
 
