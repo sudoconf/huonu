@@ -623,7 +623,7 @@ use yii\helpers\Url;
     });
 
     $('.add-survey-group').click(function () {
-        var htmls = "";
+        var htmlStr = "";
         $.ajax({
             url: 'ajax-get-target.html',
             type: 'post',
@@ -631,9 +631,9 @@ use yii\helpers\Url;
             success: function (res) {
                 console.log(res)
                 for (var i = 0; i < res.data.length; i++) {
-                    htmls += '<li class="control-group"><input class="check-box" type="checkbox" value="' + res.data[i].taobao_user_id + '"><span>' + res.data[i].taobao_user_nick + '</span></li>';
+                    htmlStr += '<li class="control-group"><input class="check-box" type="checkbox" value="' + res.data[i].taobao_user_id + '"><span>' + res.data[i].taobao_user_nick + '</span></li>';
                 }
-                $('#addhtml').append(htmls)
+                $('#addhtml').append(htmlStr)
                 layer.open({
                     type: 1,
                     title: '添加策略组',
@@ -654,7 +654,6 @@ use yii\helpers\Url;
                 );
             }
         });
-
     });
 
     // 失败的愿意是英文我这里是动态加载的
