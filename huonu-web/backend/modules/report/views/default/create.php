@@ -638,7 +638,6 @@ use yii\helpers\Url;
 
                     htmls += '<li class="control-group"><input class="check-box" type="checkbox" value="' + res.data[i].taobao_user_id + '"><span>' + res.data[i].taobao_user_nick + '</span></li>';
 
-                }
                 $('#addhtml').append(htmls)
                 layer.open({
                     type: 1,
