@@ -62,7 +62,7 @@ use yii\helpers\Url;
 
 
                             <div class="tab-pane fade in active" id="">
-                                <?php $form = \yii\bootstrap\ActiveForm::begin(); ?>
+                                <?php $form = \yii\bootstrap\ActiveForm::begin([
                                     'id' => 'form-set-parame',
                                     'method' => 'post',
                                     'action' => 'ajax-save-set-parameter.html',
