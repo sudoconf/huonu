@@ -49,13 +49,8 @@ use yii\helpers\Url;
                                     设置参数
                                 </a>
                             </li>
-<<<<<<< HEAD
                             <li class="">
                                 <a href="#add-survey-group" data-placement="top" title="添加测略组">
-=======
-                            <li class="disabled">
-                                <a href="#add-survey-group" data-toggle="tab" data-placement="top" title="添加测略组">
->>>>>>> aba80df6fdd50794aa328738fce80d0e5b3ef5df
                                     <i class="create-step">2</i>
                                     <i class="fa fa-bar-chart-o fa-fw"></i>
                                     添加测略组
@@ -65,17 +60,14 @@ use yii\helpers\Url;
 
                         <div class="tab-content">
 
-<<<<<<< HEAD
+
                             <div class="tab-pane fade in active" id="">
                                 <?php $form = \yii\bootstrap\ActiveForm::begin(); ?>
-=======
-                            <div class="tab-pane fade in active" id="set-up-parameters">
-                                <?php $form = \yii\bootstrap\ActiveForm::begin([
                                     'id' => 'form-set-parame',
                                     'method' => 'post',
                                     'action' => 'ajax-save-set-parameter.html',
                                 ]); ?>
->>>>>>> aba80df6fdd50794aa328738fce80d0e5b3ef5df
+
                                 <div class="form-group form-inline">
                                     <div class="control-group">
                                         <span>复盘名称</span>
@@ -273,11 +265,7 @@ use yii\helpers\Url;
                                         </label>
                                     </div>
 
-<<<<<<< HEAD
                                     <input type="button" value="下一步，添加对比组" class="btn btn-primary" id="oneStep">
-=======
-                                    <span class="create btn btn-primary">下一步，添加对比组</span>
->>>>>>> aba80df6fdd50794aa328738fce80d0e5b3ef5df
                                 </div>
                                 <?php \yii\bootstrap\ActiveForm::end(); ?>
                             </div>
@@ -599,7 +587,6 @@ use yii\helpers\Url;
         });
         console.log(arr)
     })
-<<<<<<< HEAD
 
     //第一步
     $('#oneStep').on('click',function(){
@@ -620,7 +607,4 @@ use yii\helpers\Url;
         $('.tab-pane').eq(0).addClass('active in');
     })
 
-
-=======
->>>>>>> aba80df6fdd50794aa328738fce80d0e5b3ef5df
 </script>
