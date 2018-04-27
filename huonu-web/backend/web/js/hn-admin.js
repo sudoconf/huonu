@@ -76,7 +76,7 @@ $('.del').click(function () {
 // 加载中
 function SHOW_LOAD_LAYER(){
     // return layer.msg('努力中...', {icon: 16,shade: [0.1, '#f5f5f5'],scrollbar: false,offset: '50%', time:1000000}) ;
-    var ii = layer.load(2, {shade: [0.5, '#f5f5f5']})
+    var ii = layer.load(2, {shade: [0.5]})
     //此处用setTimeout演示ajax的回调
     setTimeout(function(){
         layer.close(ii);

@@ -368,14 +368,6 @@ use yii\helpers\Url;
 <?= Html::jsFile('@web/vendor/jquery-sortable/jquery-sortable.js') ?>
 
 <script>
-
-    $('#myTab a:first').tab('show'); // 初始化显示哪个tab
-
-    $('#myTab a').click(function (e) {
-        e.preventDefault(); // 阻止a链接的跳转行为
-        $(this).tab('show'); // 显示当前选中的链接及关联的content
-    });
-
     $("[data-toggle='tab']").tooltip(); // 工具提示（Tooltip）插件 - 锚
 
     // 时间段选择
@@ -428,6 +420,7 @@ use yii\helpers\Url;
     // 拖动排序
     $('ul.custom-fields').sortable();
 
+    // jquery ajax autocomplete 自动完成
     $('#taobao_name').autocomplete({
         minChars: 0,
         max: 5,
@@ -484,6 +477,7 @@ use yii\helpers\Url;
         }
     });
 
+
     // 第一步骤 提交数据
     $(document).on('click', '.create', function () {
 
@@ -516,41 +510,37 @@ use yii\helpers\Url;
         return false;
     });
 
-
-    // 第二步骤
-    $('.add-survey-group').click(function () {
-        var htmlStr = "";
+    // 页面加载的时候获取定向人群
+    $(document).ready(function () {
+        var htmlStr = '';
         $.ajax({
             url: 'ajax-get-target.html',
-            type: 'post',
+            type: 'get',
             dataType: 'json',
             success: function (res) {
+                console.log(res);
                 for (var i = 0; i < res.data.length; i++) {
                     htmlStr += '<li class="control-group"><input class="check-box" type="checkbox" value="' + res.data[i].taobao_user_id + '"><span>' + res.data[i].taobao_user_nick + '</span></li>';
                 }
                 $('#addhtml').append(htmlStr)
-                layer.open({
-                    type: 1,
-                    title: '添加策略组',
-                    shadeClose: true,
-                    shade: [0.5],
-                    maxmin: false, //开启最大化最小化按钮
-
-                    area: ['580px', '500px'],
-                    content: $('.add-survey-group-html').html()
-                });
             },
             error: function () {
-                layer.msg('网络异常 请稍后再试',
-                    {
-                        icon: 5,
-                        shade: [0.8, '#f5f5f5'],
-                        time: 1000
-                    }
-                );
+                console.log('网络异常 请稍后再试');
             }
         });
+    });
 
+    // 第二步骤
+    $('.add-survey-group').click(function () {
+        layer.open({
+            type: 1,
+            title: '添加策略组',
+            shadeClose: true,
+            shade: [0.5],
+            maxmin: false, //开启最大化最小化按钮
+            area: ['580px', '500px'],
+            content: $('.add-survey-group-html').html()
+        });
     });
 
     // 失败的愿意是因为我这里是动态加载的
@@ -587,23 +577,23 @@ use yii\helpers\Url;
 
 
     //第一步
-    $('#oneStep').on('click', function () {
-        var taobao_name = $('#taobao_name').val()//这是一个测试条件
-        if (taobao_name == "") {
-            layer.msg('请填写完整才能到下一步');
-        } else {
-            $('.nav-tabs li').eq(1).addClass('active').siblings('li').removeClass('active');
-            $('.tab-pane').eq(0).removeClass('active in');
-            $('.tab-pane').eq(1).addClass('active in');
-        }
-    });
+    // $('#oneStep').on('click', function () {
+    //     var taobao_name = $('#taobao_name').val()//这是一个测试条件
+    //     if (taobao_name == "") {
+    //         layer.msg('请填写完整才能到下一步');
+    //     } else {
+    //         $('.nav-tabs li').eq(1).addClass('active').siblings('li').removeClass('active');
+    //         $('.tab-pane').eq(0).removeClass('active in');
+    //         $('.tab-pane').eq(1).addClass('active in');
+    //     }
+    // });
 
     //上一步
-    $('#shangyibu').on('click', function () {
-        $('.nav-tabs li').eq(0).addClass('active').siblings('li').removeClass('active');
-        $('.tab-pane').eq(1).removeClass('active in');
-        $('.tab-pane').eq(0).addClass('active in');
-
-    });
+    // $('#shangyibu').on('click', function () {
+    //     $('.nav-tabs li').eq(0).addClass('active').siblings('li').removeClass('active');
+    //     $('.tab-pane').eq(1).removeClass('active in');
+    //     $('.tab-pane').eq(0).addClass('active in');
+    //
+    // });
 
 </script>

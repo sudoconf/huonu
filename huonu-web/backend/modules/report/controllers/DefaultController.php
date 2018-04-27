@@ -87,9 +87,12 @@ class DefaultController extends BaseController
             unset($data['_csrf-backend']);
         }
 
-        Yii::$app->session->set('setParameter', $data);
+        $setParameter = Yii::$app->session->get('setParameter');
+        if (!$setParameter && !is_array($setParameter)) {
+            Yii::$app->session->set('setParameter', $data);
+        }
 
-        return CtHelper::response('true', '保存成功', $data);
+        return CtHelper::response('true', '保存成功');
     }
 
     /**
@@ -106,14 +109,36 @@ class DefaultController extends BaseController
      */
     public function actionAjaxSaveStrategyGroup()
     {
+        $data = Yii::$app->request->post();
+
+        // 后续在做 验证字段规则 TODO
+
+        if (empty($data)) {
+            return CtHelper::response('false', '参数错误');
+        }
+
+        if (isset($data['_csrf-backend'])) {
+            unset($data['_csrf-backend']);
+        }
+
+        $setParameter = Yii::$app->session->get('strategyGroup');
+        if (!$setParameter && !is_array($setParameter)) {
+            Yii::$app->session->set('strategyGroup', $data);
+        }
+
+        return CtHelper::response('true', '保存成功');
     }
 
     /**
-     * 第三步 完成，生成统计数据 TODO
+     * 第三步 生成统计数据 TODO
      */
-    public function actionCreateThere()
+    public function actionGenerateStatistic()
     {
-        // 生成统计数据之后跳转到详情页面 TODO
+        // 生成统计数据 TODO
+
+        // 删除 session TODO
+
+        // 之后跳转到详情页面 TODO
     }
 
 }
