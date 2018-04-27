@@ -49,7 +49,7 @@ use yii\helpers\Url;
                                     设置参数
                                 </a>
                             </li>
-                            <li class="">
+                            <li class="disabled">
                                 <a href="#add-survey-group" data-toggle="tab" data-placement="top" title="添加测略组">
                                     <i class="create-step">2</i>
                                     <i class="fa fa-bar-chart-o fa-fw"></i>
@@ -341,9 +341,8 @@ use yii\helpers\Url;
             </div>
         </div>
         <div class="control-group">
-            <div class="col-sm-offset-3 col-sm-9">
-                <span class="btn btn-primary add-survey-group-operate">添加</span>
-            </div>
+            <label class="col-sm-3 control-label"></label>
+            <span class="btn btn-primary add-survey-group-operate">添加</span>
         </div>
     </form>
 
@@ -384,8 +383,8 @@ use yii\helpers\Url;
         $('.select-time span').html(start.format('YYYY-MM-DD HH:mm:ss'));
 
         //赋值给隐藏输入框
-        $('#multitray-start-time').html(start.format('YYYY-MM-DD HH:mm:ss'));
-        $('#multitray-end-time').html(end.format('YYYY-MM-DD HH:mm:ss'));
+        $('#multitray-start-time').val(start.format('YYYY-MM-DD HH:mm:ss'));
+        $('#multitray-end-time').val(end.format('YYYY-MM-DD HH:mm:ss'));
     };
     var optionSet = {
         'timePicker': true, //显示时间
@@ -554,11 +553,10 @@ use yii\helpers\Url;
 
     });
 
-    // 失败的愿意是英文我这里是动态加载的
+    // 失败的愿意是因为我这里是动态加载的
     // $('#select-all').click(function () {
     //     //全选按钮选中状态，索引0取document对象
     //     var selectAll = $(this)[0].checked;
-    //     console.log(selectAll);
     //     //操作所有复选框的选中状态
     //     var checkbox = $(".check-box");
     //     console.log(checkbox);

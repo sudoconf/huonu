@@ -45,7 +45,10 @@ class DefaultController extends BaseController
         ]);
     }
 
-    // 创建第一步
+    /**
+     * 创建第一步 TODO
+     * @return string
+     */
     public function actionCreate()
     {
         $model = new Multitray();
@@ -55,7 +58,9 @@ class DefaultController extends BaseController
         ]);
     }
 
-    // 第一步 ajax 获取店铺
+    /**
+     * 第一步 ajax 获取店铺 TODO
+     */
     public function actionAjaxGetShop()
     {
         $inputStr = Yii::$app->request->get('inputStr');
@@ -65,29 +70,50 @@ class DefaultController extends BaseController
         CtHelper::response(200, 'success', $shop);
     }
 
-    // 保存第一步骤的数据
+    /**
+     * 保存第一步骤的数据 TODO
+     */
     public function actionAjaxSaveSetParameter()
     {
         $data = Yii::$app->request->post();
-        return CtHelper::response('true','000', $data);
+
+        // 后续在做 验证字段规则 TODO
+
+        if (empty($data)) {
+            return CtHelper::response('false', '参数错误');
+        }
+
+        if (isset($data['_csrf-backend'])) {
+            unset($data['_csrf-backend']);
+        }
+
+        Yii::$app->session->set('setParameter', $data);
+
+        return CtHelper::response('true', '保存成功', $data);
     }
 
-    // 第二步 ajax 获取定向列表
+    /**
+     * 第二步 ajax 获取定向列表 TODO
+     */
     public function actionAjaxGetTarget()
     {
         $shop = AuthorizeUser::find()->asArray()->all();
         CtHelper::response(200, 'success', $shop);
     }
 
-    // 保存第二步骤的数据
+    /**
+     * 保存第二步骤的数据 TODO
+     */
     public function actionAjaxSaveStrategyGroup()
     {
     }
 
-    // 第三步 完成，生成统计数据
+    /**
+     * 第三步 完成，生成统计数据 TODO
+     */
     public function actionCreateThere()
     {
-        // 通过策略组
+        // 生成统计数据之后跳转到详情页面 TODO
     }
 
 }
