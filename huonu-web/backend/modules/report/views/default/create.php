@@ -42,7 +42,7 @@ use yii\helpers\Url;
 
                         <ul class="nav nav-tabs">
                             <li class="active">
-                                <a href="#set-up-parameters" data-toggle="tab" data-placement="top" title="设置参数">
+                                <a href="#set-up-parameters" data-placement="top" title="设置参数">
                                     <!--去掉 data-toggle="tab" 就不能切换了-->
                                     <i class="create-step">1</i>
                                     <i class="fa fa-bar-chart-o fa-fw"></i>
@@ -50,7 +50,7 @@ use yii\helpers\Url;
                                 </a>
                             </li>
                             <li class="">
-                                <a href="#add-survey-group" data-toggle="tab" data-placement="top" title="添加测略组">
+                                <a href="#add-survey-group" data-placement="top" title="添加测略组">
                                     <i class="create-step">2</i>
                                     <i class="fa fa-bar-chart-o fa-fw"></i>
                                     添加测略组
@@ -60,7 +60,7 @@ use yii\helpers\Url;
 
                         <div class="tab-content">
 
-                            <div class="tab-pane fade in active" id="set-up-parameters">
+                            <div class="tab-pane fade in active" id="">
                                 <?php $form = \yii\bootstrap\ActiveForm::begin(); ?>
                                 <div class="form-group form-inline">
                                     <div class="control-group">
@@ -245,12 +245,12 @@ use yii\helpers\Url;
                                         </label>
                                     </div>
 
-                                    <input type="submit" value="下一步，添加对比组" class="btn btn-primary">
+                                    <input type="button" value="下一步，添加对比组" class="btn btn-primary" id="oneStep">
                                 </div>
                                 <?php \yii\bootstrap\ActiveForm::end(); ?>
                             </div>
 
-                            <div class="tab-pane fade" id="add-survey-group">
+                            <div class="tab-pane fade twostep" id="">
                                 <div class="form-group">
 
                                     <div class="control-group">
@@ -288,7 +288,7 @@ use yii\helpers\Url;
 
                                     <div class="control-group">
                                         <input type="submit" value="下一步，生成报表" class="btn btn-primary">
-                                        <input type="submit" value="上一步" class="btn btn-primary">
+                                        <input type="button" value="上一步" class="btn btn-primary" id="shangyibu">
                                     </div>
 
                                 </div>
@@ -510,6 +510,25 @@ use yii\helpers\Url;
             
         });
         console.log(arr)
+    })
+
+    //第一步
+    $('#oneStep').on('click',function(){
+        var taobao_name = $('#taobao_name').val()//这是一个测试条件
+        if(taobao_name==""){
+            layer.msg('请填写完整才能到下一步');
+        }else{
+            $('.nav-tabs li').eq(1).addClass('active').siblings('li').removeClass('active');
+            $('.tab-pane').eq(0).removeClass('active in');
+            $('.tab-pane').eq(1).addClass('active in');
+        }
+    })
+
+    //上一步
+    $('#shangyibu').on('click',function(){
+        $('.nav-tabs li').eq(0).addClass('active').siblings('li').removeClass('active');
+        $('.tab-pane').eq(1).removeClass('active in');
+        $('.tab-pane').eq(0).addClass('active in');
     })
 
 
