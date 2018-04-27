@@ -14,4 +14,13 @@ use Yii;
 // 单元 service TODO
 class UnitService extends BaseService
 {
+    // 复制单元 TODO
+    public function copyUnit()
+    {
+    }
+
+    // 移除单元 TODO
+    public function removeUnit()
+    {
+    }
 }

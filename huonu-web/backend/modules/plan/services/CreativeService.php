@@ -14,4 +14,8 @@ use Yii;
 // 创意 service TODO
 class CreativeService extends BaseService
 {
+    // 移除创意 TODO
+    public function removeCreative()
+    {
+    }
 }

@@ -14,4 +14,10 @@ use Yii;
 // 定向 service TODO
 class TargetService extends BaseService
 {
+    // 编辑
+
+    // 移除定向 TODO
+    public function removeTarget()
+    {
+    }
 }

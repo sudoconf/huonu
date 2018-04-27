@@ -14,4 +14,8 @@ use Yii;
 // 资源位 service TODO
 class ResourceService extends BaseService
 {
+    // 移除资源位 TODO
+    public function removeResource()
+    {
+    }
 }
