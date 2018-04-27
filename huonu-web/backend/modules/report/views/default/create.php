@@ -397,7 +397,7 @@ use yii\helpers\Url;
         'opens': 'right',
         'drops': 'down',
         'format': 'YYYY-MM-DD HH:mm:ss',
-        'autoUpdateInput': false, // 当前默认时间
+        'autoUpdateInput': true, // 当前默认时间
         'ranges': {
             // '最近1小时': [moment().subtract('hours',1), moment()],
             '今天': [moment().startOf('day'), moment()],
