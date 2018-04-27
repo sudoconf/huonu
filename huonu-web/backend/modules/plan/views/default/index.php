@@ -241,9 +241,12 @@ use yii\helpers\Url;
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr" style="display: none;">
                                         <td colspan="12">
+                                            <a>设置</a>
                                             <a>详情</a>
                                             <a>复制</a>
-                                            <a>同步</a>
+                                            <a>移除</a>
+                                            <a>置顶</a>
+                                            <a>报表</a>
                                         </td>
                                     </tr>
 
@@ -818,7 +821,6 @@ use yii\helpers\Url;
 
 <!-- 引入jQuery的js文件 -->
 <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 
 <script>
 
