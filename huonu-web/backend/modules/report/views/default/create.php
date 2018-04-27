@@ -42,20 +42,15 @@ use yii\helpers\Url;
 
                         <ul class="nav nav-tabs" id="myTab">
                             <li class="active">
-                                <a href="#set-up-parameters" data-toggle="tab" data-placement="top" title="设置参数">
+                                <a href="#set-up-parameters" data-placement="top" title="设置参数">
                                     <!--去掉 data-toggle="tab" 就不能切换了-->
                                     <i class="create-step">1</i>
                                     <i class="fa fa-bar-chart-o fa-fw"></i>
                                     设置参数
                                 </a>
                             </li>
-<<<<<<< HEAD
                             <li class="">
                                 <a href="#add-survey-group" data-placement="top" title="添加测略组">
-=======
-                            <li class="disabled">
-                                <a href="#add-survey-group" data-toggle="tab" data-placement="top" title="添加测略组">
->>>>>>> 333ee291ad737eb7f0e07bade6944711e7b27264
                                     <i class="create-step">2</i>
                                     <i class="fa fa-bar-chart-o fa-fw"></i>
                                     添加测略组
@@ -65,22 +60,13 @@ use yii\helpers\Url;
 
                         <div class="tab-content">
 
-<<<<<<< HEAD
 
                             <div class="tab-pane fade in active" id="">
                                 <?php $form = \yii\bootstrap\ActiveForm::begin(); ?>
-=======
-                            <div class="tab-pane fade in active" id="set-up-parameters">
-                                <?php $form = \yii\bootstrap\ActiveForm::begin([
->>>>>>> 333ee291ad737eb7f0e07bade6944711e7b27264
                                     'id' => 'form-set-parame',
                                     'method' => 'post',
                                     'action' => 'ajax-save-set-parameter.html',
                                 ]); ?>
-<<<<<<< HEAD
-
-=======
->>>>>>> 333ee291ad737eb7f0e07bade6944711e7b27264
                                 <div class="form-group form-inline">
                                     <div class="control-group">
                                         <span>复盘名称</span>
@@ -278,11 +264,8 @@ use yii\helpers\Url;
                                         </label>
                                     </div>
 
-<<<<<<< HEAD
-                                    <input type="button" value="下一步，添加对比组" class="btn btn-primary" id="oneStep">
-=======
+
                                     <span id="oneStep" class="create btn btn-primary">下一步，添加对比组</span>
->>>>>>> 333ee291ad737eb7f0e07bade6944711e7b27264
                                 </div>
                                 <?php \yii\bootstrap\ActiveForm::end(); ?>
                             </div>
@@ -603,11 +586,8 @@ use yii\helpers\Url;
 
         });
         console.log(arr)
-<<<<<<< HEAD
-    })
-=======
     });
->>>>>>> 333ee291ad737eb7f0e07bade6944711e7b27264
+
 
     //第一步
     $('#oneStep').on('click', function () {
@@ -626,10 +606,7 @@ use yii\helpers\Url;
         $('.nav-tabs li').eq(0).addClass('active').siblings('li').removeClass('active');
         $('.tab-pane').eq(1).removeClass('active in');
         $('.tab-pane').eq(0).addClass('active in');
-<<<<<<< HEAD
-    })
 
-=======
     });
->>>>>>> 333ee291ad737eb7f0e07bade6944711e7b27264
+
 </script>
