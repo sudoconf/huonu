@@ -42,20 +42,15 @@ use yii\helpers\Url;
 
                         <ul class="nav nav-tabs" id="myTab">
                             <li class="active">
-                                <a href="#set-up-parameters" data-placement="top" title="设置参数">
+                                <a href="#set-up-parameters" data-toggle="tab" data-placement="top" title="设置参数">
                                     <!--去掉 data-toggle="tab" 就不能切换了-->
                                     <i class="create-step">1</i>
                                     <i class="fa fa-bar-chart-o fa-fw"></i>
                                     设置参数
                                 </a>
                             </li>
-<<<<<<< HEAD
-                            <li class="">
-                                <a href="#add-survey-group" data-placement="top" title="添加测略组">
-=======
                             <li class="disabled">
                                 <a href="#add-survey-group" data-toggle="tab" data-placement="top" title="添加测略组">
->>>>>>> aba80df6fdd50794aa328738fce80d0e5b3ef5df
                                     <i class="create-step">2</i>
                                     <i class="fa fa-bar-chart-o fa-fw"></i>
                                     添加测略组
@@ -65,17 +60,12 @@ use yii\helpers\Url;
 
                         <div class="tab-content">
 
-<<<<<<< HEAD
-                            <div class="tab-pane fade in active" id="">
-                                <?php $form = \yii\bootstrap\ActiveForm::begin(); ?>
-=======
                             <div class="tab-pane fade in active" id="set-up-parameters">
                                 <?php $form = \yii\bootstrap\ActiveForm::begin([
                                     'id' => 'form-set-parame',
                                     'method' => 'post',
                                     'action' => 'ajax-save-set-parameter.html',
                                 ]); ?>
->>>>>>> aba80df6fdd50794aa328738fce80d0e5b3ef5df
                                 <div class="form-group form-inline">
                                     <div class="control-group">
                                         <span>复盘名称</span>
@@ -273,16 +263,12 @@ use yii\helpers\Url;
                                         </label>
                                     </div>
 
-<<<<<<< HEAD
-                                    <input type="button" value="下一步，添加对比组" class="btn btn-primary" id="oneStep">
-=======
-                                    <span class="create btn btn-primary">下一步，添加对比组</span>
->>>>>>> aba80df6fdd50794aa328738fce80d0e5b3ef5df
+                                    <span id="oneStep" class="create btn btn-primary">下一步，添加对比组</span>
                                 </div>
                                 <?php \yii\bootstrap\ActiveForm::end(); ?>
                             </div>
 
-                            <div class="tab-pane fade twostep" id="">
+                            <div class="tab-pane fade" id="add-survey-group">
                                 <div class="form-group">
 
                                     <div class="control-group">
@@ -598,29 +584,24 @@ use yii\helpers\Url;
 
         });
         console.log(arr)
-    })
-<<<<<<< HEAD
+    });
 
     //第一步
-    $('#oneStep').on('click',function(){
+    $('#oneStep').on('click', function () {
         var taobao_name = $('#taobao_name').val()//这是一个测试条件
-        if(taobao_name==""){
+        if (taobao_name == "") {
             layer.msg('请填写完整才能到下一步');
-        }else{
+        } else {
             $('.nav-tabs li').eq(1).addClass('active').siblings('li').removeClass('active');
             $('.tab-pane').eq(0).removeClass('active in');
             $('.tab-pane').eq(1).addClass('active in');
         }
-    })
+    });
 
     //上一步
-    $('#shangyibu').on('click',function(){
+    $('#shangyibu').on('click', function () {
         $('.nav-tabs li').eq(0).addClass('active').siblings('li').removeClass('active');
         $('.tab-pane').eq(1).removeClass('active in');
         $('.tab-pane').eq(0).addClass('active in');
-    })
-
-
-=======
->>>>>>> aba80df6fdd50794aa328738fce80d0e5b3ef5df
+    });
 </script>
