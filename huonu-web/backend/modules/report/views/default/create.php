@@ -42,7 +42,7 @@ use yii\helpers\Url;
 
                         <ul class="nav nav-tabs" id="myTab">
                             <li class="active">
-                                <a href="#set-up-parameters" data-placement="top" title="设置参数">
+                                <a href="#set-up-parameters" data-toggle="tab" data-placement="top" title="设置参数">
                                     <!--去掉 data-toggle="tab" 就不能切换了-->
                                     <i class="create-step">1</i>
                                     <i class="fa fa-bar-chart-o fa-fw"></i>
@@ -50,7 +50,7 @@ use yii\helpers\Url;
                                 </a>
                             </li>
                             <li class="">
-                                <a href="#add-survey-group" data-placement="top" title="添加测略组">
+                                <a href="#add-survey-group" data-toggle="tab" data-placement="top" title="添加测略组">
                                     <i class="create-step">2</i>
                                     <i class="fa fa-bar-chart-o fa-fw"></i>
                                     添加测略组
@@ -60,8 +60,7 @@ use yii\helpers\Url;
 
                         <div class="tab-content">
 
-
-                            <div class="tab-pane fade in active" id="">
+                            <div class="tab-pane fade in active" id="set-up-parameters">
                                 <?php $form = \yii\bootstrap\ActiveForm::begin([
                                     'id' => 'form-set-parame',
                                     'method' => 'post',
