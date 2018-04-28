@@ -150,29 +150,24 @@ use yii\helpers\Url;
                                     <tr class="odd gradeX operation-open">
                                         <th><input type="checkbox"></th>
                                         <td>
-                                            <div class="w60">
-                                                <div class="ux-status-handle">
-                                                    <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
-                                                    <i class="fa fa-caret-down s_fc_9"></i>
-                                                    <div class="ux-status-info" style="display: none">
-                                                        <ul class="ux-status-operations">
-                                                            <li class="ux-operation-cur">
-                                                                <i class="">~</i>
-                                                                <i class=""></i>
-                                                                &nbsp;&nbsp;正在投放
-                                                            </li>
-                                                            <li>
-                                                                <i class="">~</i>
-                                                                <i class=""></i>
-                                                                &nbsp;&nbsp;暂停投放
-                                                            </li>
-                                                            <li>
-                                                                <i class="">~</i>
-                                                                <i class=""></i>
-                                                                &nbsp;&nbsp;结束投放
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                            <div class="ux-status-handle">
+                                                <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
+                                                <i class="fa fa-caret-down s_fc_9"></i>
+                                                <div class="ux-status-info" style="display: none">
+                                                    <ul class="ux-status-operations">
+                                                        <li class="ux-operation-cur">
+                                                            <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green"></i>
+                                                            正在投放
+                                                        </li>
+                                                        <li>
+                                                            <i class="glyphicon glyphicon-pause s_fs_20 s_fc_red"></i>
+                                                            暂停投放
+                                                        </li>
+                                                        <li>
+                                                            <i class="glyphicon glyphicon-minus-sign s_fs_20 s_fc_9"></i>
+                                                            结束投放
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </td>
@@ -202,29 +197,24 @@ use yii\helpers\Url;
                                     <tr class="odd gradeX operation-open">
                                         <th><input type="checkbox"></th>
                                         <td>
-                                            <div class="w60">
-                                                <div class="ux-status-handle">
-                                                    <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
-                                                    <i class="fa fa-caret-down s_fc_9"></i>
-                                                    <div class="ux-status-info" style="display: none">
-                                                        <ul class="ux-status-operations">
-                                                            <li class="ux-operation-cur">
-                                                                <i class="">~</i>
-                                                                <i class=""></i>
-                                                                &nbsp;&nbsp;正在投放
-                                                            </li>
-                                                            <li>
-                                                                <i class="">~</i>
-                                                                <i class=""></i>
-                                                                &nbsp;&nbsp;暂停投放
-                                                            </li>
-                                                            <li>
-                                                                <i class="">~</i>
-                                                                <i class=""></i>
-                                                                &nbsp;&nbsp;结束投放
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                            <div class="ux-status-handle">
+                                                <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
+                                                <i class="fa fa-caret-down s_fc_9"></i>
+                                                <div class="ux-status-info" style="display: none">
+                                                    <ul class="ux-status-operations">
+                                                        <li class="ux-operation-cur">
+                                                            <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green"></i>
+                                                            正在投放
+                                                        </li>
+                                                        <li>
+                                                            <i class="glyphicon glyphicon-pause s_fs_20 s_fc_red"></i>
+                                                            暂停投放
+                                                        </li>
+                                                        <li>
+                                                            <i class="glyphicon glyphicon-minus-sign s_fs_20 s_fc_9"></i>
+                                                            结束投放
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </td>
@@ -328,29 +318,24 @@ use yii\helpers\Url;
                                     <tr class="odd gradeX operation-open">
                                         <th><input type="checkbox"></th>
                                         <td>
-                                            <div class="w60">
-                                                <div class="ux-status-handle">
-                                                    <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
-                                                    <i class="fa fa-bar-chart-o fa-fw"></i>
-                                                    <div class="ux-status-info" style="display: none">
-                                                        <ul class="ux-status-operations">
-                                                            <li class="ux-operation-cur">
-                                                                <i class="">~</i>
-                                                                <i class=""></i>
-                                                                &nbsp;&nbsp;正在投放
-                                                            </li>
-                                                            <li>
-                                                                <i class="">~</i>
-                                                                <i class=""></i>
-                                                                &nbsp;&nbsp;暂停投放
-                                                            </li>
-                                                            <li>
-                                                                <i class="">~</i>
-                                                                <i class=""></i>
-                                                                &nbsp;&nbsp;结束投放
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                            <div class="ux-status-handle">
+                                                <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
+                                                <i class="fa fa-caret-down s_fc_9"></i>
+                                                <div class="ux-status-info" style="display: none">
+                                                    <ul class="ux-status-operations">
+                                                        <li class="ux-operation-cur">
+                                                            <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green"></i>
+                                                            正在投放
+                                                        </li>
+                                                        <li>
+                                                            <i class="glyphicon glyphicon-pause s_fs_20 s_fc_red"></i>
+                                                            暂停投放
+                                                        </li>
+                                                        <li>
+                                                            <i class="glyphicon glyphicon-minus-sign s_fs_20 s_fc_9"></i>
+                                                            结束投放
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </td>
@@ -377,29 +362,24 @@ use yii\helpers\Url;
                                     <tr class="odd gradeX operation-open">
                                         <th><input type="checkbox"></th>
                                         <td>
-                                            <div class="w60">
-                                                <div class="ux-status-handle">
-                                                    <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
-                                                    <i class="fa fa-bar-chart-o fa-fw"></i>
-                                                    <div class="ux-status-info" style="display: none">
-                                                        <ul class="ux-status-operations">
-                                                            <li class="ux-operation-cur">
-                                                                <i class="">~</i>
-                                                                <i class=""></i>
-                                                                &nbsp;&nbsp;正在投放
-                                                            </li>
-                                                            <li>
-                                                                <i class="">~</i>
-                                                                <i class=""></i>
-                                                                &nbsp;&nbsp;暂停投放
-                                                            </li>
-                                                            <li>
-                                                                <i class="">~</i>
-                                                                <i class=""></i>
-                                                                &nbsp;&nbsp;结束投放
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                            <div class="ux-status-handle">
+                                                <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
+                                                <i class="fa fa-caret-down s_fc_9"></i>
+                                                <div class="ux-status-info" style="display: none">
+                                                    <ul class="ux-status-operations">
+                                                        <li class="ux-operation-cur">
+                                                            <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green"></i>
+                                                            正在投放
+                                                        </li>
+                                                        <li>
+                                                            <i class="glyphicon glyphicon-pause s_fs_20 s_fc_red"></i>
+                                                            暂停投放
+                                                        </li>
+                                                        <li>
+                                                            <i class="glyphicon glyphicon-minus-sign s_fs_20 s_fc_9"></i>
+                                                            结束投放
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </td>
