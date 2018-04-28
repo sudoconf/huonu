@@ -45,14 +45,14 @@ use yii\helpers\Url;
                                 <a href="#set-up-parameters" data-toggle="tab" data-placement="top" title="设置参数">
                                     <!--去掉 data-toggle="tab" 就不能切换了-->
                                     <i class="create-step">1</i>
-                                    <i class="fa fa-bar-chart-o fa-fw"></i>
+                                    <i class="fa fa-wrench"></i>
                                     设置参数
                                 </a>
                             </li>
                             <li class="disabled">
                                 <a href="#add-survey-group" data-toggle="tab" data-placement="top" title="添加测略组">
                                     <i class="create-step">2</i>
-                                    <i class="fa fa-bar-chart-o fa-fw"></i>
+                                    <i class="fa fa-align-justify"></i>
                                     添加测略组
                                 </a>
                             </li>
@@ -91,7 +91,7 @@ use yii\helpers\Url;
                                     <div class="control-group">
                                         <span>字段选择</span>
                                         <a href="javascript:;" data-reveal-id="field-select" data-animation="fade">
-                                            <i class="fa fa-gear fa-fw"></i>
+                                            <i class="fa fa-gear"></i>
                                         </a>
                                         <!-- 字段选择 -->
                                         <div id="field-select" class="reveal-modal">

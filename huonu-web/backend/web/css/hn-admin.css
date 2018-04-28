@@ -711,6 +711,7 @@ ul.custom-fields li.placeholder:before {
 .s_fs_20{font-size:20px} 
 
 .mb20 { margin-bottom: 20px}
+.mr10{ margin-right: 10px}
 
 .s_fc_c{ color: #4d7fff}
 .s_fc_9{ color: #999}
@@ -751,5 +752,8 @@ ul.custom-fields li.placeholder:before {
 .ux-status-handle .ux-status-info .ux-status-operations li{list-style-type: none; list-style-image: none; height: 44px; line-height: 32px; padding: 5px 10px; cursor: pointer;}
 .ux-status-handle .ux-status-info .ux-status-operations{ padding: 0px; margin: -5px 0 0 0 }
 .ux-status-handle .ux-status-info .ux-status-operations li:hover{background-color: #fafafa;}
-.ux-status-handle .ux-status-info .ux-status-operations li i{line-height: 32px;}
+.ux-status-handle .ux-status-info .ux-status-operations li i{line-height: 32px; float: left}
+.ux-status-handle .ux-status-info .ux-status-operations li a{line-height: 35px; padding-left: 10px}
 .ux-status-handle .ux-status-info .ux-status-operations li .ux-operation-cur-icon{float: right; margin-right: 4px; color: #999; font-size: 10px;}
+
+#dataTables-example .operation-td{ padding-left: 56px; margin-left: 56px}

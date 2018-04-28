@@ -136,14 +136,14 @@ use yii\helpers\Url;
                                         <td>Win 95+</td>
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr">
-                                        <td colspan="12">
-                                            <a href="javascript:;" class="btn btn-primary">设置</a>
-                                            <a href="javascript:;" class="btn btn-primary">详情</a>
-                                            <a href="javascript:;" class="btn btn-primary">编辑</a>
-                                            <a href="javascript:;" class="btn btn-primary">移除</a>
-                                            <a href="javascript:;" class="btn btn-primary">置顶</a>
-                                            <a href="javascript:;" class="btn btn-primary">同步</a>
-                                            <a href="javascript:;" class="btn btn-primary">报表</a>
+                                        <td colspan="12" class="operation-td">
+                                            <a href="javascript:;" class="btn btn-primary mr10">设置</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">详情</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">编辑</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">置顶</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">同步</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">报表</a>
                                         </td>
                                     </tr>
 
@@ -186,14 +186,14 @@ use yii\helpers\Url;
                                         <td>Win 95+</td>
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr" style="display: none;">
-                                        <td colspan="12">
-                                            <a href="javascript:;" class="btn btn-primary">设置</a>
-                                            <a href="javascript:;" class="btn btn-primary">详情</a>
-                                            <a href="javascript:;" class="btn btn-primary">编辑</a>
-                                            <a href="javascript:;" class="btn btn-primary">移除</a>
-                                            <a href="javascript:;" class="btn btn-primary">置顶</a>
-                                            <a href="javascript:;" class="btn btn-primary">同步</a>
-                                            <a href="javascript:;" class="btn btn-primary">报表</a>
+                                        <td colspan="12" class="operation-td">
+                                            <a href="javascript:;" class="btn btn-primary mr10">设置</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">详情</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">编辑</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">置顶</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">同步</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">报表</a>
                                         </td>
                                     </tr>
 
@@ -236,14 +236,14 @@ use yii\helpers\Url;
                                         <td>Win 95+</td>
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr" style="display: none;">
-                                        <td colspan="12">
-                                            <a href="javascript:;" class="btn btn-primary">设置</a>
-                                            <a href="javascript:;" class="btn btn-primary">详情</a>
-                                            <a href="javascript:;" class="btn btn-primary">编辑</a>
-                                            <a href="javascript:;" class="btn btn-primary">移除</a>
-                                            <a href="javascript:;" class="btn btn-primary">置顶</a>
-                                            <a href="javascript:;" class="btn btn-primary">同步</a>
-                                            <a href="javascript:;" class="btn btn-primary">报表</a>
+                                        <td colspan="12" class="operation-td">
+                                            <a href="javascript:;" class="btn btn-primary mr10">设置</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">详情</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">编辑</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">置顶</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">同步</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">报表</a>
                                         </td>
                                     </tr>
 
@@ -359,12 +359,12 @@ use yii\helpers\Url;
                                         <td>Internet Explorer 4.0</td>
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr">
-                                        <td colspan="12">
-                                            <a href="javascript:;" class="btn btn-primary">详情</a>
-                                            <a href="javascript:;" class="btn btn-primary">编辑</a>
-                                            <a href="javascript:;" class="btn btn-primary">移除</a>
-                                            <a href="javascript:;" class="btn btn-primary">同步</a>
-                                            <a href="javascript:;" class="btn btn-primary">报表</a>
+                                        <td colspan="12" class="operation-td">
+                                            <a href="javascript:;" class="btn btn-primary mr10">详情</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">编辑</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">同步</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">报表</a>
                                         </td>
                                     </tr>
 
@@ -406,12 +406,12 @@ use yii\helpers\Url;
                                         <td>Internet Explorer 4.0</td>
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr" style="display: none">
-                                        <td colspan="12">
-                                            <a href="javascript:;" class="btn btn-primary">详情</a>
-                                            <a href="javascript:;" class="btn btn-primary">编辑</a>
-                                            <a href="javascript:;" class="btn btn-primary">移除</a>
-                                            <a href="javascript:;" class="btn btn-primary">同步</a>
-                                            <a href="javascript:;" class="btn btn-primary">报表</a>
+                                        <td colspan="12" class="operation-td">
+                                            <a href="javascript:;" class="btn btn-primary mr10">详情</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">编辑</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">同步</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">报表</a>
                                         </td>
                                     </tr>
 
@@ -502,11 +502,11 @@ use yii\helpers\Url;
                                         <td>Internet Explorer 4.0</td>
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr">
-                                        <td colspan="12">
-                                            <a href="javascript:;" class="btn btn-primary">编辑</a>
-                                            <a href="javascript:;" class="btn btn-primary">移除</a>
-                                            <a href="javascript:;" class="btn btn-primary">同步</a>
-                                            <a href="javascript:;" class="btn btn-primary">报表</a>
+                                        <td colspan="12" class="operation-td">
+                                            <a href="javascript:;" class="btn btn-primary mr10">编辑</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">同步</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">报表</a>
                                         </td>
                                     </tr>
 
@@ -523,11 +523,11 @@ use yii\helpers\Url;
                                         <td>Internet Explorer 4.0</td>
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr" style="display: none">
-                                        <td colspan="12">
-                                            <a href="javascript:;" class="btn btn-primary">编辑</a>
-                                            <a href="javascript:;" class="btn btn-primary">移除</a>
-                                            <a href="javascript:;" class="btn btn-primary">同步</a>
-                                            <a href="javascript:;" class="btn btn-primary">报表</a>
+                                        <td colspan="12" class="operation-td">
+                                            <a href="javascript:;" class="btn btn-primary mr10">编辑</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">同步</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">报表</a>
                                         </td>
                                     </tr>
 
@@ -636,10 +636,10 @@ use yii\helpers\Url;
                                         <td>Internet Explorer 4.0</td>
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr">
-                                        <td colspan="12">
-                                            <a href="javascript:;" class="btn btn-primary">移除</a>
-                                            <a href="javascript:;" class="btn btn-primary">同步</a>
-                                            <a href="javascript:;" class="btn btn-primary">报表</a>
+                                        <td colspan="12" class="operation-td">
+                                            <a href="javascript:;" class="btn btn-primary mr10">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">同步</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">报表</a>
                                         </td>
                                     </tr>
 
@@ -657,10 +657,10 @@ use yii\helpers\Url;
                                         <td>Internet Explorer 4.0</td>
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr" style="display: none">
-                                        <td colspan="12">
-                                            <a href="javascript:;" class="btn btn-primary">移除</a>
-                                            <a href="javascript:;" class="btn btn-primary">同步</a>
-                                            <a href="javascript:;" class="btn btn-primary">报表</a>
+                                        <td colspan="12" class="operation-td">
+                                            <a href="javascript:;" class="btn btn-primary mr10">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">同步</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">报表</a>
                                         </td>
                                     </tr>
 
@@ -765,10 +765,10 @@ use yii\helpers\Url;
                                         <td>Internet Explorer 4.0</td>
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr">
-                                        <td colspan="12">
-                                            <a href="javascript:;" class="btn btn-primary">移除</a>
-                                            <a href="javascript:;" class="btn btn-primary">同步</a>
-                                            <a href="javascript:;" class="btn btn-primary">报表</a>
+                                        <td colspan="12" class="operation-td">
+                                            <a href="javascript:;" class="btn btn-primary mr10">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">同步</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">报表</a>
                                         </td>
                                     </tr>
 
@@ -785,10 +785,10 @@ use yii\helpers\Url;
                                         <td>Internet Explorer 4.0</td>
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr" style="display: none">
-                                        <td colspan="12">
-                                            <a href="javascript:;" class="btn btn-primary">移除</a>
-                                            <a href="javascript:;" class="btn btn-primary">同步</a>
-                                            <a href="javascript:;" class="btn btn-primary">报表</a>
+                                        <td colspan="12" class="operation-td">
+                                            <a href="javascript:;" class="btn btn-primary mr10">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">同步</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10">报表</a>
                                         </td>
                                     </tr>
 

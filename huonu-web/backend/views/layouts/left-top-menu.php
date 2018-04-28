@@ -67,58 +67,91 @@ $tt = MenuHelper::getAssignedMenu(Yii::$app->user->id);
                 </li>
                 <li>
                     <a href="javascript:;">
-                        <i class="fa fa-bar-chart-o fa-fw"></i> 系统管理
+                        <i class="fa fa-gear"></i> 系统管理
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="<?= Url::toRoute('/system/user') ?>">管理员列表</a>
+                            <a href="<?= Url::toRoute('/system/user') ?>">
+                                <i class="fa fa-list-ul"></i>
+                                管理员列表
+                            </a>
                         </li>
                         <li>
-                            <a href="<?= Url::toRoute('/system/assignment') ?>">分配</a>
+                            <a href="<?= Url::toRoute('/system/assignment') ?>">
+                                <i class="fa fa-list-alt"></i>
+                                分配
+                            </a>
                         </li>
                         <li>
-                            <a href="<?= Url::toRoute('/system/role') ?>">角色列表</a>
+                            <a href="<?= Url::toRoute('/system/role') ?>">
+                                <i class="fa fa-list-ul"></i>
+                                角色列表
+                            </a>
                         </li>
                         <li>
-                            <a href="<?= Url::toRoute('/system/permission') ?>">权限列表</a>
+                            <a href="<?= Url::toRoute('/system/permission') ?>">
+                                <i class="fa fa-list-ul"></i>
+                                权限列表
+                            </a>
                         </li>
                         <li>
-                            <a href="<?= Url::toRoute('/system/route') ?>">路由列表</a>
+                            <a href="<?= Url::toRoute('/system/route') ?>">
+                                <i class="fa fa-list-ul"></i>
+                                路由列表
+                            </a>
                         </li>
                         <li>
-                            <a href="<?= Url::toRoute('/system/rule') ?>">规则列表</a>
+                            <a href="<?= Url::toRoute('/system/rule') ?>">
+                                <i class="fa fa-list-ul"></i>
+                                规则列表
+                            </a>
                         </li>
                         <li>
-                            <a href="<?= Url::toRoute('/system/menu') ?>">菜单列表</a>
+                            <a href="<?= Url::toRoute('/system/menu') ?>">
+                                <i class="glyphicon glyphicon-menu-hamburger"></i>
+                                菜单列表
+                            </a>
                         </li>
                         <li>
-                            <a href="<?= Url::toRoute('/system/log') ?>">操作日志</a>
+                            <a href="<?= Url::toRoute('/system/log') ?>">
+                                <i class="fa fa-list-alt"></i>
+                                操作日志
+                            </a>
                         </li>
                     </ul>
                 </li>
                 <li>
                     <a href="javascript:;">
-                        <i class="fa fa-bar-chart-o fa-fw"></i> 客户报表
+                        <i class="glyphicon glyphicon-list-alt"></i> 客户报表
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="<?= Url::toRoute('/report/default') ?>">人群复盘列表</a>
+                            <a href="<?= Url::toRoute('/report/default') ?>">
+                                <i class="fa fa-list-alt"></i>
+                                人群复盘列表
+                            </a>
                         </li>
                         <li>
-                            <a href="<?= Url::toRoute('/report/data-sync') ?>">数据同步</a>
+                            <a href="<?= Url::toRoute('/report/data-sync') ?>">
+                                <i class="fa fa-list-alt"></i>
+                                数据同步
+                            </a>
                         </li>
                     </ul>
                 </li>
                 <li>
                     <a href="javascript:;">
-                        <i class="fa fa-bar-chart-o fa-fw"></i> 客户计划
+                        <i class="glyphicon glyphicon-list"></i> 客户计划
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="<?= Url::toRoute('/plan/default') ?>">计划列表</a>
+                            <a href="<?= Url::toRoute('/plan/default') ?>">
+                                <i class="fa fa-list-alt"></i>
+                                计划列表
+                            </a>
                         </li>
                     </ul>
                 </li>
