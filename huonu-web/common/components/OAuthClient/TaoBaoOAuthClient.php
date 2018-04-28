@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Administrator
@@ -9,25 +10,23 @@
 namespace common\components\OAuthClient;
 
 // 抽象 实现类
-class TaoBaoOAuthClient extends AbstractOAuthClient
-{
+class TaoBaoOAuthClient extends AbstractOAuthClient {
+
     const USERINFO_URL = '';
     const AUTHORIZE_URL = '';
     const OAUTH_TOKEN_URL = '';
 
-    public function getAuthorizeUrl($callbackUrl)
-    {
+    public function getAuthorizeUrl($callbackUrl) {
         $params = array();
         $params['appid'] = $this->config['setting']['key'];
         $params['redirect_uri'] = $callbackUrl;
         $params['response_type'] = 'code';
         $params['scope'] = 'snsapi_userinfo';
 
-        return self::AUTHORIZE_URL.http_build_query($params).'#wechat_redirect';
+        return self::AUTHORIZE_URL . http_build_query($params) . '#wechat_redirect';
     }
 
-    public function getAccessToken($code)
-    {
+    public function getAccessToken($code) {
         $params = array(
             'appid' => $this->config['setting']['key'],
             'secret' => $this->config['setting']['secret'],
@@ -40,12 +39,11 @@ class TaoBaoOAuthClient extends AbstractOAuthClient
         return array(
             'openid' => $rawToken['openid'],
             'access_token' => $rawToken['access_token'],
-            'expired_time' => time() + (int)$rawToken['expires_in'],
+            'expired_time' => time() + (int) $rawToken['expires_in'],
         );
     }
 
-    public function getUserInfo($token)
-    {
+    public function getUserInfo($token) {
         $params = array(
             'openid' => $token['openid'],
             'access_token' => $token['access_token'],
@@ -57,8 +55,7 @@ class TaoBaoOAuthClient extends AbstractOAuthClient
         return $this->convertUserInfo($info);
     }
 
-    private function convertUserInfo($info)
-    {
+    private function convertUserInfo($info) {
         $userInfo = array();
         $userInfo['id'] = $info['unionid'];
         $userInfo['openid'] = $info['openid'];
@@ -69,4 +66,5 @@ class TaoBaoOAuthClient extends AbstractOAuthClient
 
         return $userInfo;
     }
+
 }

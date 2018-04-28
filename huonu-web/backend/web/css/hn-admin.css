@@ -727,13 +727,21 @@ ul.custom-fields li.placeholder:before {
 
 .pd10{ padding: 10px;}
 .pd15{ padding: 15px;}
+
 .pdl15{ padding-left: 15px}
+
 .pb60{ padding-bottom: 60px}
+.pb15{padding-bottom: 15px}
+
+.pt15{ padding-top: 15px}
 .pt40{ padding-top: 40px}
 
 .s_fs_16{ font-size: 16px}
+.s_fs_20{font-size:20px} 
 
 .mb20 { margin-bottom: 20px}
 
 .s_fc_c{ color: #4d7fff}
 .s_fc_9{ color: #999}
+.s_fc_green{ color: #51A300}
+.s_fc_red{ color: #a40100}

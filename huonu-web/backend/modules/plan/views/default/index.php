@@ -35,7 +35,7 @@ use yii\helpers\Url;
     <div class="row">
         <div class="col-lg-12">
             <div class="tabbable">
-                <ul class="nav nav-tabs">
+                <ul class="nav nav-pills">
                     <li class="active"><a href="#plan" data-placement="top" data-toggle="tab" title="计划">计划</a></li>
                     <li class=""><a href="#unit" data-placement="top" data-toggle="tab" title="单元">单元</a></li>
                     <li class=""><a href="#target" data-placement="top" data-toggle="tab" title="定向">定向</a></li>
@@ -46,7 +46,7 @@ use yii\helpers\Url;
                     <!-- 计划 -->
                     <div class="tab-pane fade in active" id="plan">
 
-                        <div class="control-group form-inline">
+                        <div class="control-group form-inline pt15 pb15">
                             <a href="<?= Url::toRoute('create-plan')?>" id="create-plan" class="btn btn-primary create-plan">
                                 <i class="fa fa-plus"></i>
                                 新建推广计划
@@ -103,24 +103,21 @@ use yii\helpers\Url;
                                         <td>
                                             <div class="w60">
                                                 <div class="ux-status-handle">
-                                                    <i class="glyphicon glyphicon-play-circle" title="正在投放"></i>
-                                                    <i class="fa fa-bar-chart-o fa-fw"></i>
+                                                    <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
+                                                    <i class="fa fa-caret-down s_fc_9"></i>
                                                     <div class="ux-status-info" style="display: none">
                                                         <ul class="ux-status-operations">
                                                             <li class="ux-operation-cur">
-                                                                <i class="">~</i>
-                                                                <i class=""></i>
-                                                                &nbsp;&nbsp;正在投放
+                                                                <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green"></i>
+                                                                正在投放
                                                             </li>
                                                             <li>
-                                                                <i class="">~</i>
-                                                                <i class=""></i>
-                                                                &nbsp;&nbsp;暂停投放
+                                                                <i class="glyphicon glyphicon-pause s_fs_20 s_fc_red"></i>
+                                                                暂停投放
                                                             </li>
                                                             <li>
-                                                                <i class="">~</i>
-                                                                <i class=""></i>
-                                                                &nbsp;&nbsp;结束投放
+                                                                <i class="glyphicon glyphicon-minus-sign s_fs_20 s_fc_9"></i>
+                                                                结束投放
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -145,6 +142,7 @@ use yii\helpers\Url;
                                             <a href="javascript:;" class="btn btn-primary">编辑</a>
                                             <a href="javascript:;" class="btn btn-primary">移除</a>
                                             <a href="javascript:;" class="btn btn-primary">置顶</a>
+                                            <a href="javascript:;" class="btn btn-primary">同步</a>
                                             <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
@@ -154,8 +152,8 @@ use yii\helpers\Url;
                                         <td>
                                             <div class="w60">
                                                 <div class="ux-status-handle">
-                                                    <i class="glyphicon glyphicon-play-circle" title="正在投放"></i>
-                                                    <i class="fa fa-bar-chart-o fa-fw"></i>
+                                                    <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
+                                                    <i class="fa fa-caret-down s_fc_9"></i>
                                                     <div class="ux-status-info" style="display: none">
                                                         <ul class="ux-status-operations">
                                                             <li class="ux-operation-cur">
@@ -196,6 +194,7 @@ use yii\helpers\Url;
                                             <a href="javascript:;" class="btn btn-primary">编辑</a>
                                             <a href="javascript:;" class="btn btn-primary">移除</a>
                                             <a href="javascript:;" class="btn btn-primary">置顶</a>
+                                            <a href="javascript:;" class="btn btn-primary">同步</a>
                                             <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
@@ -205,8 +204,8 @@ use yii\helpers\Url;
                                         <td>
                                             <div class="w60">
                                                 <div class="ux-status-handle">
-                                                    <i class="glyphicon glyphicon-play-circle" title="正在投放"></i>
-                                                    <i class="fa fa-bar-chart-o fa-fw"></i>
+                                                    <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
+                                                    <i class="fa fa-caret-down s_fc_9"></i>
                                                     <div class="ux-status-info" style="display: none">
                                                         <ul class="ux-status-operations">
                                                             <li class="ux-operation-cur">
@@ -247,6 +246,7 @@ use yii\helpers\Url;
                                             <a href="javascript:;" class="btn btn-primary">编辑</a>
                                             <a href="javascript:;" class="btn btn-primary">移除</a>
                                             <a href="javascript:;" class="btn btn-primary">置顶</a>
+                                            <a href="javascript:;" class="btn btn-primary">同步</a>
                                             <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
@@ -276,7 +276,7 @@ use yii\helpers\Url;
                     <!-- 单元 -->
                     <div class="tab-pane fade" id="unit">
                         
-                        <div class="control-group form-inline">
+                        <div class="control-group form-inline pt15 pb15">
                             <span href="javascript:;" id="create-plan" class="btn btn-primary create-plan">
                                 <i class="fa fa-plus"></i>
                                 新建推广单元
@@ -330,7 +330,7 @@ use yii\helpers\Url;
                                         <td>
                                             <div class="w60">
                                                 <div class="ux-status-handle">
-                                                    <i class="glyphicon glyphicon-play-circle" title="正在投放"></i>
+                                                    <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
                                                     <i class="fa fa-bar-chart-o fa-fw"></i>
                                                     <div class="ux-status-info" style="display: none">
                                                         <ul class="ux-status-operations">
@@ -369,6 +369,7 @@ use yii\helpers\Url;
                                             <a href="javascript:;" class="btn btn-primary">详情</a>
                                             <a href="javascript:;" class="btn btn-primary">编辑</a>
                                             <a href="javascript:;" class="btn btn-primary">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary">同步</a>
                                             <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
@@ -378,7 +379,7 @@ use yii\helpers\Url;
                                         <td>
                                             <div class="w60">
                                                 <div class="ux-status-handle">
-                                                    <i class="glyphicon glyphicon-play-circle" title="正在投放"></i>
+                                                    <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
                                                     <i class="fa fa-bar-chart-o fa-fw"></i>
                                                     <div class="ux-status-info" style="display: none">
                                                         <ul class="ux-status-operations">
@@ -417,6 +418,7 @@ use yii\helpers\Url;
                                             <a href="javascript:;" class="btn btn-primary">详情</a>
                                             <a href="javascript:;" class="btn btn-primary">编辑</a>
                                             <a href="javascript:;" class="btn btn-primary">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary">同步</a>
                                             <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
@@ -446,7 +448,7 @@ use yii\helpers\Url;
                     <!-- 定向 -->
                     <div class="tab-pane fade" id="target">
                         
-                        <div class="control-group form-inline">
+                        <div class="control-group form-inline pt15 pb15">
                             <span href="javascript:;" id="create-plan" class="btn btn-primary create-plan">
                                 <i class="fa fa-plus"></i>
                                 增加定向
@@ -511,6 +513,7 @@ use yii\helpers\Url;
                                         <td colspan="12">
                                             <a href="javascript:;" class="btn btn-primary">编辑</a>
                                             <a href="javascript:;" class="btn btn-primary">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary">同步</a>
                                             <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
@@ -531,6 +534,7 @@ use yii\helpers\Url;
                                         <td colspan="12">
                                             <a href="javascript:;" class="btn btn-primary">编辑</a>
                                             <a href="javascript:;" class="btn btn-primary">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary">同步</a>
                                             <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
@@ -560,7 +564,7 @@ use yii\helpers\Url;
                     <!-- 资源位 -->
                     <div class="tab-pane fade" id="resources">
                         
-                        <div class="control-group form-inline">
+                        <div class="control-group form-inline pt15 pb15">
                             <span href="javascript:;" id="create-plan" class="btn btn-primary create-plan">
                                 <i class="fa fa-plus"></i>
                                 增加资源位
@@ -642,6 +646,7 @@ use yii\helpers\Url;
                                     <tr class="odd gradeX cur-table-operation-tr">
                                         <td colspan="12">
                                             <a href="javascript:;" class="btn btn-primary">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary">同步</a>
                                             <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
@@ -662,6 +667,7 @@ use yii\helpers\Url;
                                     <tr class="odd gradeX cur-table-operation-tr" style="display: none">
                                         <td colspan="12">
                                             <a href="javascript:;" class="btn btn-primary">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary">同步</a>
                                             <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
@@ -691,7 +697,7 @@ use yii\helpers\Url;
                     <!-- 创意 -->
                     <div class="tab-pane fade" id="creative">
                         
-                        <div class="control-group form-inline">
+                        <div class="control-group form-inline pt15 pb15">
                             <span href="javascript:;" id="create-plan" class="btn btn-primary create-plan">
                                 <i class="fa fa-plus"></i>
                                 从创意库选择
@@ -769,6 +775,7 @@ use yii\helpers\Url;
                                     <tr class="odd gradeX cur-table-operation-tr">
                                         <td colspan="12">
                                             <a href="javascript:;" class="btn btn-primary">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary">同步</a>
                                             <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
@@ -788,6 +795,7 @@ use yii\helpers\Url;
                                     <tr class="odd gradeX cur-table-operation-tr" style="display: none">
                                         <td colspan="12">
                                             <a href="javascript:;" class="btn btn-primary">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary">同步</a>
                                             <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
