@@ -109,6 +109,7 @@ use yii\helpers\Url;
                                                             <li class="ux-operation-cur">
                                                                 <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green"></i>
                                                                 <a href="javascript:;">正在投放</a>
+                                                                <i class="glyphicon glyphicon-ok ux-operation-cur-icon"></i>
                                                             </li>
                                                             <li>
                                                                 <i class="glyphicon glyphicon-pause s_fs_20 s_fc_red"></i>
@@ -158,6 +159,7 @@ use yii\helpers\Url;
                                                             <li class="ux-operation-cur">
                                                                 <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green"></i>
                                                                 <a href="javascript:;">正在投放</a>
+                                                                <i class="glyphicon glyphicon-ok ux-operation-cur-icon"></i>
                                                             </li>
                                                             <li>
                                                                 <i class="glyphicon glyphicon-pause s_fs_20 s_fc_red"></i>
@@ -207,6 +209,7 @@ use yii\helpers\Url;
                                                             <li class="ux-operation-cur">
                                                                 <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green"></i>
                                                                 <a href="javascript:;">正在投放</a>
+                                                                <i class="glyphicon glyphicon-ok ux-operation-cur-icon"></i>
                                                             </li>
                                                             <li>
                                                                 <i class="glyphicon glyphicon-pause s_fs_20 s_fc_red"></i>
@@ -330,6 +333,7 @@ use yii\helpers\Url;
                                                             <li class="ux-operation-cur">
                                                                 <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green"></i>
                                                                 <a href="javascript:;">正在投放</a>
+                                                                <i class="glyphicon glyphicon-ok ux-operation-cur-icon"></i>
                                                             </li>
                                                             <li>
                                                                 <i class="glyphicon glyphicon-pause s_fs_20 s_fc_red"></i>
@@ -376,6 +380,7 @@ use yii\helpers\Url;
                                                             <li class="ux-operation-cur">
                                                                 <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green"></i>
                                                                 <a href="javascript:;">正在投放</a>
+                                                                <i class="glyphicon glyphicon-ok ux-operation-cur-icon"></i>
                                                             </li>
                                                             <li>
                                                                 <i class="glyphicon glyphicon-pause s_fs_20 s_fc_red"></i>

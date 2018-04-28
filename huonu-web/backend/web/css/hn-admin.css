@@ -749,5 +749,7 @@ ul.custom-fields li.placeholder:before {
 }
 .ux-status-handle .ux-status-info .ux-status-operations li.ux-operation-cur{cursor: default}
 .ux-status-handle .ux-status-info .ux-status-operations li{list-style-type: none; list-style-image: none; height: 44px; line-height: 32px; padding: 5px 10px; cursor: pointer;}
-.ux-status-handle .ux-status-info .ux-status-operations{ margin-top: 0; }
-.ux-status-handle .ux-status-info .ux-status-operations li:hover{background-color: #999;}//#fafafa}
+.ux-status-handle .ux-status-info .ux-status-operations{ padding: 0px; margin: -5px 0 0 0 }
+.ux-status-handle .ux-status-info .ux-status-operations li:hover{background-color: #fafafa;}
+.ux-status-handle .ux-status-info .ux-status-operations li i{line-height: 32px;}
+.ux-status-handle .ux-status-info .ux-status-operations li .ux-operation-cur-icon{float: right; margin-right: 4px; color: #999; font-size: 10px;}
