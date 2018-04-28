@@ -47,10 +47,10 @@ use yii\helpers\Url;
                     <div class="tab-pane fade in active" id="plan">
 
                         <div class="control-group form-inline">
-                            <span href="javascript:;" id="create-plan" class="btn btn-primary create-plan">
+                            <a href="<?= Url::toRoute('create-plan')?>" id="create-plan" class="btn btn-primary create-plan">
                                 <i class="fa fa-plus"></i>
                                 新建推广计划
-                            </span>
+                            </a>
 
                             <select name="" class="form-control">
                                 <option>全部状态</option>
@@ -77,7 +77,8 @@ use yii\helpers\Url;
 
                         </div>
                         
-                        <div class="control-group">
+                        <div class="control-group table-responsive">
+
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
@@ -139,12 +140,12 @@ use yii\helpers\Url;
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr">
                                         <td colspan="12">
-                                            <a>设置</a>
-                                            <a>详情</a>
-                                            <a>复制</a>
-                                            <a>移除</a>
-                                            <a>置顶</a>
-                                            <a>报表</a>
+                                            <a href="javascript:;" class="btn btn-primary">设置</a>
+                                            <a href="javascript:;" class="btn btn-primary">详情</a>
+                                            <a href="javascript:;" class="btn btn-primary">编辑</a>
+                                            <a href="javascript:;" class="btn btn-primary">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary">置顶</a>
+                                            <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
 
@@ -190,12 +191,12 @@ use yii\helpers\Url;
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr" style="display: none;">
                                         <td colspan="12">
-                                            <a>设置</a>
-                                            <a>详情</a>
-                                            <a>复制</a>
-                                            <a>移除</a>
-                                            <a>置顶</a>
-                                            <a>报表</a>
+                                            <a href="javascript:;" class="btn btn-primary">设置</a>
+                                            <a href="javascript:;" class="btn btn-primary">详情</a>
+                                            <a href="javascript:;" class="btn btn-primary">编辑</a>
+                                            <a href="javascript:;" class="btn btn-primary">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary">置顶</a>
+                                            <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
                                     
@@ -241,12 +242,12 @@ use yii\helpers\Url;
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr" style="display: none;">
                                         <td colspan="12">
-                                            <a>设置</a>
-                                            <a>详情</a>
-                                            <a>复制</a>
-                                            <a>移除</a>
-                                            <a>置顶</a>
-                                            <a>报表</a>
+                                            <a href="javascript:;" class="btn btn-primary">设置</a>
+                                            <a href="javascript:;" class="btn btn-primary">详情</a>
+                                            <a href="javascript:;" class="btn btn-primary">编辑</a>
+                                            <a href="javascript:;" class="btn btn-primary">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary">置顶</a>
+                                            <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
 
@@ -305,7 +306,7 @@ use yii\helpers\Url;
 
                         </div>
                         
-                        <div class="control-group">
+                        <div class="control-group table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
@@ -365,10 +366,10 @@ use yii\helpers\Url;
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr">
                                         <td colspan="12">
-                                            <a>详情</a>
-                                            <a>复制</a>
-                                            <a>移除</a>
-                                            <a>报表</a>
+                                            <a href="javascript:;" class="btn btn-primary">详情</a>
+                                            <a href="javascript:;" class="btn btn-primary">编辑</a>
+                                            <a href="javascript:;" class="btn btn-primary">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
 
@@ -413,10 +414,10 @@ use yii\helpers\Url;
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr" style="display: none">
                                         <td colspan="12">
-                                            <a>详情</a>
-                                            <a>复制</a>
-                                            <a>移除</a>
-                                            <a>报表</a>
+                                            <a href="javascript:;" class="btn btn-primary">详情</a>
+                                            <a href="javascript:;" class="btn btn-primary">编辑</a>
+                                            <a href="javascript:;" class="btn btn-primary">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
 
@@ -476,7 +477,7 @@ use yii\helpers\Url;
 
                         </div>
                         
-                        <div class="control-group">
+                        <div class="control-group table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
@@ -508,9 +509,9 @@ use yii\helpers\Url;
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr">
                                         <td colspan="12">
-                                            <a>编辑</a>
-                                            <a>移除</a>
-                                            <a>报表</a>
+                                            <a href="javascript:;" class="btn btn-primary">编辑</a>
+                                            <a href="javascript:;" class="btn btn-primary">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
 
@@ -528,9 +529,9 @@ use yii\helpers\Url;
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr" style="display: none">
                                         <td colspan="12">
-                                            <a>编辑</a>
-                                            <a>移除</a>
-                                            <a>报表</a>
+                                            <a href="javascript:;" class="btn btn-primary">编辑</a>
+                                            <a href="javascript:;" class="btn btn-primary">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
 
@@ -606,7 +607,7 @@ use yii\helpers\Url;
 
                         </div>
                         
-                        <div class="control-group">
+                        <div class="control-group table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
@@ -640,8 +641,8 @@ use yii\helpers\Url;
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr">
                                         <td colspan="12">
-                                            <a>移除</a>
-                                            <a>报表</a>
+                                            <a href="javascript:;" class="btn btn-primary">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
 
@@ -660,8 +661,8 @@ use yii\helpers\Url;
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr" style="display: none">
                                         <td colspan="12">
-                                            <a>移除</a>
-                                            <a>报表</a>
+                                            <a href="javascript:;" class="btn btn-primary">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
 
@@ -735,7 +736,7 @@ use yii\helpers\Url;
 
                         </div>
                         
-                        <div class="control-group">
+                        <div class="control-group table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
@@ -767,8 +768,8 @@ use yii\helpers\Url;
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr">
                                         <td colspan="12">
-                                            <a>移除</a>
-                                            <a>报表</a>
+                                            <a href="javascript:;" class="btn btn-primary">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
 
@@ -786,8 +787,8 @@ use yii\helpers\Url;
                                     </tr>
                                     <tr class="odd gradeX cur-table-operation-tr" style="display: none">
                                         <td colspan="12">
-                                            <a>移除</a>
-                                            <a>报表</a>
+                                            <a href="javascript:;" class="btn btn-primary">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
 

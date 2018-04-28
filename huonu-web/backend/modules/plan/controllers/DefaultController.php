@@ -34,6 +34,7 @@ class DefaultController extends Controller
     // 新建计划 TODO
     public function actionCreatePlan()
     {
+        return $this->render('create-plan');
     }
 
     // 改变计划状态 TODO
