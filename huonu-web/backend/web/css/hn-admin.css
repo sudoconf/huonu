@@ -611,35 +611,6 @@ table.dataTable thead .sorting:after {
     margin: 10px;
 }
 
-.w60 {
-    width: 60px;
-}
-
-.ux-status-handle {
-    position: relative;
-}
-
-.ux-status-handle:hover .ux-status-handle {
-    display: block;
-}
-
-.ux-status-handle .ux-status-info {
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 9996;
-    width: 246px;
-    box-shadow: 0 6px 8px rgba(51, 51, 51, .08);
-    background-color: #fff;
-    border: 0;
-    border-radius: 2px;
-    text-align: left;
-    line-height: 1.8;
-    border-collapse: separate;
-    word-wrap: break-word;
-    overflow: hidden;
-}
-
 /*创建复盘*/
 .creat-step {
     width: 20px;
@@ -745,3 +716,38 @@ ul.custom-fields li.placeholder:before {
 .s_fc_9{ color: #999}
 .s_fc_green{ color: #51A300}
 .s_fc_red{ color: #a40100}
+
+
+
+.w60 {
+    width: 60px;
+}
+
+.ux-status-handle {
+    position: relative;
+}
+
+.ux-status-handle:hover .ux-status-handle {
+    display: block;
+}
+
+.ux-status-handle .ux-status-info {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 9996;
+    width: 246px;
+    box-shadow: 0 6px 8px rgba(51, 51, 51, .08);
+    background-color: #fff;
+    border: 0;
+    border-radius: 5px;
+    text-align: left;
+    line-height: 1.8;
+    border-collapse: separate;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+.ux-status-handle .ux-status-info .ux-status-operations li.ux-operation-cur{cursor: default}
+.ux-status-handle .ux-status-info .ux-status-operations li{list-style-type: none; list-style-image: none; height: 44px; line-height: 32px; padding: 5px 10px; cursor: pointer;}
+.ux-status-handle .ux-status-info .ux-status-operations{ margin-top: 0; }
+.ux-status-handle .ux-status-info .ux-status-operations li:hover{background-color: #999;}//#fafafa}

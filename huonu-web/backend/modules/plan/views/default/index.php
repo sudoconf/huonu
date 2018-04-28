@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-
 ?>
 
 <div id="page-wrapper">
@@ -47,7 +46,7 @@ use yii\helpers\Url;
                     <div class="tab-pane fade in active" id="plan">
 
                         <div class="control-group form-inline pt15 pb15">
-                            <a href="<?= Url::toRoute('create-plan')?>" id="create-plan" class="btn btn-primary create-plan">
+                            <a href="<?= Url::toRoute('create-plan') ?>" id="create-plan" class="btn btn-primary create-plan">
                                 <i class="fa fa-plus"></i>
                                 新建推广计划
                             </a>
@@ -76,7 +75,7 @@ use yii\helpers\Url;
                             </select>
 
                         </div>
-                        
+
                         <div class="control-group table-responsive">
 
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -103,21 +102,21 @@ use yii\helpers\Url;
                                         <td>
                                             <div class="w60">
                                                 <div class="ux-status-handle">
-                                                    <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
+                                                    <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
                                                     <i class="fa fa-caret-down s_fc_9"></i>
                                                     <div class="ux-status-info" style="display: none">
                                                         <ul class="ux-status-operations">
                                                             <li class="ux-operation-cur">
-                                                                <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green"></i>
-                                                                正在投放
+                                                                <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green"></i>
+                                                                <a href="javascript:;">正在投放</a>
                                                             </li>
                                                             <li>
-                                                                <i class="glyphicon glyphicon-pause s_fs_20 s_fc_red"></i>
-                                                                暂停投放
+                                                                <i class="glyphicon glyphicon-pause s_fs_20 s_fc_red"></i>
+                                                                <a href="javascript:;">暂停投放</a>
                                                             </li>
                                                             <li>
-                                                                <i class="glyphicon glyphicon-minus-sign s_fs_20 s_fc_9"></i>
-                                                                结束投放
+                                                                <i class="glyphicon glyphicon-minus-sign s_fs_20 s_fc_9"></i>
+                                                                <a href="javascript:;">结束投放</a>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -150,24 +149,26 @@ use yii\helpers\Url;
                                     <tr class="odd gradeX operation-open">
                                         <th><input type="checkbox"></th>
                                         <td>
-                                            <div class="ux-status-handle">
-                                                <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
-                                                <i class="fa fa-caret-down s_fc_9"></i>
-                                                <div class="ux-status-info" style="display: none">
-                                                    <ul class="ux-status-operations">
-                                                        <li class="ux-operation-cur">
-                                                            <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green"></i>
-                                                            正在投放
-                                                        </li>
-                                                        <li>
-                                                            <i class="glyphicon glyphicon-pause s_fs_20 s_fc_red"></i>
-                                                            暂停投放
-                                                        </li>
-                                                        <li>
-                                                            <i class="glyphicon glyphicon-minus-sign s_fs_20 s_fc_9"></i>
-                                                            结束投放
-                                                        </li>
-                                                    </ul>
+                                            <div class="w60">
+                                                <div class="ux-status-handle">
+                                                    <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
+                                                    <i class="fa fa-caret-down s_fc_9"></i>
+                                                    <div class="ux-status-info" style="display: none">
+                                                        <ul class="ux-status-operations">
+                                                            <li class="ux-operation-cur">
+                                                                <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green"></i>
+                                                                <a href="javascript:;">正在投放</a>
+                                                            </li>
+                                                            <li>
+                                                                <i class="glyphicon glyphicon-pause s_fs_20 s_fc_red"></i>
+                                                                <a href="javascript:;">暂停投放</a>
+                                                            </li>
+                                                            <li>
+                                                                <i class="glyphicon glyphicon-minus-sign s_fs_20 s_fc_9"></i>
+                                                                <a href="javascript:;">结束投放</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </td>
@@ -193,28 +194,30 @@ use yii\helpers\Url;
                                             <a href="javascript:;" class="btn btn-primary">报表</a>
                                         </td>
                                     </tr>
-                                    
+
                                     <tr class="odd gradeX operation-open">
                                         <th><input type="checkbox"></th>
                                         <td>
-                                            <div class="ux-status-handle">
-                                                <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
-                                                <i class="fa fa-caret-down s_fc_9"></i>
-                                                <div class="ux-status-info" style="display: none">
-                                                    <ul class="ux-status-operations">
-                                                        <li class="ux-operation-cur">
-                                                            <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green"></i>
-                                                            正在投放
-                                                        </li>
-                                                        <li>
-                                                            <i class="glyphicon glyphicon-pause s_fs_20 s_fc_red"></i>
-                                                            暂停投放
-                                                        </li>
-                                                        <li>
-                                                            <i class="glyphicon glyphicon-minus-sign s_fs_20 s_fc_9"></i>
-                                                            结束投放
-                                                        </li>
-                                                    </ul>
+                                            <div class="w60">
+                                                <div class="ux-status-handle">
+                                                    <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
+                                                    <i class="fa fa-caret-down s_fc_9"></i>
+                                                    <div class="ux-status-info" style="display: none">
+                                                        <ul class="ux-status-operations">
+                                                            <li class="ux-operation-cur">
+                                                                <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green"></i>
+                                                                <a href="javascript:;">正在投放</a>
+                                                            </li>
+                                                            <li>
+                                                                <i class="glyphicon glyphicon-pause s_fs_20 s_fc_red"></i>
+                                                                <a href="javascript:;">暂停投放</a>
+                                                            </li>
+                                                            <li>
+                                                                <i class="glyphicon glyphicon-minus-sign s_fs_20 s_fc_9"></i>
+                                                                <a href="javascript:;">结束投放</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </td>
@@ -260,12 +263,12 @@ use yii\helpers\Url;
                                 </ul>
                             </nav>
                         </div>
-                        
+
                     </div>
 
                     <!-- 单元 -->
                     <div class="tab-pane fade" id="unit">
-                        
+
                         <div class="control-group form-inline pt15 pb15">
                             <span href="javascript:;" id="create-plan" class="btn btn-primary create-plan">
                                 <i class="fa fa-plus"></i>
@@ -295,7 +298,7 @@ use yii\helpers\Url;
                             </select>
 
                         </div>
-                        
+
                         <div class="control-group table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
@@ -318,24 +321,26 @@ use yii\helpers\Url;
                                     <tr class="odd gradeX operation-open">
                                         <th><input type="checkbox"></th>
                                         <td>
-                                            <div class="ux-status-handle">
-                                                <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
-                                                <i class="fa fa-caret-down s_fc_9"></i>
-                                                <div class="ux-status-info" style="display: none">
-                                                    <ul class="ux-status-operations">
-                                                        <li class="ux-operation-cur">
-                                                            <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green"></i>
-                                                            正在投放
-                                                        </li>
-                                                        <li>
-                                                            <i class="glyphicon glyphicon-pause s_fs_20 s_fc_red"></i>
-                                                            暂停投放
-                                                        </li>
-                                                        <li>
-                                                            <i class="glyphicon glyphicon-minus-sign s_fs_20 s_fc_9"></i>
-                                                            结束投放
-                                                        </li>
-                                                    </ul>
+                                            <div class="w60">
+                                                <div class="ux-status-handle">
+                                                    <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
+                                                    <i class="fa fa-caret-down s_fc_9"></i>
+                                                    <div class="ux-status-info" style="display: none">
+                                                        <ul class="ux-status-operations">
+                                                            <li class="ux-operation-cur">
+                                                                <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green"></i>
+                                                                <a href="javascript:;">正在投放</a>
+                                                            </li>
+                                                            <li>
+                                                                <i class="glyphicon glyphicon-pause s_fs_20 s_fc_red"></i>
+                                                                <a href="javascript:;">暂停投放</a>
+                                                            </li>
+                                                            <li>
+                                                                <i class="glyphicon glyphicon-minus-sign s_fs_20 s_fc_9"></i>
+                                                                <a href="javascript:;">结束投放</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </td>
@@ -362,24 +367,26 @@ use yii\helpers\Url;
                                     <tr class="odd gradeX operation-open">
                                         <th><input type="checkbox"></th>
                                         <td>
-                                            <div class="ux-status-handle">
-                                                <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
-                                                <i class="fa fa-caret-down s_fc_9"></i>
-                                                <div class="ux-status-info" style="display: none">
-                                                    <ul class="ux-status-operations">
-                                                        <li class="ux-operation-cur">
-                                                            <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green"></i>
-                                                            正在投放
-                                                        </li>
-                                                        <li>
-                                                            <i class="glyphicon glyphicon-pause s_fs_20 s_fc_red"></i>
-                                                            暂停投放
-                                                        </li>
-                                                        <li>
-                                                            <i class="glyphicon glyphicon-minus-sign s_fs_20 s_fc_9"></i>
-                                                            结束投放
-                                                        </li>
-                                                    </ul>
+                                            <div class="w60">
+                                                <div class="ux-status-handle">
+                                                    <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green" title="正在投放"></i>
+                                                    <i class="fa fa-caret-down s_fc_9"></i>
+                                                    <div class="ux-status-info" style="display: none">
+                                                        <ul class="ux-status-operations">
+                                                            <li class="ux-operation-cur">
+                                                                <i class="glyphicon glyphicon-play-circle s_fs_20 s_fc_green"></i>
+                                                                <a href="javascript:;">正在投放</a>
+                                                            </li>
+                                                            <li>
+                                                                <i class="glyphicon glyphicon-pause s_fs_20 s_fc_red"></i>
+                                                                <a href="javascript:;">暂停投放</a>
+                                                            </li>
+                                                            <li>
+                                                                <i class="glyphicon glyphicon-minus-sign s_fs_20 s_fc_9"></i>
+                                                                <a href="javascript:;">结束投放</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </td>
@@ -422,12 +429,12 @@ use yii\helpers\Url;
                                 </ul>
                             </nav>
                         </div>
-                        
+
                     </div>
 
                     <!-- 定向 -->
                     <div class="tab-pane fade" id="target">
-                        
+
                         <div class="control-group form-inline pt15 pb15">
                             <span href="javascript:;" id="create-plan" class="btn btn-primary create-plan">
                                 <i class="fa fa-plus"></i>
@@ -458,7 +465,7 @@ use yii\helpers\Url;
                             </select>
 
                         </div>
-                        
+
                         <div class="control-group table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
@@ -538,12 +545,12 @@ use yii\helpers\Url;
                                 </ul>
                             </nav>
                         </div>
-                        
+
                     </div>
 
                     <!-- 资源位 -->
                     <div class="tab-pane fade" id="resources">
-                        
+
                         <div class="control-group form-inline pt15 pb15">
                             <span href="javascript:;" id="create-plan" class="btn btn-primary create-plan">
                                 <i class="fa fa-plus"></i>
@@ -590,7 +597,7 @@ use yii\helpers\Url;
                             </select>
 
                         </div>
-                        
+
                         <div class="control-group table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
@@ -671,18 +678,18 @@ use yii\helpers\Url;
                                 </ul>
                             </nav>
                         </div>
-                        
+
                     </div>
 
                     <!-- 创意 -->
                     <div class="tab-pane fade" id="creative">
-                        
+
                         <div class="control-group form-inline pt15 pb15">
                             <span href="javascript:;" id="create-plan" class="btn btn-primary create-plan">
                                 <i class="fa fa-plus"></i>
                                 从创意库选择
                             </span>
-                            
+
                             <span href="javascript:;" id="create-plan" class="btn btn-primary create-plan">
                                 添加新创意
                             </span>
@@ -721,7 +728,7 @@ use yii\helpers\Url;
                             </select>
 
                         </div>
-                        
+
                         <div class="control-group table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
@@ -799,7 +806,7 @@ use yii\helpers\Url;
                                 </ul>
                             </nav>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
