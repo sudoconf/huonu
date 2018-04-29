@@ -47,10 +47,9 @@ class SystemLog extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['operation_id', 'created_at', 'created_id'], 'integer'],
-            [['module', 'controller', 'action', 'url', 'params', 'agent', 'ip', 'remarks'], 'required'],
+            [['module', 'controller', 'action', 'url', 'params', 'agent', 'ip'], 'required'],
             [['params'], 'string'],
-            [['type'], 'string', 'max' => 1],
+            [['operation_id', 'created_at', 'created_id'], 'integer'],
             [['module', 'controller', 'action'], 'string', 'max' => 64],
             [['url'], 'string', 'max' => 100],
             [['agent'], 'string', 'max' => 255],
@@ -135,13 +134,12 @@ class SystemLog extends \yii\db\ActiveRecord
                 $logData['agent'] = $headers->get('User-Agent');
             }
 
-            $log = new self();
+            $log = new SystemLog();
             $log->setAttributes($logData);
-            print_r($log->save());die;
             if (!$log->save()) {
                 throw new \Exception(Json::encode($log->getErrors()));
             }
-            die;
+
             $transaction->commit();
         } catch (\Exception $e) {
             $transaction->rollBack();

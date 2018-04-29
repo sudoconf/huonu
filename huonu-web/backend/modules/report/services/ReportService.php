@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Administrator
@@ -10,17 +11,17 @@ namespace backend\modules\report\services;
 
 use backend\models\Multitray;
 use backend\models\MultitrayPolicyGroup;
+use backend\models\SystemLog;
 use common\components\CtHelper;
 use common\services\BaseService;
 use Yii;
 use yii\db\Exception;
 
 // 报表 service TODO
-class ReportService extends BaseService
-{
+class ReportService extends BaseService {
+
     // 添加 复盘实际操作
-    public function create()
-    {
+    public function create() {
         $session = Yii::$app->session;
 
         // 第一步保存的数据
@@ -36,7 +37,6 @@ class ReportService extends BaseService
         $transaction = Yii::$app->db->beginTransaction();
 
         try {
-
             // 添加复盘
             $analyseArray[''] = $setParameter[''];
 
@@ -48,8 +48,11 @@ class ReportService extends BaseService
             $multitrayId = Yii::$app->db->getLastInsertID();
 
             // 添加复盘日志
+            $analyseRemarks = sprintf('%s添加了复盘：%s', Yii::$app->user->identity->username, '');
+            SystemLog::create(SystemLog::TYPE_CREATE, $multitrayId, $analyseRemarks, $setParameter['复盘名称']);
 
-            // 添加策略组
+
+            // TODO 添加策略组 策略组最多只能有9个 所以数据库要分批存储
             $multitrayPolicyGroupArray[] = '';
 
             $multitrayPolicyGroup = new MultitrayPolicyGroup();
@@ -60,6 +63,11 @@ class ReportService extends BaseService
             $multitrayPolicyGroupId = Yii::$app->db->getLastInsertID();
 
             // 添加策略组日志
+            $policyGroupRemarks = sprintf('%s添加了策略组：%s', Yii::$app->user->identity->username, '');
+            SystemLog::create(SystemLog::TYPE_CREATE, $multitrayPolicyGroupId, $policyGroupRemarks, $multitrayPolicyGroupArray['策略组名称']);
+
+            // 添加完数据之后 生成统计数据 TODO
+
 
             $session->remove('setParameter');
             $session->remove('strategyGroup');
@@ -68,8 +76,8 @@ class ReportService extends BaseService
             CtHelper::response(true, '操作成功');
         } catch (Exception $e) {
             $transaction->rollBack();
-            CtHelper::response(true, $e->getMessage());
+            CtHelper::response(false, $e->getMessage());
         }
-
     }
+
 }

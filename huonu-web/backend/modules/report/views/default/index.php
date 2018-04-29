@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\searchs\MultitraySearch */
@@ -47,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'multitray_cycle',
                         'content' => function ($dataProvider) {
-                            return $dataProvider->multitray_cycle.'天';
+                            return $dataProvider->multitray_cycle . '天';
                         },
                     ],
                     [
@@ -60,13 +61,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         'template' => '{info}{delete}',
                         'buttons' => [
                             'info' => function ($url, $model, $key) {
-                                return Html::button('查看', [
-                                    'class' => 'btn btn-primary reset-password'
-                                ]);
+                                $url = Url::toRoute(['show', 'multitrayId' => $model->multitray_id]);
+                                return Html::a('<span class="btn btn-primary">查看</span>', $url, ['title' => '查看', 'class' => 'mr10']);
                             },
                             'delete' => function ($url, $model, $key) {
                                 return Html::button('删除', [
-                                    'class' => 'btn btn-primary reset-password'
+                                    'class' => 'btn btn-primary'
                                 ]);
                             },
                         ],

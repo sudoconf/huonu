@@ -2,15 +2,17 @@
 
 namespace backend\modules\plan\controllers;
 
+use backend\controllers\BaseController;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 
-class DefaultController extends Controller {
+class DefaultController extends BaseController
+{
 
     /**
      * @inheritdoc
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -25,48 +27,75 @@ class DefaultController extends Controller {
      * 计划列表
      * @return string
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         return $this->render('index');
     }
 
-    // 新建计划 TODO
-    public function actionCreatePlan() {
+    // TODO 改变计划状态
+    public function actionAjaxChangePlanState()
+    {
+
+    }
+
+    // TODO 计划设置
+    public function actionAjaxSetPlan()
+    {
+
+    }
+
+    // TODO 计划详情
+    public function actionDetailPlan()
+    {
+
+    }
+
+    // TODO 复制计划
+    public function actionAjaxCopyPlan()
+    {
+
+    }
+
+    // TODO 移除计划
+    public function actionAjaxRemovePlan()
+    {
+
+    }
+
+    // TODO 置顶计划
+    public function actionAjaxPlanSort()
+    {
+
+    }
+
+    // TODO 计划报表
+    public function actionPlanReport()
+    {
+
+    }
+
+    // TODO 计划同步
+    public function actionAjaxPlanSync()
+    {
+
+    }
+
+    // TODO 新建计划
+    public function actionCreatePlan()
+    {
         return $this->render('create-plan');
     }
 
-    // 改变计划状态 TODO
-    public function actionAjaxChangePlanState() {
-        
+    // TODO Ajax 创建调价模板
+    public function actionAjaxCreateAdjustPriceTemplate()
+    {
+
     }
 
-    // 计划设置 TODO
-    public function actionAjaxSetPlan() {
-        
-    }
+    // TODO Ajax 创建地域模板
+    public function actionAjaxCreateRegionalTemplate()
+    {
 
-    // 计划详情 TODO
-    public function actionDetailPlan() {
-        
-    }
-
-    // 复制计划 TODO
-    public function actionAjaxCopyPlan() {
-        
-    }
-
-    // 移除计划 TODO
-    public function actionAjaxRemovePlan() {
-        
-    }
-
-    // 置顶计划 TODO
-    public function actionAjaxPlanSort() {
-        
-    }
-
-    // 计划报表 TODO
-    public function actionPlanReport() {
-        
     }
 
 }

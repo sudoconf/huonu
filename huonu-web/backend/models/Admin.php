@@ -112,7 +112,7 @@ class Admin extends BaseAdmin
 
             $currentUserName = Yii::$app->user->identity->username;
 
-            $remarks = sprintf('%添加了用户：%', $currentUserName, $result->username);
+            $remarks = sprintf('%s添加了用户：%s', $currentUserName, $result->username);
 
             SystemLog::create(SystemLog::TYPE_CREATE, $result->getId(), $remarks, $user);
 

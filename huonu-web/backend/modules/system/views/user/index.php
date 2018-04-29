@@ -169,12 +169,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 data: form.serialize(),
                 success: function (response) {
                     console.log(response);
-                    // if (response.data != null) {
-                    //     layer.alert('保存成功', {icon: 1});
-                    //     window.location.reload();
-                    // } else {
-                    //     layer.alert('保存失败', {icon: 2});
-                    // }
+                    if (response.data != null) {
+                        layer.alert('保存成功', {icon: 1});
+                        window.location.reload();
+                    } else {
+                        layer.alert('保存失败', {icon: 2});
+                    }
                 },
                 error: function () {
                     layer.alert('系统错误');

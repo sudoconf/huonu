@@ -139,7 +139,17 @@ class DefaultController extends BaseController {
      * 复盘详情
      */
     public function actionShow() {
-        
+
+        // 按时日期分析
+
+        // 按人群分析
+
+        // 策略组按日分析
+
+        // 定向人群按日分析
+
+        return $this->render('show');
+
     }
 
     /**
