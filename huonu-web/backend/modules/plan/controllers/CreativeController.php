@@ -38,4 +38,10 @@ class CreativeController extends BaseController
     {
 
     }
+
+    // TODO 增加创意
+    public function actionAddCreative()
+    {
+
+    }
 }

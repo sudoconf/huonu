@@ -38,4 +38,10 @@ class ResourceController extends BaseController
     {
 
     }
+
+    // TODO 增加资源位
+    public function actionAddResource()
+    {
+
+    }
 }

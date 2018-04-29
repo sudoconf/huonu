@@ -44,7 +44,7 @@ use yii\helpers\Url;
 
 
 <?= Html::jsFile('@web/vendor/echarts-2.2.7/echarts-all.js') ?>
-<?= Html::jsFile('@web/js/timelineOption.js') ?>
+<?= Html::jsFile('@web/js/plan/timelineOption.js') ?>
 
 <script type="text/javascript">
 //初始化echarts实例

@@ -40,4 +40,10 @@ class TargetController extends BaseController
 
     }
 
+    // TODO 增加定向
+    public function actionAddTarget()
+    {
+
+    }
+
 }

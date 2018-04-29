@@ -27,14 +27,14 @@ class DataSyncController extends BaseController
         ];
     }
 
-    // 数据同步列表
+    // TODO 数据同步列表
     public function actionIndex()
     {
         return $this->render('index');
     }
 
-    // ajax 数据同步 TODO
-    public function actionAjaxSync()
+    // TODO ajax 数据同步
+    public function actionAjaxDataSync()
     {
     }
 
