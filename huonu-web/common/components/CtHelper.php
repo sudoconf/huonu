@@ -23,6 +23,12 @@ class CtHelper
         ];
     }
 
+    /**
+     * 统一返回结果
+     * @param bool $result 状态 true or false
+     * @param string $message
+     * @param array $data
+     */
     public static function response($result = true, $message = '', $data = [])
     {
         Yii::$app->response->data = CtHelper::makeResponse($result, $message, $data);

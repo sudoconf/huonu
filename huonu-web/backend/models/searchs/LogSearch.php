@@ -3,6 +3,7 @@
 namespace backend\models\searchs;
 
 use backend\models\Admin;
+use backend\models\SystemLog;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -11,7 +12,7 @@ use backend\models\Log;
 /**
  * LogSearch represents the model behind the search form of `backend\models\Log`.
  */
-class LogSearch extends Log
+class LogSearch extends SystemLog
 {
     /**
      * @inheritdoc
@@ -42,11 +43,11 @@ class LogSearch extends Log
      */
     public function search($params)
     {
-        $query = Log::find();
+        $query = SystemLog::find();
 
         // add conditions that should always apply here
-        $query->select(Log::tableName().'.*,admin.username');
-        $query->join('left join', Admin::tableName().' admin', 'admin.id = huonu_log.created_id');
+        $query->select(SystemLog::tableName().'.*,admin.username');
+        $query->join('left join', Admin::tableName().' admin', 'admin.id = huonu_system_log.created_id');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
-use \backend\models\Log;
+use \backend\models\SystemLog;
 use \yii\widgets\DetailView;
 use yii\helpers\Url;
 
@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'type',
                         'value' => function($model) {
-                            return Log::getTypeDescription($model->type);
+                            return SystemLog::getTypeDescription($model->type);
                         },
                     ],
                     'module',

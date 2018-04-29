@@ -6,6 +6,7 @@ use backend\controllers\BaseController;
 use backend\models\AuthorizeUser;
 use backend\models\Multitray;
 use backend\models\searchs\MultitraySearch;
+use backend\modules\report\services\ReportService;
 use common\components\CtHelper;
 use yii\filters\VerbFilter;
 use Yii;
@@ -13,13 +14,12 @@ use Yii;
 /**
  * Default controller for the `report` module
  */
-class DefaultController extends BaseController
-{
+class DefaultController extends BaseController {
+
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -34,14 +34,13 @@ class DefaultController extends BaseController
      * 列表
      * @return string
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new MultitraySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -49,32 +48,29 @@ class DefaultController extends BaseController
      * 创建第一步 TODO
      * @return string
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new Multitray();
         // print_r(Yii::$app->request->post());die;
         return $this->render('create', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
     /**
      * 第一步 ajax 获取店铺 TODO
      */
-    public function actionAjaxGetShop()
-    {
+    public function actionAjaxGetShop() {
         $inputStr = Yii::$app->request->get('inputStr');
         $shop = AuthorizeUser::find()
-            ->where(['like', 'taobao_user_nick', $inputStr])
-            ->asArray()->all();
+                        ->where(['like', 'taobao_user_nick', $inputStr])
+                        ->asArray()->all();
         CtHelper::response(200, 'success', $shop);
     }
 
     /**
      * 保存第一步骤的数据 TODO
      */
-    public function actionAjaxSaveSetParameter()
-    {
+    public function actionAjaxSaveSetParameter() {
         $data = Yii::$app->request->post();
 
         // 后续在做 验证字段规则 TODO
@@ -98,8 +94,7 @@ class DefaultController extends BaseController
     /**
      * 第二步 ajax 获取定向列表 TODO
      */
-    public function actionAjaxGetTarget()
-    {
+    public function actionAjaxGetTarget() {
         $shop = AuthorizeUser::find()->asArray()->all();
         CtHelper::response(200, 'success', $shop);
     }
@@ -107,8 +102,7 @@ class DefaultController extends BaseController
     /**
      * 保存第二步骤的数据 TODO
      */
-    public function actionAjaxSaveStrategyGroup()
-    {
+    public function actionAjaxSaveStrategyGroup() {
         $data = Yii::$app->request->post();
 
         // 后续在做 验证字段规则 TODO
@@ -121,8 +115,8 @@ class DefaultController extends BaseController
             unset($data['_csrf-backend']);
         }
 
-        $setParameter = Yii::$app->session->get('strategyGroup');
-        if (!$setParameter && !is_array($setParameter)) {
+        $strategyGroup = Yii::$app->session->get('strategyGroup');
+        if (!$strategyGroup && !is_array($strategyGroup)) {
             Yii::$app->session->set('strategyGroup', $data);
         }
 
@@ -132,13 +126,27 @@ class DefaultController extends BaseController
     /**
      * 第三步 生成统计数据 TODO
      */
-    public function actionGenerateStatistic()
-    {
+    public function actionGenerateStatistic() {
+
         // 生成统计数据 TODO
+        ReportService::service()->create();
 
         // 删除 session TODO
-
         // 之后跳转到详情页面 TODO
+    }
+
+    /**
+     * 复盘详情
+     */
+    public function actionShow() {
+        
+    }
+
+    /**
+     * 导出报表
+     */
+    public function actionAjaxExport() {
+        
     }
 
 }

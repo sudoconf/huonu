@@ -104,13 +104,18 @@ class Admin extends BaseAdmin
             $user->setPassword($this->password);
             $user->generateAuthKey();
 
-            Log::create(Log::TYPE_CREATE, $user);
-
             if (!$user->validate()) {
                 throw new \Exception(Json::encode($user->getErrors()));
             }
 
             $result = $user->save() ? $user : null;
+
+            $currentUserName = Yii::$app->user->identity->username;
+
+            $remarks = sprintf('%添加了用户：%', $currentUserName, $result->username);
+
+            SystemLog::create(SystemLog::TYPE_CREATE, $result->getId(), $remarks, $user);
+
             $transaction->commit();
             return $result;
         } catch (\Exception $e) {

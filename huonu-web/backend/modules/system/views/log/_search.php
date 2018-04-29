@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use \backend\models\Log;
+use backend\models\SystemLog;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\searchs\LogSearch */
@@ -19,7 +19,7 @@ use \backend\models\Log;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'type')->dropDownList(Log::getTypeDescription(), ['prompt' => '请选择']) ?>
+    <?= $form->field($model, 'type')->dropDownList(SystemLog::getTypeDescription(), ['prompt' => '请选择']) ?>
 
     <?= $form->field($model, 'module') ?>
 

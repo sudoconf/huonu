@@ -4,25 +4,26 @@ namespace backend\models;
 
 use common\components\CtHelper;
 use Yii;
-use yii\db\Expression;
 use yii\helpers\Json;
 
 /**
- * This is the model class for table "{{%log}}".
+ * This is the model class for table "{{%system_log}}".
  *
  * @property int $id 日志ID
- * @property int $type 日志类型
+ * @property int $operation_id 操作的id
+ * @property int $type 日志类型(1 新增 2 修改 3删除)
  * @property string $module 模块
  * @property string $controller 控制器
  * @property string $action 方法
  * @property string $url 请求地址
  * @property string $params 请求参数
+ * @property string $agent 操作用户浏览器代理商
  * @property string $ip 操作用户IP
- * @property int $agent 操作用户浏览器代理商
  * @property int $created_at 创建时间
  * @property int $created_id 创建用户
+ * @property string $remarks 备注
  */
-class Log extends \yii\db\ActiveRecord
+class SystemLog extends \yii\db\ActiveRecord
 {
     const TYPE_CREATE = 1; // 创建
     const TYPE_UPDATE = 2; // 修改
@@ -37,7 +38,7 @@ class Log extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%log}}';
+        return '{{%system_log}}';
     }
 
     /**
@@ -46,13 +47,15 @@ class Log extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['module', 'controller', 'action', 'url', 'params', 'agent', 'ip'], 'required'],
+            [['operation_id', 'created_at', 'created_id'], 'integer'],
+            [['module', 'controller', 'action', 'url', 'params', 'agent', 'ip', 'remarks'], 'required'],
             [['params'], 'string'],
-            [['created_at', 'created_id', 'type'], 'integer'],
+            [['type'], 'string', 'max' => 1],
             [['module', 'controller', 'action'], 'string', 'max' => 64],
             [['url'], 'string', 'max' => 100],
             [['agent'], 'string', 'max' => 255],
             [['ip'], 'string', 'max' => 15],
+            [['remarks'], 'string', 'max' => 200],
         ];
     }
 
@@ -63,6 +66,7 @@ class Log extends \yii\db\ActiveRecord
     {
         return [
             'id' => '日志ID',
+            'operation_id' => '操作ID',
             'type' => '日志类型',
             'module' => '模块',
             'controller' => '控制器',
@@ -74,6 +78,7 @@ class Log extends \yii\db\ActiveRecord
             'created_at' => '创建时间',
             'created_id' => '创建用户',
             'username' => '操作人',
+            'remarks' => '备注',
         ];
     }
 
@@ -102,35 +107,41 @@ class Log extends \yii\db\ActiveRecord
     /**
      * 创建日志
      * @param $type
+     * @param int $operationId
+     * @param $remarks
      * @param array $params
      * @return string
      * @throws \yii\db\Exception
      */
-    public static function create($type, $params = [])
+    public static function create($type, $operationId = 0, $remarks, $params = [])
     {
         $transaction = Yii::$app->db->beginTransaction();
         try {
 
-            $log = new self();
-            $log->type = $type;
-            $log->params = Json::encode($params);
-            $log->module = Yii::$app->controller->module->id;
-            $log->controller = Yii::$app->controller->id;
-            $log->action = Yii::$app->controller->action->id;
-            $log->url = Yii::$app->request->url;
-            $log->ip = CtHelper::getIpAddress();
-            $log->created_id = Yii::$app->user->id;
-            $log->created_at = time();
+            $logData['operation_id'] = $operationId;
+            $logData['type'] = $type;
+            $logData['params'] = Json::encode($params);
+            $logData['module'] = Yii::$app->controller->module->id;
+            $logData['controller'] = Yii::$app->controller->id;
+            $logData['action'] = Yii::$app->controller->action->id;
+            $logData['url'] = Yii::$app->request->url;
+            $logData['ip'] = CtHelper::getIpAddress();
+            $logData['created_id'] = Yii::$app->user->id;
+            $logData['created_at'] = time();
+            $logData['remarks'] = $remarks;
+
             $headers = Yii::$app->request->headers;
             if ($headers->has('User-Agent')) {
-                $log->agent = $headers->get('User-Agent');
+                $logData['agent'] = $headers->get('User-Agent');
             }
 
-            if (!$log->validate()) {
+            $log = new self();
+            $log->setAttributes($logData);
+            print_r($log->save());die;
+            if (!$log->save()) {
                 throw new \Exception(Json::encode($log->getErrors()));
             }
-
-            $log->save();
+            die;
             $transaction->commit();
         } catch (\Exception $e) {
             $transaction->rollBack();

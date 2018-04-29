@@ -4,9 +4,9 @@ namespace backend\modules\system\controllers;
 
 use backend\controllers\BaseController;
 use backend\models\Admin;
+use backend\models\SystemLog;
 use common\components\CtHelper;
 use Yii;
-use backend\models\Log;
 use backend\models\searchs\LogSearch;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -65,11 +65,11 @@ class LogController extends BaseController
      */
     protected function find($id)
     {
-        $log = Log::find()->where('id=:id', [':id' => $id])->asArray()->one();
+        $log = SystemLog::find()->where('id=:id', [':id' => $id])->asArray()->one();
         if (!empty($log)) {
             $admin = Admin::findOne($log['created_id']);
             $log['username'] = $admin->username;
-            $log['type'] = Log::getTypeDescription($log['type']);
+            $log['type'] = SystemLog::getTypeDescription($log['type']);
             $log['createdAt'] = date('Y-m-d H:i:s', $log['created_at']);
             return $log;
         }
