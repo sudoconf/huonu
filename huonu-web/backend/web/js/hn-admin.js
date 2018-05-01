@@ -87,6 +87,15 @@ function CLOSE_LOAD_LAYER(index){
     layer.close(index);
 }
 
+function LAYER_MSG(msg, i) {
+    layer.msg(msg, {
+        icon: 2,
+        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+    }, function () {
+        CLOSE_LOAD_LAYER(i);
+    });
+}
+
 
 // 客户计划
 $('.plan-table tr:even').hover(function () {

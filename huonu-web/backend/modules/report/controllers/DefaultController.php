@@ -14,12 +14,14 @@ use Yii;
 /**
  * Default controller for the `report` module
  */
-class DefaultController extends BaseController {
+class DefaultController extends BaseController
+{
 
     /**
      * @inheritdoc
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -34,43 +36,54 @@ class DefaultController extends BaseController {
      * 列表
      * @return string
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $searchModel = new MultitraySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-        ]);
+        return $this->render(
+            'index',
+            [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]
+        );
     }
 
     /**
      * 创建第一步 TODO
      * @return string
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $model = new Multitray();
+
         // print_r(Yii::$app->request->post());die;
-        return $this->render('create', [
-                    'model' => $model,
-        ]);
+        return $this->render(
+            'create',
+            [
+                'model' => $model,
+            ]
+        );
     }
 
     /**
      * 第一步 ajax 获取店铺 TODO
      */
-    public function actionAjaxGetShop() {
+    public function actionAjaxGetShop()
+    {
         $inputStr = Yii::$app->request->get('inputStr');
         $shop = AuthorizeUser::find()
-                        ->where(['like', 'taobao_user_nick', $inputStr])
-                        ->asArray()->all();
+            ->where(['like', 'taobao_user_nick', $inputStr])
+            ->asArray()->all();
         CtHelper::response(200, 'success', $shop);
     }
 
     /**
      * 保存第一步骤的数据 TODO
      */
-    public function actionAjaxSaveSetParameter() {
+    public function actionAjaxSaveSetParameter()
+    {
         $data = Yii::$app->request->post();
 
         // 后续在做 验证字段规则 TODO
@@ -95,7 +108,8 @@ class DefaultController extends BaseController {
     /**
      * 第二步 ajax 获取定向列表 TODO
      */
-    public function actionAjaxGetTarget() {
+    public function actionAjaxGetTarget()
+    {
         $shop = AuthorizeUser::find()->asArray()->all();
         CtHelper::response(200, 'success', $shop);
     }
@@ -103,7 +117,8 @@ class DefaultController extends BaseController {
     /**
      * 保存第二步骤策略组的数据 TODO
      */
-    public function actionAjaxSaveStrategyGroup() {
+    public function actionAjaxSaveStrategyGroup()
+    {
         $data = Yii::$app->request->post();
 
         // 后续在做 验证字段规则 TODO
@@ -112,12 +127,12 @@ class DefaultController extends BaseController {
             return CtHelper::response('false', '参数错误');
         }
 
-        if (isset($data['_csrf-backend'])) {
-            unset($data['_csrf-backend']);
-        }
-
         $strategyGroup = Yii::$app->session->get('strategyGroup');
-        if (!$strategyGroup && !is_array($strategyGroup)) {
+
+        if ($strategyGroup && is_array($strategyGroup)) {
+            $data = $strategyGroup + $data;
+            Yii::$app->session->set('strategyGroup', $data);
+        } else {
             Yii::$app->session->set('strategyGroup', $data);
         }
 
@@ -125,19 +140,22 @@ class DefaultController extends BaseController {
     }
 
     // TODO 修改策略组数据
-    public function actionAjaxEditStrategyGroup() {
-        
+    public function actionAjaxEditStrategyGroup()
+    {
+
     }
 
     // TODO 删除策略组数据
-    public function actionAjaxDelStrategyGroup() {
-        
+    public function actionAjaxDelStrategyGroup()
+    {
+
     }
 
     /**
      * 第三步 生成统计数据 TODO
      */
-    public function actionGenerateStatistic() {
+    public function actionGenerateStatistic()
+    {
 
         // 生成统计数据 TODO
         ReportService::service()->create();
@@ -149,7 +167,8 @@ class DefaultController extends BaseController {
     /**
      * 复盘详情
      */
-    public function actionShow() {
+    public function actionShow()
+    {
 
         // 按时日期分析
         // 按人群分析
@@ -162,8 +181,9 @@ class DefaultController extends BaseController {
     /**
      * 导出报表
      */
-    public function actionAjaxExport() {
-        
+    public function actionAjaxExport()
+    {
+
     }
 
 }
