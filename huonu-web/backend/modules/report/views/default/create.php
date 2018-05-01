@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-
 ?>
 <?= Html::cssFile('@web/vendor/daterangepicker/daterangepicker.css') ?>
 <?= Html::cssFile('@web/vendor/jquery-reveal/reveal.css') ?>
@@ -61,11 +60,13 @@ use yii\helpers\Url;
                         <div class="tab-content">
 
                             <div class="tab-pane fade in active" id="set-up-parameters">
-                                <?php $form = \yii\bootstrap\ActiveForm::begin([
+                                <?php
+                                $form = \yii\bootstrap\ActiveForm::begin([
                                     'id' => 'form-set-parame',
                                     'method' => 'post',
                                     'action' => 'ajax-save-set-parameter.html',
-                                ]); ?>
+                                ]);
+                                ?>
                                 <div class="form-group form-inline">
                                     <div class="control-group">
                                         <span>复盘名称</span>
@@ -270,38 +271,22 @@ use yii\helpers\Url;
                             </div>
 
                             <div class="tab-pane fade" id="add-survey-group">
+                                <?php
+                                $form = \yii\bootstrap\ActiveForm::begin([
+                                    'id' => 'add-survey-group',
+                                    'method' => 'post',
+                                    'action' => 'ajax-save-strategy-group.html',
+                                ]);
+                                ?>
                                 <div class="form-group">
 
                                     <div class="control-group">
                                         <input type="button" value="添加策略组" class="btn btn-primary add-survey-group">
                                     </div>
 
-                                    <div class="control-group text-center" style="display: none;">
-                                        <span>未添加策略组</span>
-                                    </div>
-
-                                    <div class="control-group" style="overflow: hidden;">
-                                        <div class="card">
-                                            <div class="strategic-group">
-                                                <span class="list-group-item active">
-                                                    <a href="javascript:;" class="badge"><i
-                                                                class="fa fa-times">删除</i></a>
-                                                    <a href="javascript:;" class="badge"><i
-                                                                class="fa fa-edit">编辑</i></a>
-                                                    <h4 class="list-group-item-heading">
-                                                        入门网站包
-                                                    </h4>
-                                                </span>
-                                            </div>
-                                            <div class="pre-scrollable">
-                                                <ul class="list-group">
-                                                    <li class="list-group-item">免费域名注册</li>
-                                                    <li class="list-group-item">免费 Window 空间托管</li>
-                                                    <li class="list-group-item">图像的数量</li>
-                                                    <li class="list-group-item">24*7 支持</li>
-                                                    <li class="list-group-item">每年更新成本</li>
-                                                </ul>
-                                            </div>
+                                    <div class="control-group survey-group" style="overflow: hidden;">
+                                        <div class="not-added-policy-group text-center pt40 pb60">
+                                            <div class="s_fs_16 pd15">未添加策略组</div>
                                         </div>
                                     </div>
 
@@ -311,7 +296,8 @@ use yii\helpers\Url;
                                     </div>
 
                                 </div>
-                            </div st>
+                                <?php \yii\bootstrap\ActiveForm::end() ?>
+                            </div>
 
                         </div>
                     </div>
@@ -329,7 +315,7 @@ use yii\helpers\Url;
         <div class="control-group">
             <label for="target-name" class="col-sm-3 control-label">策略组名称</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" id="target-name" placeholder="请输入策略组名称">
+                <input type="text" class="form-control" name="target-name" id="target-name" placeholder="请输入策略组名称">
             </div>
         </div>
         <div class="control-group">
@@ -345,8 +331,6 @@ use yii\helpers\Url;
             <span class="btn btn-primary add-survey-group-operate">添加</span>
         </div>
     </form>
-
-
 </div>
 
 <!-- 引入jQuery的js文件 -->
@@ -427,7 +411,7 @@ use yii\helpers\Url;
         autoFill: true,
         matchContains: true,
         scrollHeight: 220,
-        minLength: 1,  // 输入框字符个等于2时开始查询
+        minLength: 1, // 输入框字符个等于2时开始查询
         source: function (request, response) {
             $.ajax({
                 url: 'ajax-get-shop.html', // 后台请求路径
@@ -440,8 +424,8 @@ use yii\helpers\Url;
                         response($.map(res.data, function (item) { // 此处是将返回数据转换为 JSON对象，并给每个下拉项补充对应参数
                             // console.log(item.taobao_user_nick);
                             return {
-                                label: item.taobao_user_nick,   // 下拉框显示值
-                                value: item.taobao_user_nick,   // 选中后，填充到下拉框的值
+                                label: item.taobao_user_nick, // 下拉框显示值
+                                value: item.taobao_user_nick, // 选中后，填充到下拉框的值
                                 id: item.taobao_user_id // 其它的值
                             }
                         }));
@@ -449,11 +433,11 @@ use yii\helpers\Url;
                 },
                 error: function (XmlHttpRequest, textStatus, errorThrown) {
                     layer.msg('网络异常 请稍后再试',
-                        {
-                            icon: 5,
-                            shade: [0.8, '#f5f5f5'],
-                            time: 1000
-                        }
+                            {
+                                icon: 5,
+                                shade: [0.8, '#f5f5f5'],
+                                time: 1000
+                            }
                     );
                 }
             });
@@ -518,9 +502,9 @@ use yii\helpers\Url;
             type: 'get',
             dataType: 'json',
             success: function (res) {
-                console.log(res);
+//                console.log(res);
                 for (var i = 0; i < res.data.length; i++) {
-                    htmlStr += '<li class="control-group"><input class="check-box" type="checkbox" value="' + res.data[i].taobao_user_id + '"><span>' + res.data[i].taobao_user_nick + '</span></li>';
+                    htmlStr += '<li class="control-group"><input class="check-box" type="checkbox" value="' + res.data[i].taobao_user_id + '" title="' + res.data[i].taobao_user_nick + '"><span>' + res.data[i].taobao_user_nick + '</span></li>';
                 }
                 $('#addhtml').append(htmlStr)
             },
@@ -539,7 +523,7 @@ use yii\helpers\Url;
             shade: [0.5],
             maxmin: false, //开启最大化最小化按钮
             area: ['580px', '500px'],
-            content: $('.add-survey-group-html').html()
+            content: $('.add-survey-group-html') // TODO 这里如果写成 $('.add-survey-group-html').html 就会获取不到 弹窗的 input value 值
         });
     });
 
@@ -563,16 +547,111 @@ use yii\helpers\Url;
         }
     });
 
-    // 添加
+    // TODO 添加 策略组显示页面
     $(document).on('click', '.add-survey-group-operate', function () {
-        var arr = [];
-        $('.check-box').each(function (index, el) {
-            if ($(this).is(':checked')) {
-                arr.push($(this).val());
-            }
+        
+        var targetName = $("#target-name").val();
+        // var taobaoIdArr = [];
+        // var taobaoNameArr = [];
+        var surveyGroup = [];
+        
+        var htmlStr = '<div class="card">';
+        htmlStr += '<div class="strategic-group"><span class="list-group-item active">';
+        htmlStr += '<a href="javascript:;" class="badge del-strategic-group"><i class="fa fa-times">删除</i></a>';
+        htmlStr += '<a href="javascript:;" class="badge edit-strategic-group"><i class="fa fa-edit">编辑</i></a>';
+        htmlStr += '<h4 class="list-group-item-heading">' + targetName + '</h4></span></div><div class="pre-scrollable"><ul class="list-group">';
 
+        $('.check-box').each(function (index, element) {
+            if ($(this).is(':checked')) {
+                htmlStr += '<li class="list-group-item">' + $(this).attr('title') + '</li>';
+                // taobaoIdArr.push($(this).val());
+                // taobaoNameArr.push($(this).attr('title'));
+            }
         });
-        console.log(arr)
+        
+        // 合并 数组
+        // surveyGroup = taobaoIdArr.map((item, idx) => [item, taobaoNameArr[idx]]);
+        console.log(JSON.stringify(surveyGroup));
+        htmlStr += '</ul></div></div>';
+
+        // ajax 提交策略组信息
+        $.ajax({
+            url: 'ajax-save-strategy-group.html',
+            type: 'post',
+            data: JSON.stringify(surveyGroup),
+            dataType: 'json',
+            beforeSend: function () {
+                i = SHOW_LOAD_LAYER();
+                
+                // 策略组最多只能添加 9 个
+                var surveyGroupLength = $('.survey-group .card').length;
+                if (surveyGroupLength > 9) {
+                    layer.msg('策略组只能添加9个！', {
+                        icon: 2,
+                        time: 5000 //2秒关闭（如果不配置，默认是3秒）
+                    }, function () {
+                        CLOSE_LOAD_LAYER(i);
+                    });
+                    return false;
+                }
+            },
+            success: function (response) {
+                CLOSE_LOAD_LAYER(i);
+                
+                console.log(response);
+                
+                // 隐藏未添加策略组
+                $('.not-added-policy-group').css('display', 'none');
+
+                $('.survey-group').append(htmlStr);
+
+                layer.closeAll();
+
+            },
+            error: function (e, jqxhr, settings, exception) {
+                layer.msg('加载失败！', {
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function () {
+                    CLOSE_LOAD_LAYER(i);
+                });
+            }
+        });
+        return false;
+    
+        
+    });
+
+    // 提交 第二步数据
+    $(document).on('click', '.create', function () {
+
+//        var form = $('form#add-survey-group');
+//        // console.log(form.serialize());
+//
+//        //表单提交
+//        $.ajax({
+//            url: form.attr('action'),
+//            type: 'post',
+//            data: form.serialize(),
+//            beforeSend: function () {
+//                i = SHOW_LOAD_LAYER();
+//            },
+//            success: function (response) {
+//                CLOSE_LOAD_LAYER(i);
+//                console.log(response);
+//
+//
+//            },
+//            error: function (e, jqxhr, settings, exception) {
+//                layer.msg('加载失败！', {
+//                    icon: 2,
+//                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+//                }, function () {
+//                    CLOSE_LOAD_LAYER(i);
+//                });
+//            }
+//        });
+//        return false;
     });
 
 

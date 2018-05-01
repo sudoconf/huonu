@@ -84,7 +84,8 @@ class DefaultController extends BaseController {
         }
 
         $setParameter = Yii::$app->session->get('setParameter');
-        if (!$setParameter && !is_array($setParameter)) {
+        if ($setParameter && is_array($setParameter)) {
+            Yii::$app->session->remove('setParameter');
             Yii::$app->session->set('setParameter', $data);
         }
 
@@ -100,7 +101,7 @@ class DefaultController extends BaseController {
     }
 
     /**
-     * 保存第二步骤的数据 TODO
+     * 保存第二步骤策略组的数据 TODO
      */
     public function actionAjaxSaveStrategyGroup() {
         $data = Yii::$app->request->post();
@@ -123,6 +124,16 @@ class DefaultController extends BaseController {
         return CtHelper::response('true', '保存成功');
     }
 
+    // TODO 修改策略组数据
+    public function actionAjaxEditStrategyGroup() {
+        
+    }
+
+    // TODO 删除策略组数据
+    public function actionAjaxDelStrategyGroup() {
+        
+    }
+
     /**
      * 第三步 生成统计数据 TODO
      */
@@ -141,15 +152,11 @@ class DefaultController extends BaseController {
     public function actionShow() {
 
         // 按时日期分析
-
         // 按人群分析
-
         // 策略组按日分析
-
         // 定向人群按日分析
 
         return $this->render('show');
-
     }
 
     /**
