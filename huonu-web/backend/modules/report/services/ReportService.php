@@ -97,16 +97,13 @@ class ReportService extends BaseService
             $field['effectType'] = $analyseArray['multitray_effect_model'];
             $field['multitrayId'] = $multitrayId;
             $this->generateStatisticOperation($field);
-            die;
+
             // 删除第一步和第二部设置的session
             $session->remove('setParameter');
             $session->remove('strategyGroup');
 
             $transaction->commit();
             CtHelper::response(true, '操作成功');
-
-            // TODO 之后跳转到详情页面
-
         } catch (Exception $e) {
             $transaction->rollBack();
             CtHelper::response(false, $e->getMessage());
@@ -163,7 +160,7 @@ class ReportService extends BaseService
                         huonu_multitray_policy_group t2
                 where 
                         t1.target_id = t2.target_id 
-                and     log_date >= '2017-08-07' and log_date <= '2018-04-30' 
+                and     log_date >= '$logStartDate' and log_date <= '$logEndDate' 
                 and     taobao_user_id='$taoBaoId' 
                 and     effect = '$effect' 
                 and     effect_type = '$effectType' 
@@ -218,7 +215,7 @@ class ReportService extends BaseService
             array_multisort($lineInfoArray);
 
             $transaction = Yii::$app->db->beginTransaction();
-            try{
+            try {
 
                 $multitrayStatistics = new MultitrayStatistics();
 
@@ -237,7 +234,7 @@ class ReportService extends BaseService
                 SystemLog::create(SystemLog::TYPE_CREATE, $multitrayStatisticsId, $multitrayStatisticRemark, $multitrayStatisticsArray);
 
                 $transaction->commit();
-            }catch (Exception $e) {
+            } catch (Exception $e) {
                 $transaction->rollBack();
                 throw new \Exception($e->getMessage());
             }

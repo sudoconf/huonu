@@ -160,9 +160,6 @@ class DefaultController extends BaseController
      */
     public function actionAjaxGenerateStatistic()
     {
-        // print_r(Yii::$app->session);die;
-        // Yii::$app->session->remove('strategyGroup');
-        // Yii::$app->session->remove('setParameter');die;
         // TODO 生成统计数据
         ReportService::service()->createOperation();
     }
