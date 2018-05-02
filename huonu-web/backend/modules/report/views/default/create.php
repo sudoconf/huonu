@@ -252,8 +252,7 @@ use yii\helpers\Url;
                   <div class="control-group">
                     <span>效果模型</span>
                     <label class="form-inline">
-                      <input type="radio" value="click_effect" checked="checked"
-                             name="multitray_effect_model">点击效果
+                      <input type="radio" value="click" checked="checked" name="multitray_effect_model">点击效果
                       <input type="radio" value="impression" name="multitray_effect_model">展示效果
                     </label>
                   </div>
@@ -296,7 +295,7 @@ use yii\helpers\Url;
                   </div>
 
                   <div class="control-group">
-                    <input type="submit" value="下一步，生成报表" class="btn btn-primary">
+                    <input type="button" value="下一步，生成报表" class="btn btn-primary generate-report">
                     <input type="button" value="上一步" class="btn btn-primary" id="shangyibu">
                   </div>
 
@@ -509,7 +508,7 @@ use yii\helpers\Url;
             success: function (res) {
 //                console.log(res);
                 for (var i = 0; i < res.data.length; i++) {
-                    htmlStr += '<li class="control-group"><input class="check-box" type="checkbox" value="' + res.data[i].taobao_user_id + '" title="' + res.data[i].taobao_user_nick + '"><span>' + res.data[i].taobao_user_nick + '</span></li>';
+                    htmlStr += '<li class="control-group"><input class="check-box" type="checkbox" value="' + res.data[i].target_id + '" title="' + res.data[i].target_name + '"><span>' + res.data[i].target_name + '</span></li>';
                 }
                 $('#addhtml').append(htmlStr)
             },
@@ -567,7 +566,7 @@ use yii\helpers\Url;
         $('.check-box').each(function (index, element) {
             if ($(this).is(':checked')) {
                 htmlStr += '<li class="list-group-item">' + $(this).attr('title') + '</li>';
-                dataJson += '{"taobaoId": "' + $(this).val() + '","taobaoName": "' + $(this).attr('title') + '"},'
+                dataJson += '{"targetId": "' + $(this).val() + '","targetName": "' + $(this).attr('title') + '"},'
             }
         });
 
@@ -619,36 +618,33 @@ use yii\helpers\Url;
         return false;
     });
 
-    // 提交 第二步数据
-    $(document).on('click', '.create', function () {
+    // TODO 生成报表
+    $('.generate-report').click(function () {
 
-//        var form = $('form#add-survey-group');
-//        // console.log(form.serialize());
-//
-//        //表单提交
-//        $.ajax({
-//            url: form.attr('action'),
-//            type: 'post',
-//            data: form.serialize(),
-//            beforeSend: function () {
-//                i = SHOW_LOAD_LAYER();
-//            },
-//            success: function (response) {
-//                CLOSE_LOAD_LAYER(i);
-//                console.log(response);
-//
-//
-//            },
-//            error: function (e, jqxhr, settings, exception) {
-//                layer.msg('加载失败！', {
-//                    icon: 2,
-//                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
-//                }, function () {
-//                    CLOSE_LOAD_LAYER(i);
-//                });
-//            }
-//        });
-//        return false;
+        // ajax 提交策略组信息
+        $.ajax({
+            url: 'ajax-generate-statistic.html',
+            type: 'post',
+            dataType: 'json',
+            beforeSend: function () {
+                i = SHOW_LOAD_LAYER();
+            },
+            success: function (response) {
+                CLOSE_LOAD_LAYER(i);
+
+                if (response.result == "true") {
+                    LAYER_MSG('报表生成成功！', i);
+                } else {
+                    LAYER_MSG('加载失败！', i);
+                }
+
+            },
+            error: function (e, jqxhr, settings, exception) {
+                LAYER_MSG('加载失败！', i);
+            }
+        });
+        return false;
+
     });
 
 

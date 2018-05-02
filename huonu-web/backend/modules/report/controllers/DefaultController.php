@@ -6,6 +6,7 @@ use backend\controllers\BaseController;
 use backend\models\AuthorizeUser;
 use backend\models\Multitray;
 use backend\models\searchs\MultitraySearch;
+use backend\models\TaobaoZsAdvertiserTargetDaySumList;
 use backend\modules\report\services\ReportService;
 use common\components\CtHelper;
 use yii\filters\VerbFilter;
@@ -51,7 +52,7 @@ class DefaultController extends BaseController
     }
 
     /**
-     * 创建第一步 TODO
+     * TODO 创建第一步
      * @return string
      */
     public function actionCreate()
@@ -68,7 +69,7 @@ class DefaultController extends BaseController
     }
 
     /**
-     * 第一步 ajax 获取店铺 TODO
+     * TODO 第一步 ajax 获取店铺
      */
     public function actionAjaxGetShop()
     {
@@ -80,13 +81,13 @@ class DefaultController extends BaseController
     }
 
     /**
-     * 保存第一步骤的数据 TODO
+     * TODO 保存第一步骤的数据
      */
     public function actionAjaxSaveSetParameter()
     {
         $data = Yii::$app->request->post();
 
-        // 后续在做 验证字段规则 TODO
+        // TODO 后续在做 验证字段规则
 
         if (empty($data)) {
             return CtHelper::response('false', '参数错误');
@@ -94,11 +95,14 @@ class DefaultController extends BaseController
 
         if (isset($data['_csrf-backend'])) {
             unset($data['_csrf-backend']);
+            // unset($data['multitray_time']);
         }
 
         $setParameter = Yii::$app->session->get('setParameter');
         if ($setParameter && is_array($setParameter)) {
             Yii::$app->session->remove('setParameter');
+            Yii::$app->session->set('setParameter', $data);
+        } else {
             Yii::$app->session->set('setParameter', $data);
         }
 
@@ -106,22 +110,22 @@ class DefaultController extends BaseController
     }
 
     /**
-     * 第二步 ajax 获取定向列表 TODO
+     * TODO 第二步 ajax 获取定向列表
      */
     public function actionAjaxGetTarget()
     {
-        $shop = AuthorizeUser::find()->asArray()->all();
+        $shop = TaobaoZsAdvertiserTargetDaySumList::find()->select('target_id,target_name')->where(['taobao_user_id'=>'3015595177'])->limit(50)->asArray()->all();
         CtHelper::response(200, 'success', $shop);
     }
 
     /**
-     * 保存第二步骤策略组的数据 TODO
+     * TODO 保存第二步骤策略组的数据
      */
     public function actionAjaxSaveStrategyGroup()
     {
         $data = Yii::$app->request->post();
 
-        // 后续在做 验证字段规则 TODO
+        // TODO 后续在做 验证字段规则
 
         if (empty($data)) {
             return CtHelper::response('false', '参数错误');
@@ -154,36 +158,32 @@ class DefaultController extends BaseController
     /**
      * 第三步 生成统计数据 TODO
      */
-    public function actionGenerateStatistic()
+    public function actionAjaxGenerateStatistic()
     {
-
-        // 生成统计数据 TODO
-        ReportService::service()->create();
-
-        // 删除 session TODO
-        // 之后跳转到详情页面 TODO
+        // print_r(Yii::$app->session);die;
+        // Yii::$app->session->remove('strategyGroup');
+        // Yii::$app->session->remove('setParameter');die;
+        // TODO 生成统计数据
+        ReportService::service()->createOperation();
     }
 
     /**
-     * 复盘详情
+     * TODO 复盘详情
      */
     public function actionShow()
     {
-
-        // 按时日期分析
-        // 按人群分析
-        // 策略组按日分析
-        // 定向人群按日分析
-
-        return $this->render('show');
+        $reportData = ReportService::service()->getShowOperation();
+        return $this->render('show', [
+            'reportData' => $reportData
+        ]);
     }
 
     /**
-     * 导出报表
+     * TODO 导出报表
      */
     public function actionAjaxExport()
     {
-
+        ReportService::service()->exportOperation();
     }
 
 }

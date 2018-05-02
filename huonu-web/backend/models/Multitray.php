@@ -14,7 +14,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $multitray_name 复盘名称
  * @property int $multitray_start_time 起始时间
  * @property int $multitray_end_time 截止时间
- * @property string $multitray_effect_model 效果模型 click_effect(点击效果) show_effect(展示效果)
+ * @property string $multitray_effect_model 效果模型 click(点击效果) impression(展示效果)
  * @property int $multitray_cycle 数据周期 3、7、15 天
  * @property string $multitray_field 字段 json格式
  * @property int $created_at 添加时间
@@ -43,7 +43,7 @@ class Multitray extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['taobao_id', 'taobao_name', 'multitray_name', 'multitray_start_time', 'multitray_end_time', 'multitray_effect_model', 'multitray_cycle', 'multitray_field', 'created_at', 'updated_at'], 'required'],
+            [['taobao_id', 'taobao_name', 'multitray_name', 'multitray_start_time', 'multitray_end_time', 'multitray_effect_model', 'multitray_cycle', 'multitray_field'], 'required'],
             [['multitray_start_time', 'multitray_end_time', 'created_at', 'updated_at'], 'integer'],
             [['taobao_id'], 'string', 'max' => 20],
             [['taobao_name'], 'string', 'max' => 30],
