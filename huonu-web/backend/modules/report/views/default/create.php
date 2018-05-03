@@ -495,7 +495,6 @@ use yii\helpers\Url;
         }
     });
 
-
     // 第一步骤 提交数据
     $(document).on('click', '.create', function () {
 
@@ -695,6 +694,54 @@ use yii\helpers\Url;
     });
 
     // TODO 编辑策略组
+    $('.edit-strategic-group').click(function () {
+        $.ajax({
+            url: ajaxUrl,
+            type: 'get',
+            data: {'id': id},
+            beforeSend: function () {
+                i = SHOW_LOAD_LAYER();
+            },
+            success: function (msg) {
+                CLOSE_LOAD_LAYER(i);
+                var html = '<div class="form-group">';
+                html += '<form class="form-horizontal" role="form">';
+                html += '<div class="control-group">';
+                html += '<label for="target-name" class="col-sm-3 control-label">策略组名称</label>';
+                html += '<div class="col-sm-9">';
+                html += '<input type="text" class="form-control" name="target-name" id="target-name" placeholder="请输入策略组名称">';
+                html += '</div>';
+                html += '</div>';
+                html += '<div class="control-group">';
+                html += '<label for="lastname" class="col-sm-3 control-label">选择定向人群</label>';
+                html += '<div class="col-sm-9">';
+                html += '<ul class="list-group pre-scrollable" id="addhtml">';
+                html += '<li class="control-group"><input type="checkbox" id="select-all"><span>全选</span></li>';
+                html += '</ul>';
+                html += '</div>';
+                html += '</div>';
+                html += '<div class="control-group">';
+                html += '<label class="col-sm-3 control-label"></label>';
+                html += '<span class="btn btn-primary edit-survey-group-operate">修改</span>';
+                html += '</div>';
+                html += '</form>';
+                html += '</div>'';
+                layer.open({
+                    type: 1,
+                    title: '修改测策略组',
+                    shadeClose: true,
+                    shade: 0.5, // 遮罩
+                    anim: 1, // 动画
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ['580px', '500px'],
+                    content: html,
+                });
+            },
+            error: function (e, jqxhr, settings, exception) {
+                LAYER_MSG_FUNCTION('加载失败', i);
+            }
+        });
+    });
 
     // TODO 生成报表
     $('.generate-report').click(function () {

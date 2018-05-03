@@ -1,377 +1,141 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>瀑布流测试</title>
-    <style type='text/css'>
-        #wf-main{position: relative;}
-        #wf-main li{padding: 15px 0 0 15px; float:left;}
-    </style>
-    <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
-</head>
-<body>
-<ul class="tips" id="wf-main" style="list-style-type:none;">
-    <?php
-    for($i=1;$i<=8;$i++) {
-        $string = './image/test'.$i.'.jpg';
-        echo "<li class='wf-cld'><img src='$string'  width='200' height='auto' alt='' /></li>";
+<script src="./asset/vendor/jquery/jquery.js"></script>
+<style type="text/css">
+	.picList{
+    img{
+        width: 100px;
+        height: 100px;
+        position: relative;
+
+        /*加载失败时显示灰底文字*/
+        &:after{
+            content: "( ⊙ o ⊙ )加载失败";
+            font-size: 6px;
+            font-family: FontAwesome;
+            color: rgb(100, 100, 100);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            background-color: #ddd;
         }
-    ?>
-</ul>
-</body>
-</html>
-<script>
-    $(function(){
-        waterfall();
-        //进行加载图片
-        var count = getCount();
-           $('#wf-main').on('scroll',function(){
-            if(checkscrollside()){
-
-                //ajax 提交到action.php
-                $.ajax({
-                    type: 'POST',
-                    url: "action.php" ,
-                    data: {id:count},
-                    success: function(dat) {
-//                        var data = eval('('+dat +')');
-                        var data = JSON.parse(dat);
-                        console.log(data);
-                        if(data){
-                            $(data).each(function(id,status,url){
-                                $li =  $("<li>").addClass("wf-cld").appendTo("#wf-main");
-                                $("<img>").attr({"src":this.url}).css({"width":"200px","height":"auto"}).appendTo($li);
-                            });
-                            //确保滚动条高度保持不变
-                            var scroll_top  = $(window).scrollTop();
-                            waterfall();
-                            $(window).scrollTop(scroll_top);
-                        }
-                    },
-                    error: function(){
-                      alert('服务器出错了!');
-                    }
-                });
-
-            }
-        });
-
-    });
-    //让图片折叠排列
-    function waterfall(){
-        var $par_main = $("#wf-main"); //父元素
-        var $child_main = $("#wf-main>li"); //子元素
-        var par_width = $par_main.width(); //获得父元素的宽度
-
-        var child_width = $child_main.eq(0).width(); //获得子元素宽度
-        var num_col     = Math.floor(par_width / child_width); //一行显示多少列
-
-        var col_arr = []; //一列中所有元素相加后的高度 做多有num_col 个值
-        col_arr.length=0;
-        $child_main.each(function(index,value){
-            if(index < num_col){
-                col_arr[index] = $(value).height();
-            }else{
-                var minH = Math.min.apply( null, col_arr );//数组pinHArr中的最小值minH
-                var min_index =  $.inArray(minH,col_arr); //获得最小索引值
-                //数组中最小元素的高 +  新块的高 + 15 空格距离
-                col_arr[min_index] += $child_main.eq(index).height() + 15;
-
-                $(value).css({  //设置元素显示位置
-                    position:"absolute",
-                    top:minH + 15 ,
-                    left : $child_main.eq(min_index).position().left
-                });
-                var maxH = Math.max.apply(null,col_arr);
-                $par_main.height(maxH); // 更改父元素高度
-            }
-        });
     }
-    //是否进行夹杂滚动条 当最后一张图片顶部 到 最后一张图片自身高度的一半作为分界线
-    function checkscrollside(){
-        var  $child_main =  $("#wf-main>li");
-        var trigger_heigth = $child_main.last().get(0).offsetTop + $child_main.height() / 2;
-        //滚动条高度
-        var scroll_top = $(window).scrollTop();
-        //获取页面宽度
-        var docu_width = $(document).width();
-        return (trigger_heigth <scroll_top + docu_width)?true:false;
-    }
-
-    function getCount(){
-        var length = $("#wf-main ").find('li').length;
-        return length;
-    }
-
-</script>
-
-<?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2017/7/11
- * Time: 14:49
- */
-
-   // $postId = $_POST['id'];
-    $postId = 5;
-    $coon = mysql_connect('172.28.32.205','root','123456');
-    if(!$coon) {
-        die('connect failed');
-    }
-    mysql_select_db('test',$coon);
-    mysql_set_charset('utf-8',$coon);
-    $query = "select * from test_image where status=1 and id > ".$postId." limit 5;";
-
-    $re = mysql_query($query);
-    while($arr = mysql_fetch_assoc($re)) {
-        $arry [] = $arr;
-    }
-    exit(json_encode($arry));//这里一定要写成exit 之前写成return 一直报错，ajax远程调程序，得到数据。要停止程序并返回到ajax
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    $(function(){
-     jsonajax();
- });
-
- //这里就要进行计算滚动条当前所在的位置了。如果滚动条离最底部还有100px的时候就要进行调用ajax加载数据
- $(window).scroll(function(){    
-     //此方法是在滚动条滚动时发生的函数
-     // 当滚动到最底部以上100像素时，加载新内容
-     var $doc_height,$s_top,$now_height;
-     $doc_height = $(document).height();        //这里是document的整个高度
-     $s_top = $(this).scrollTop();            //当前滚动条离最顶上多少高度
-     $now_height = $(this).height();            //这里的this 也是就是window对象
-     if(($doc_height - $s_top - $now_height) < 100) jsonajax();    
- });
-
-
- //做一个ajax方法来请求data.php不断的获取数据
- var $num = 0;
- function jsonajax(){
-
-     $.ajax({
-         url:'data.php',
-         type:'POST',
-         data:"num="+$num++,
-         dataType:'json',
-         success:function(json){
-             if(typeof json == 'object'){
-                 var neirou,$row,iheight,temp_h;
-                 for(var i=0,l=json.length;i<l;i++){
-                     neirou = json[i];    //当前层数据
-                     //找了高度最少的列做添加新内容
-                     iheight  =  -1;
-                     $("#stage li").each(function(){
-                         //得到当前li的高度
-                         temp_h = Number($(this).height());
-                         if(iheight == -1 || iheight >temp_h){
-                             iheight = temp_h;
-                             $row = $(this); //此时$row是li对象了
-                         }
-                     });
-                     $item = $('<div><img src="'+neirou.img+'" border="0" ><br/>'+neirou.title+'</div>').hide();
-                     $row.append($item);
-                     $item.fadeIn();
-                 }
-             }
-         }
-     });
- }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- <script>  
-    $(function () {  
-        var $window = $(window);  
-        var $document = $(document);  
-        var i = 1;   
-        var message = "@Model.Key";  
-        var cateid = "@Model.Activid";  
-        var key = "";  
-        pageCount = parseInt(pageCount);  
-        function applyLayout() {  
-            $.ajax({  
-                type: "post",  
-                url: "/home/Actives_List",  
-                dataType: "json",  
-                async: true, //true 异步  false为同步请求  
-                data: {  
-                    pageIndex: i,  
-                    cateid: cateid,  
-                    key: encodeURI(message)  
-                },  
-                beforeSend: function () {  
-                        isload = true;  
-                    },  
-                    complete: function () {  
-                        isload = false;  
-                    },  
-                success: function (msg) {  
-                    if (msg != null) {  
-                        var data = eval(msg);  
-                        var htmlData = "";  
-                        htmlData += Mustache.render(listTemp, data);  
-                        $("#proContent").append(htmlData);  
-                    }  
-                }  
-            });  
-        }  
-        function onScroll() {  
-            // 如果窗口底部小于100像素，就执行加载事件  
-            var winHeight = window.innerHeight ? window.innerHeight : $window.height(), // iphone fix  
-                closeToBottom = ($window.scrollTop() + winHeight > $document.height() - 100);  
-            if (closeToBottom) {  
-  
-                if (i >= pageCount) {  
-                    return false;  
-                } else {  
-                    i++;  
-                    applyLayout();  
-                }  
-            }  
-        }  
-        $window.bind('scroll', onScroll);  
-  
-    });  
-</script>  
-
-
-
-
-
-
-
-
-
-
-
-//  瀑布流加载
-    var $page = 0,
-        htmls = '';
-    $('.add-survey-group').click(function () {
-        var page = $page+1;
-        jsonajax(page);
-
-        //这里就要进行计算滚动条当前所在的位置了。如果滚动条离最底部还有100px的时候就要进行调用ajax加载数据
-        $(window).scroll(function () {
-            //此方法是在滚动条滚动时发生的函数
-            // 当滚动到最底部以上100像素时，加载新内容
-            var $doc_height, $s_top, $now_height;
-            $doc_height = $(document).height();        //这里是document的整个高度
-            $s_top = $(this).scrollTop();            //当前滚动条离最顶上多少高度
-            $now_height = $(this).height();            //这里的this 也是就是window对象
-            if (($doc_height - $s_top - $now_height) < 100) jsonajax();
-        });
-
-        layer.open({
-            type: 1,
-            title: '添加策略组',
-            shadeClose: true,
-            shade: [0.8, '#f5f5f5'],
-            maxmin: false, //开启最大化最小化按钮
-            area: ['462px', '430px'],
-            content:htmls
-        });
-
-    });
-
-function jsonajax($page) {
-
-    $.ajax({
-        url: 'ajax-get-target.html',
-        type: 'POST',
-        data: "page=" + $page,
-        dataType: 'json',
-        success: function (json) {
-            var html = '';
-            var neirou, $row, iheight, temp_h;
-            for (var i = 0, l = json.data.length; i < l; i++) {
-                neirou = json.data[i];    //当前层数据
-                //找了高度最少的列做添加新内容
-                iheight = -1;
-                $(".add-survey-group-html ul li").each(function () {
-                    //得到当前li的高度
-                    temp_h = Number($(this).height());
-                    if (iheight == -1 || iheight > temp_h) {
-                        iheight = temp_h;
-                        $row = $(this); //此时$row是li对象了
-                    }
-                });
-
-                html += '<li class="control-group"><input type="checkbox"><span>' + neirou.taobao_user_nick + '</span></li>';
-
-                // $item = $('<div><img src="'+neirou.img+'" border="0" ><br/>'+neirou.title+'</div>').hide();
-                // $row.append($item);
-                // $item.fadeIn();
-
-            }
-            
-            htmls = html;
-
-        }
-    });
 }
+
+.lazy{
+    background: url('./asset/images/loading.gif') center no-repeat;
+    border: 1px solid black;
+}
+
+#loadBar{
+    width: 200px;
+    height: 15px;
+    background: linear-gradient(90deg,#187103,#81b50b,#187103);
+    border: 10px solid white;
+
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    margin-left: -100px;
+
+    #loadBarMask{
+        width: 70%;
+        height: 100%;
+        background-color: beige;
+        position: absolute;
+        right: 0;
+    }
+}
+</style>
+
+<body>
+    <div class="picList">
+        <img class="lazy" src="http://www.jq22.com/demo/jQueryWaterfallFlow20160830/img/01.jpg">
+        <img class="lazy" src="http://www.jq22.com/demo/jQueryWaterfallFlow20160830/img/01.jpg">
+        <img class="lazy" src="http://www.jq22.com/demo/jQueryWaterfallFlow20160830/img/01.jpg">
+        <img class="lazy" src="http://www.jq22.com/demo/jQueryWaterfallFlow20160830/img/01.jpg">
+        <img class="lazy" src="http://www.jq22.com/demo/jQueryWaterfallFlow20160830/img/01.jpg">
+        <img class="lazy" src="http://www.jq22.com/demo/jQueryWaterfallFlow20160830/img/01.jpg">
+        <img class="lazy" src="http://www.jq22.com/demo/jQueryWaterfallFlow20160830/img/01.jpg">
+        <img class="lazy" src="http://www.jq22.com/demo/jQueryWaterfallFlow20160830/img/01.jpg">
+        <img class="lazy" src="http://www.jq22.com/demo/jQueryWaterfallFlow20160830/img/01.jpg">
+        <img class="lazy" src="http://www.jq22.com/demo/jQueryWaterfallFlow20160830/img/01.jpg">
+    </div>
+
+    <div id="loadBar">
+        <div id="loadBarMask"></div>
+    </div>
+</body>
+
+<script>
+
+　　var lazyPic = $('img.lazy');
+var loadBarMask = $('#loadBarMask');
+var picList = $('.picList');
+
+var scrollTop,
+    clientHeight,
+    scrollHeight;
+
+var threshold = 200; //最后一张图片距离窗口200px的时候开始加载图片
+
+var src = [];
+
+var activePic = 0;
+var totalPic = lazyPic.length;
+
+//待加载的图片数据
+var dirtSrc = "./asset/images/";
+var picData = {imgSrc:[
+    dirtSrc + "01.jpg",
+    dirtSrc + "02.jpg",
+    dirtSrc + "03.jpg",
+    dirtSrc + "04.jpg",
+    dirtSrc + "05.jpg",
+    dirtSrc + "06.jpg",
+    dirtSrc + "07.jpg",
+    dirtSrc + "08.jpg",
+    dirtSrc + "09.jpg",
+    dirtSrc + "10.jpg",
+]};
+
+//加载次数计数器
+var scrollIndex = 0;
+
+$(function(){
+
+    /*监听窗口滚动情况*/
+    $(window).on('scroll',function(){
+
+        scrollTop = $(window).scrollTop();//$(window).scrollTop()==document.body.scrollTop
+        clientHeight = $(window).height();
+        scrollHeight = picList.last().height();//picList.last()[0].clientHeight
+
+        /*目标与窗口的距离达到阈值时开始加载*/
+        if(scrollHeight-clientHeight-scrollTop < threshold){
+            scrollPic(2);
+        }
+    })
+})
+
+/*根据滚动程度加载图片，每次加载perAmount张*/
+
+function scrollPic(perAmount = 2){
+
+    var totalAmount = perAmount * (scrollIndex+1);
+
+     //考虑到最后一次加载的时候，剩余的图片数量有可能达不到限定的每次加载的数量，这时候需要更改totalAmount的值
+    if(totalAmount>picData.imgSrc.length){
+        totalAmount = picData.imgSrc.length;
+    }
+    for(scrollIndex;scrollIndex<totalAmount;scrollIndex++){
+        var oimg = new Image();
+        oimg.src = picData.imgSrc[scrollIndex];
+        picList.append(oimg);
+    }
+
+}
+</script>
