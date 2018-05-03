@@ -149,11 +149,11 @@ class DefaultController extends BaseController
     {
         $data = Yii::$app->request->post();
 
-        // TODO 后续在做 验证字段规则
-
         if (empty($data)) {
             return CtHelper::response('false', '参数错误');
         }
+
+        // TODO 后续在做 验证字段规则
 
         $strategyGroup = Yii::$app->session->get('strategyGroup');
 
@@ -176,6 +176,18 @@ class DefaultController extends BaseController
     // TODO 删除策略组数据
     public function actionAjaxDelStrategyGroup()
     {
+        $strategyGroup = Yii::$app->session->get('strategyGroup');
+
+        $targetName = Yii::$app->request->post('targetName');
+        if (!$targetName && array_key_exists($targetName, $strategyGroup)) {
+            return CtHelper::response('false', '参数错误');
+        }
+
+        unset($strategyGroup[$targetName]);
+
+        Yii::$app->session->set('strategyGroup', $strategyGroup);
+
+        return CtHelper::response('true', '删除成功');
 
     }
 

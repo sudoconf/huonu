@@ -660,6 +660,38 @@ use yii\helpers\Url;
     // TODO 删除策略组
     $(document).on('click', '.del-strategic-group', function () {
 
+        var targetName = $(this).parent().find('h4').html(); // 查找当前点击的父元素的 h4 标签 html
+
+        var parentDom = $(this).parents('.card'); // parent 和 parents(找到某一特定的祖先元素): 只能找上一级别
+        parentDom.remove();
+
+        var cardLength = $('.survey-group').children('.card').length; // 获取 div 的个数
+        if (cardLength <= 0) {
+            var html = '<div class="not-added-policy-group text-center pt40 pb60"><div class="s_fs_16 pd15">未添加策略组</div></div>';
+            $('.survey-group').append(html);
+        }
+
+        $.ajax({
+            url: 'ajax-del-strategy-group.html',
+            type: 'post',
+            data: {'targetName': targetName}, // 字符串转 json 对象
+            dataType: 'json',
+            beforeSend: function () {
+                i = SHOW_LOAD_LAYER();
+            },
+            success: function (response) {
+                CLOSE_LOAD_LAYER(i);
+
+                if (response.result != "true") {
+                    LAYER_MSG_FUNCTION('加载失败', i);
+                }
+
+            },
+            error: function (e, jqxhr, settings, exception) {
+                LAYER_MSG_FUNCTION('加载失败', i);
+            }
+        });
+
     });
 
     // TODO 编辑策略组
