@@ -5,6 +5,7 @@ namespace backend\modules\report\controllers;
 use backend\controllers\BaseController;
 use backend\models\AuthorizeUser;
 use backend\models\Multitray;
+use backend\models\MultitrayStatistics;
 use backend\models\searchs\MultitraySearch;
 use backend\models\TaobaoZsAdvertiserTargetDaySumList;
 use backend\modules\report\services\ReportService;
@@ -57,6 +58,8 @@ class DefaultController extends BaseController
      */
     public function actionCreate()
     {
+        // Yii::$app->session->remove('setParameter');
+        // Yii::$app->session->remove('strategyGroup');
         $model = new Multitray();
 
         // print_r(Yii::$app->request->post());die;
@@ -114,7 +117,7 @@ class DefaultController extends BaseController
      */
     public function actionAjaxGetTarget()
     {
-        $shop = TaobaoZsAdvertiserTargetDaySumList::find()->select('target_id,target_name')->where(['taobao_user_id'=>'3015595177'])->limit(50)->asArray()->all();
+        $shop = TaobaoZsAdvertiserTargetDaySumList::find()->select('target_id,target_name')->where(['taobao_user_id' => '3015595177'])->limit(50)->asArray()->all();
         CtHelper::response(200, 'success', $shop);
     }
 
@@ -133,13 +136,13 @@ class DefaultController extends BaseController
 
         $strategyGroup = Yii::$app->session->get('strategyGroup');
 
-        if ($strategyGroup && is_array($strategyGroup)) {
-            $data = $strategyGroup + $data;
+        if (!$strategyGroup && !is_array($strategyGroup)) {
             Yii::$app->session->set('strategyGroup', $data);
         } else {
+            $data = $strategyGroup + $data;
+            Yii::$app->session->remove('strategyGroup');
             Yii::$app->session->set('strategyGroup', $data);
         }
-
         return CtHelper::response('true', '保存成功');
     }
 
@@ -175,8 +178,17 @@ class DefaultController extends BaseController
         ]);
     }
 
+    // TODO Ajax 获取复盘统计数据
+    public function actionAjaxGetStatisticData()
+    {
+        $multitrayId = Yii::$app->request->get('multitrayId');
+        $multitrayStatistics = MultitrayStatistics::find()->where(['multitray_id' => $multitrayId])->asArray()->one();
+
+        return CtHelper::response('true', 'ok', $multitrayStatistics);
+    }
+
     /**
-     * TODO 导出报表
+     * TODO Ajax 导出报表
      */
     public function actionAjaxExport()
     {

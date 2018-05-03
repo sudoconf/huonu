@@ -18,15 +18,13 @@ use common\services\BaseService;
 use Yii;
 use yii\db\Exception;
 
-// 报表 service TODO
+// TODO 报表 service
 class ReportService extends BaseService
 {
 
     // 添加 复盘实际操作
     public function createOperation()
     {
-        $session = Yii::$app->session;
-
         // 第一步保存的数据
         $setParameter = Yii::$app->session->get('setParameter');
 
@@ -68,14 +66,14 @@ class ReportService extends BaseService
                 foreach ($v as $sk => $sv) {
                     $multitrayPolicyGroup = new MultitrayPolicyGroup();
                     $strategicGroup['multitray_id'] = $multitrayId;
-                    $strategicGroup['policy_group_name'] = $k;
+                    $strategicGroup['policy_group_name'] = (string)$k;
                     $strategicGroup['taobao_id'] = $setParameter['taobao_id'];
                     $strategicGroup['target_id'] = $sv['targetId'];
                     $strategicGroup['target_name'] = $sv['targetName'];
 
                     $multitrayPolicyGroup->setAttributes($strategicGroup);
                     if (!$multitrayPolicyGroup->save()) {
-                        throw new Exception('策略组添加失败：' . current($multitray->getFirstErrors()));
+                        throw new Exception('策略组添加失败：' . current($multitrayPolicyGroup->getFirstErrors()));
                     }
                     $multitrayPolicyGroupId = Yii::$app->db->getLastInsertID();
 
@@ -99,8 +97,8 @@ class ReportService extends BaseService
             $this->generateStatisticOperation($field);
 
             // 删除第一步和第二部设置的session
-            $session->remove('setParameter');
-            $session->remove('strategyGroup');
+            // $session->remove('setParameter');
+            // $session->remove('strategyGroup');
 
             $transaction->commit();
             CtHelper::response(true, '操作成功');
@@ -160,7 +158,7 @@ class ReportService extends BaseService
                         huonu_multitray_policy_group t2
                 where 
                         t1.target_id = t2.target_id 
-                and     log_date >= '$logStartDate' and log_date <= '$logEndDate' 
+                and     log_date >= '2017-08-07' and log_date <= '2018-04-30' 
                 and     taobao_user_id='$taoBaoId' 
                 and     effect = '$effect' 
                 and     effect_type = '$effectType' 
@@ -170,9 +168,9 @@ class ReportService extends BaseService
         if (!empty($result)) {
 
             $lineInfoArray = [];
+            $newInfoArray = [];
 
             foreach ($result as $k => $v) {
-
                 $lineInfo = '["' . round($v['purchase_rate_of_goods'], 2)
                     . '","' . round($v['commodity_collection_rate'], 2)
                     . '","' . round($v['commodity_collection_cost'], 2)
@@ -198,21 +196,22 @@ class ReportService extends BaseService
                     . '","' . round($v['ecpc'], 2)
                     . '","' . round($v['ctr'], 2)
                     . '","' . round($v['cvr'], 2)
-                    . '","' . round($v['roi'], 2);
+                    . '","' . round($v['roi'], 2) . '"]';
 
-                $lineKey = date('Y-m-d', strtotime($v['log_date']));
+                $lineKey = strtotime($v['log_date']);
                 $lineInfoArray[$v['policy_group_name']][$lineKey] = $lineInfo;
 
                 foreach ($timeArray as $tk => $tv) {
-
-                    if (!array_key_exists($tv, $lineInfoArray[$v['policy_group_name']])) {
-                        $lineInfoArray[$v['policy_group_name']][$tv] = '["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0",]';
-                    }
-
+                    $lineInfoArray[$v['policy_group_name']][strtotime($tv)] = '[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]';
                 }
             }
 
-            array_multisort($lineInfoArray);
+            foreach ($lineInfoArray as $k => $v) {
+                ksort($v, SORT_ASC);
+                foreach ($v as $tk => $tv) {
+                    $newInfoArray[$k][date('Y-m-d', $tk)] = $tv;
+                }
+            }
 
             $transaction = Yii::$app->db->beginTransaction();
             try {
@@ -220,7 +219,7 @@ class ReportService extends BaseService
                 $multitrayStatistics = new MultitrayStatistics();
 
                 $multitrayStatisticsArray['multitray_id'] = $multitrayId;
-                $multitrayStatisticsArray['multitray_statistics_content_json'] = json_encode($lineInfoArray);
+                $multitrayStatisticsArray['multitray_statistics_content_json'] = json_encode($newInfoArray);
 
                 $multitrayStatistics->setAttributes($multitrayStatisticsArray);
                 if (!$multitrayStatistics->save()) {
@@ -241,13 +240,60 @@ class ReportService extends BaseService
         }
     }
 
-    // TODO 统计展现(包括下载数据)
+    // 统计展现(包括下载数据)
     public function getShowOperation()
     {
+        $multitrayId = Yii::$app->request->get('multitrayId');
+
+        $multitray = Multitray::findOne($multitrayId);
+        if (empty($multitray)) {
+            CtHelper::response('false', '');
+        }
+
+        $logStartDate = '2017-02-01';//date('Y-m-d', $multitray->multitray_start_time);
+        $logEndDate = date('Y-m-d', $multitray->multitray_end_time);
+
+        // 花费占比(charge)、投入产出比(alipay_inshop_amt、roi)
+        $statisticDataSql = "select sum(charge) as charge, 
+                                sum(alipay_inshop_amt) as alipay_inshop_amt,
+                                sum(roi) as roi, policy_group_name,
+                                sum(cart_num)*100/sum(uv) as purchase_rate,
+                                sum(inshop_item_col_num)*100/sum(uv) as commodity_collection_rate,
+                                sum(charge)/(sum(inshop_item_col_num)+sum(cart_num)) as purchase_cost_of_goods_collection
+                    from taobao_zs_advertiser_target_day_sum_list t1, huonu_multitray_policy_group t2  where log_date >= '$logStartDate' and log_date <= '$logEndDate'
+                    and     t1.target_id = t2.target_id 
+                    and     taobao_user_id='$multitray->taobao_id'
+                    and     effect = '$multitray->multitray_cycle'
+                    and     effect_type = '$multitray->multitray_effect_model'  group by policy_group_name order by policy_group_name";
+        $statisticData = Yii::$app->db->createCommand($statisticDataSql)->queryAll();
+
         // TODO 按时日期分析
         // TODO 按人群分析
         // TODO 策略组按日分析
         // TODO 定向人群按日分析
+
+        $result['multitrayId'] = $multitrayId;
+        $result['policyGroupName'] = array_column($statisticData, 'policy_group_name');
+
+        // 花费
+        $result['charge'] = array_column($statisticData, 'charge');
+
+        // 成交额
+        $result['alipayInshopAmt'] = array_column($statisticData, 'alipay_inshop_amt');
+
+        // 消耗产出比
+        $result['roi'] = array_column($statisticData, 'roi');
+
+        // 商品收藏率
+        $result['commodityCollectionRate'] = array_column($statisticData, 'commodity_collection_rate');
+
+        // 商品加购率
+        $result['purchaseRate'] = array_column($statisticData, 'purchase_rate');
+
+        // 商品收藏加购成本
+        $result['purchaseCostGoodsCollection'] = array_column($statisticData, 'purchase_cost_of_goods_collection');
+
+        return $result;
     }
 
     // TODO 下载
