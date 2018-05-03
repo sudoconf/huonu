@@ -96,9 +96,7 @@ class ReportService extends BaseService
             $field['multitrayId'] = $multitrayId;
             $this->generateStatisticOperation($field);
 
-            // 删除第一步和第二部设置的session
-            // $session->remove('setParameter');
-            // $session->remove('strategyGroup');
+            Yii::$app->session->set('whetherOrNotComplete', true);
 
             $transaction->commit();
             CtHelper::response(true, '操作成功');

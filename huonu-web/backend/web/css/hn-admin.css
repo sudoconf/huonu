@@ -674,10 +674,6 @@ ul.custom-fields li.placeholder:before {
     position: absolute;
 }
 
-.control-group .select-time {
-    width: 310px
-}
-
 /*策略组*/
 .card {
     float: left;

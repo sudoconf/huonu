@@ -88,7 +88,15 @@ function CLOSE_LOAD_LAYER(index) {
     layer.close(index);
 }
 
-function LAYER_MSG(msg, i) {
+function LAYER_MSG(msg) {
+    layer.msg(msg, {
+        icon: 2,
+        shade: [0.5],
+        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+    });
+}
+
+function LAYER_MSG_FUNCTION(msg, i) {
     layer.msg(msg, {
         icon: 2,
         time: 2000 //2秒关闭（如果不配置，默认是3秒）

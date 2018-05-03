@@ -43,9 +43,7 @@ class DefaultController extends BaseController
         $searchModel = new MultitraySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render(
-            'index',
-            [
+        return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
             ]
@@ -58,15 +56,38 @@ class DefaultController extends BaseController
      */
     public function actionCreate()
     {
-        // Yii::$app->session->remove('setParameter');
-        // Yii::$app->session->remove('strategyGroup');
         $model = new Multitray();
 
-        // print_r(Yii::$app->request->post());die;
-        return $this->render(
-            'create',
-            [
+        $whetherOrNotComplete = Yii::$app->session->get('whetherOrNotComplete');
+        if ($whetherOrNotComplete) {
+            Yii::$app->session->remove('setParameter');
+            Yii::$app->session->remove('strategyGroup');
+        }
+
+        $setParameter = Yii::$app->session->get('setParameter');
+        if (empty($setParameter) && !isset($setParameter['multitray_name'])) {
+            $setParameter['multitray_name'] = '';
+            $setParameter['taobao_name'] = '';
+            $setParameter['taobao_id'] = '';
+            $setParameter['multitray_start_time'] = '';
+            $setParameter['multitray_end_time'] = '';
+            $setParameter['multitray_field'] = '';
+            $setParameter['multitray_effect_model'] = '';
+            $setParameter['multitray_cycle'] = '';
+        }
+        if (!array_key_exists('multitray_field', $setParameter)) {
+            $setParameter['multitray_field'] = [];
+        }
+
+        $strategyGroup = Yii::$app->session->get('strategyGroup');
+        if (empty($strategyGroup)) {
+            $strategyGroup = [];
+        }
+
+        return $this->render('create', [
                 'model' => $model,
+                'setParameter' => $setParameter,
+                'strategyGroup' => $strategyGroup
             ]
         );
     }
@@ -98,7 +119,7 @@ class DefaultController extends BaseController
 
         if (isset($data['_csrf-backend'])) {
             unset($data['_csrf-backend']);
-            // unset($data['multitray_time']);
+            unset($data['multitray_time']);
         }
 
         $setParameter = Yii::$app->session->get('setParameter');

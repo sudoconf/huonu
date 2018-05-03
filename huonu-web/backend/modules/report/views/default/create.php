@@ -74,22 +74,26 @@ use yii\helpers\Url;
                                     <div class="control-group">
                                         <span>复盘名称</span>
                                         <input type="text" class="form-control multitray-name" placeholder="复盘名称"
-                                               name="multitray_name">
+                                               name="multitray_name" value="<?= $setParameter['multitray_name'] ?>">
                                     </div>
 
                                     <div class="control-group">
                                         <span>店铺选择</span>
-                                        <input type="text" id="taobao_name" name="taobao_name" class="form-control"
+                                        <input type="text" id="taobao_name" value="<?= $setParameter['taobao_name'] ?>"
+                                               name="taobao_name" class="form-control"
                                                placeholder="店铺选择">
-                                        <input type="hidden" id="taobao_id" name="taobao_id">
+                                        <input type="hidden" id="taobao_id" name="taobao_id"
+                                               value="<?= $setParameter['taobao_id'] ?>">
                                     </div>
 
                                     <div class="control-group">
                                         <span>时间选择</span>
                                         <input type="text" placeholder="请选择时间" class="form-control select-time"
                                                name="multitray_time">
-                                        <input type="hidden" name="multitray_start_time" id="multitray-start-time"/>
-                                        <input type="hidden" name="multitray_end_time" id="multitray-end-time"/>
+                                        <input type="hidden" name="multitray_start_time" id="multitray-start-time"
+                                               value="<?= $setParameter['multitray_start_time'] ?>"/>
+                                        <input type="hidden" name="multitray_end_time" id="multitray-end-time"
+                                               value="<?= $setParameter['multitray_end_time'] ?>"/>
                                     </div>
 
                                     <div class="control-group">
@@ -113,7 +117,7 @@ use yii\helpers\Url;
                                                             <label class="form-inline">
                                                                 <input type="checkbox" name="multitray_field[]"
                                                                        value="charge"
-                                                                       checked="checked">消耗
+                                                                    <?= in_array('charge', $setParameter['multitray_field']) ? 'checked' : '' ?>>消耗
                                                             </label>
                                                         </div>
 
@@ -122,7 +126,7 @@ use yii\helpers\Url;
                                                             <label class="form-inline">
                                                                 <input type="checkbox" name="multitray_field[]"
                                                                        value="ad_pv"
-                                                                       checked="checked">展现量
+                                                                    <?= in_array('ad_pv', $setParameter['multitray_field']) ? 'checked' : '' ?>>展现量
                                                             </label>
                                                         </div>
 
@@ -131,10 +135,10 @@ use yii\helpers\Url;
                                                             <label class="form-inline">
                                                                 <input type="checkbox" name="multitray_field[]"
                                                                        value="click"
-                                                                       checked="checked">点击量
+                                                                    <?= in_array('click', $setParameter['multitray_field']) ? 'checked' : '' ?>>点击量
                                                                 <input type="checkbox" name="multitray_field[]"
                                                                        value="uv"
-                                                                       checked="checked">访客
+                                                                    <?= in_array('uv', $setParameter['multitray_field']) ? 'checked' : '' ?>>访客
                                                             </label>
                                                         </div>
 
@@ -142,11 +146,11 @@ use yii\helpers\Url;
                                                             <span>意向</span>
                                                             <label class="form-inline">
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="deep_inshop_uv">深度进店
+                                                                       value="deep_inshop_uv" disabled>深度进店
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="avg_access_time">访问时长
+                                                                       value="avg_access_time" disabled>访问时长
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="avg_access_page_num">访问页面数
+                                                                       value="avg_access_page_num" disabled>访问页面数
                                                             </label>
                                                         </div>
 
@@ -154,26 +158,26 @@ use yii\helpers\Url;
                                                             <span>行动</span>
                                                             <label class="form-inline">
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="inshop_item_col_num" checked="checked">收藏宝贝量
+                                                                       value="inshop_item_col_num" <?= in_array('inshop_item_col_num', $setParameter['multitray_field']) ? 'checked' : '' ?>>收藏宝贝量
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="dir_shop_col_num" checked="checked">收藏店铺量
+                                                                       value="dir_shop_col_num" <?= in_array('dir_shop_col_num', $setParameter['multitray_field']) ? 'checked' : '' ?>>收藏店铺量
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="cart_num"
-                                                                       checked="checked">添加购物车量
+                                                                       value="cart_num" <?= in_array('cart_num', $setParameter['multitray_field']) ? 'checked' : '' ?>>添加购物车量
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="gmv_inshop_num">拍下订单量
+                                                                       value="gmv_inshop_num" disabled>拍下订单量
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="gmv_inshop_amt">拍下订单金额<br>
+                                                                       value="gmv_inshop_amt" disabled>拍下订单金额<br>
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="commodity_collection_rate">商品收藏率
+                                                                       value="commodity_collection_rate" disabled>商品收藏率
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="purchase_rate_of_goods">商品加购率
+                                                                       value="purchase_rate_of_goods" disabled>商品加购率
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="commodity_collection_cost">商品收藏成本
+                                                                       value="commodity_collection_cost" disabled>商品收藏成本
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="purchase_cost_of_goods">商品加购成本
+                                                                       value="purchase_cost_of_goods" disabled>商品加购成本
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="purchase_cost_of_goods_collection">商品收藏加购成本
+                                                                       value="purchase_cost_of_goods_collection"
+                                                                       disabled>商品收藏加购成本
                                                             </label>
                                                         </div>
 
@@ -181,13 +185,13 @@ use yii\helpers\Url;
                                                             <span>成交</span>
                                                             <label class="form-inline">
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="alipay_in_shop_num">成交订单量
+                                                                       value="alipay_in_shop_num" disabled>成交订单量
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="alipay_inshop_amt">成交订单金额
+                                                                       value="alipay_inshop_amt" disabled>成交订单金额
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="average_cost_of_order">订单平均成本
+                                                                       value="average_cost_of_order" disabled>订单平均成本
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="order_average_amount">订单平均金额
+                                                                       value="order_average_amount" disabled>订单平均金额
                                                             </label>
                                                         </div>
 
@@ -195,20 +199,15 @@ use yii\helpers\Url;
                                                             <span>衍生指标</span>
                                                             <label class="form-inline">
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="ecpm"
-                                                                       checked="checked">千次展现成本
+                                                                       value="ecpm" <?= in_array('ecpm', $setParameter['multitray_field']) ? 'checked' : '' ?>>千次展现成本
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="ctr"
-                                                                       checked="checked">点击率
+                                                                       value="ctr" <?= in_array('ctr', $setParameter['multitray_field']) ? 'checked' : '' ?>>点击率
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="ecpc"
-                                                                       checked="checked">点击单价
+                                                                       value="ecpc" <?= in_array('ecpc', $setParameter['multitray_field']) ? 'checked' : '' ?>>点击单价
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="cvr"
-                                                                       checked="checked">点击转化率
+                                                                       value="cvr" <?= in_array('cvr', $setParameter['multitray_field']) ? 'checked' : '' ?>>点击转化率
                                                                 <input type="checkbox" name="multitray_field[]"
-                                                                       value="roi"
-                                                                       checked="checked">投资回报率
+                                                                       value="roi" <?= in_array('roi', $setParameter['multitray_field']) ? 'checked' : '' ?>>投资回报率
                                                             </label>
                                                         </div>
 
@@ -252,18 +251,26 @@ use yii\helpers\Url;
                                     <div class="control-group">
                                         <span>效果模型</span>
                                         <label class="form-inline">
-                                            <input type="radio" value="click" checked="checked"
+                                            <input type="radio" value="click"
+                                                <?= $setParameter['multitray_effect_model'] == 'click' ? 'checked' : '' ?>
                                                    name="multitray_effect_model">点击效果
-                                            <input type="radio" value="impression" name="multitray_effect_model">展示效果
+                                            <input type="radio" value="impression" name="multitray_effect_model"
+                                                <?= $setParameter['multitray_effect_model'] == 'impression' ? 'checked' : '' ?>>展示效果
                                         </label>
                                     </div>
 
                                     <div class="control-group">
                                         <span>数据周期</span>
                                         <label class="form-inline">
-                                            <input type="radio" value="3" checked="checked" name="multitray_cycle">3天
-                                            <input type="radio" value="7" name="multitray_cycle">7天
-                                            <input type="radio" value="15" name="multitray_cycle">15天
+                                            <input type="radio" value="3"
+                                                <?= ($setParameter['multitray_cycle'] == 3) ? 'checked' : '' ?>
+                                                   name="multitray_cycle">3天
+                                            <input type="radio" value="7"
+                                                <?= ($setParameter['multitray_cycle'] == 7) ? 'checked' : '' ?>
+                                                   name="multitray_cycle">7天
+                                            <input type="radio" value="15"
+                                                <?= ($setParameter['multitray_cycle'] == 15) ? 'checked' : '' ?>
+                                                   name="multitray_cycle">15天
                                         </label>
                                     </div>
 
@@ -290,9 +297,39 @@ use yii\helpers\Url;
                                     </div>
 
                                     <div class="control-group survey-group" style="overflow: hidden;">
-                                        <div class="not-added-policy-group text-center pt40 pb60">
-                                            <div class="s_fs_16 pd15">未添加策略组</div>
-                                        </div>
+                                        <?php
+                                        if (empty($strategyGroup)) { ?>
+                                            <div class="not-added-policy-group text-center pt40 pb60">
+                                                <div class="s_fs_16 pd15">未添加策略组</div>
+                                            </div>
+                                        <?php } else {
+                                            foreach ($strategyGroup as $k => $v) { ?>
+                                                <div class="card">
+                                                    <div class="strategic-group">
+                                                    <span class="list-group-item active">
+                                                        <a href="javascript:;" class="badge del-strategic-group">
+                                                            <i class="fa fa-times">删除</i>
+                                                        </a>
+                                                        <a href="javascript:;" class="badge edit-strategic-group">
+                                                            <i class="fa fa-edit">编辑</i>
+                                                        </a>
+                                                        <h4 class="list-group-item-heading"><?= $k ?></h4>
+                                                    </span>
+                                                    </div>
+                                                    <div class="pre-scrollable">
+                                                        <ul class="list-group">
+                                                            <?php foreach ($v as $tk => $tv) { ?>
+                                                                <li class="list-group-item">
+                                                                    <?= $tv['targetName'] ?>
+                                                                </li>
+                                                            <?php } ?>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+                                            <?php }
+                                        } ?>
+
                                     </div>
 
                                     <div class="control-group">
@@ -361,11 +398,9 @@ use yii\helpers\Url;
 
     // 时间段选择
     var cb = function (start, end, label) {
-        $('.select-time span').html(start.format('YYYY-MM-DD HH:mm:ss'));
-
         //赋值给隐藏输入框
-        $('#multitray-start-time').val(start.format('YYYY-MM-DD HH:mm:ss'));
-        $('#multitray-end-time').val(end.format('YYYY-MM-DD HH:mm:ss'));
+        $('#multitray-start-time').val(start.format('YYYY-MM-DD'));
+        $('#multitray-end-time').val(end.format('YYYY-MM-DD'));
     };
     var optionSet = {
         'timePicker': true, //显示时间
@@ -377,7 +412,7 @@ use yii\helpers\Url;
         'endDate': moment().endOf('day'),
         'opens': 'right',
         'drops': 'down',
-        'format': 'YYYY-MM-DD HH:mm:ss',
+        'format': 'YYYY-MM-DD',
         'autoUpdateInput': true, // 当前默认时间
         'ranges': {
             // '最近1小时': [moment().subtract('hours',1), moment()],
@@ -392,7 +427,7 @@ use yii\helpers\Url;
             '近三个月': [moment().subtract(3, 'month').startOf('month').startOf('day'), moment().subtract(1, 'month').endOf('month').endOf('day')]
         },
         'locale': {
-            'format': 'YYYY-MM-DD HH:mm:ss',
+            'format': 'YYYY-MM-DD',
             "separator": " 至 ",
             "applyLabel": "确定",
             "cancelLabel": "取消",
@@ -437,13 +472,7 @@ use yii\helpers\Url;
                     }
                 },
                 error: function (XmlHttpRequest, textStatus, errorThrown) {
-                    layer.msg('网络异常 请稍后再试',
-                        {
-                            icon: 5,
-                            shade: [0.8, '#f5f5f5'],
-                            time: 1000
-                        }
-                    );
+                    LAYER_MSG_FUNCTION('网络异常 请稍后再试', i);
                 }
             });
         },
@@ -470,6 +499,21 @@ use yii\helpers\Url;
     // 第一步骤 提交数据
     $(document).on('click', '.create', function () {
 
+        if ($('.multitray-name').val() == '') {
+            LAYER_MSG('请正确填写复盘名称');
+            return false;
+        }
+
+        if ($('#taobao_id').val() == '') {
+            LAYER_MSG('请正确选择店铺');
+            return false;
+        }
+
+        if ($('#multitray-start-time').val() == '') {
+            LAYER_MSG('请正确选择时间');
+            return false;
+        }
+
         var form = $('form#form-set-parame');
         // console.log(form.serialize());
 
@@ -483,17 +527,9 @@ use yii\helpers\Url;
             },
             success: function (response) {
                 CLOSE_LOAD_LAYER(i);
-                console.log(response);
-
-
             },
             error: function (e, jqxhr, settings, exception) {
-                layer.msg('加载失败！', {
-                    icon: 2,
-                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                }, function () {
-                    CLOSE_LOAD_LAYER(i);
-                });
+                LAYER_MSG_FUNCTION('加载失败', i);
             }
         });
         return false;
@@ -556,6 +592,17 @@ use yii\helpers\Url;
     $(document).on('click', '.add-survey-group-operate', function () {
 
         var targetName = $("#target-name").val();
+        if (targetName == '') {
+            LAYER_MSG('请正确填写策略组名称');
+            return false;
+        }
+
+        // 策略组最多只能添加 9 个  这里只能通过 session 来判断
+        var surveyGroupLength = $('.survey-group .card').length;
+        if (surveyGroupLength > 8) {
+            LAYER_MSG('策略组只能添加9个');
+            return false;
+        }
 
         var htmlStr = '<div class="card">';
         htmlStr += '<div class="strategic-group"><span class="list-group-item active">';
@@ -568,6 +615,9 @@ use yii\helpers\Url;
             if ($(this).is(':checked')) {
                 htmlStr += '<li class="list-group-item">' + $(this).attr('title') + '</li>';
                 dataJson += '{"targetId": "' + $(this).val() + '","targetName": "' + $(this).attr('title') + '"},'
+            } else {
+                LAYER_MSG('请正确选择定向人群');
+                return false;
             }
         });
 
@@ -585,18 +635,6 @@ use yii\helpers\Url;
             dataType: 'json',
             beforeSend: function () {
                 i = SHOW_LOAD_LAYER();
-
-                // 策略组最多只能添加 9 个  这里只能通过 session 来判断
-                var surveyGroupLength = $('.survey-group .card').length;
-                if (surveyGroupLength > 9) {
-                    layer.msg('策略组只能添加9个！', {
-                        icon: 2,
-                        time: 5000 //2秒关闭（如果不配置，默认是3秒）
-                    }, function () {
-                        CLOSE_LOAD_LAYER(i);
-                    });
-                    return false;
-                }
             },
             success: function (response) {
                 CLOSE_LOAD_LAYER(i);
@@ -608,16 +646,23 @@ use yii\helpers\Url;
                     $('.survey-group').append(htmlStr);
                     layer.closeAll();
                 } else {
-                    LAYER_MSG('加载失败！', i);
+                    LAYER_MSG_FUNCTION('加载失败', i);
                 }
 
             },
             error: function (e, jqxhr, settings, exception) {
-                LAYER_MSG('加载失败！', i);
+                LAYER_MSG_FUNCTION('加载失败', i);
             }
         });
         return false;
     });
+
+    // TODO 删除策略组
+    $(document).on('click', '.del-strategic-group', function () {
+
+    });
+
+    // TODO 编辑策略组
 
     // TODO 生成报表
     $('.generate-report').click(function () {
@@ -646,12 +691,12 @@ use yii\helpers\Url;
                         window.location.href = 'default.html';
                     });
                 } else {
-                    LAYER_MSG('加载失败！', i);
+                    LAYER_MSG_FUNCTION('加载失败', i);
                 }
 
             },
             error: function (e, jqxhr, settings, exception) {
-                LAYER_MSG('加载失败！', i);
+                LAYER_MSG_FUNCTION('加载失败', i);
             }
         });
         return false;
