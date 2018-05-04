@@ -15,9 +15,10 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 class DataSyncController extends BaseController
-{/**
- * @inheritdoc
- */
+{
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [

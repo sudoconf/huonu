@@ -35,6 +35,20 @@ class ApiLogs extends \yii\db\ActiveRecord
     }
 
     /**
+     * 设置自定义属性
+     * @return array
+     */
+    public function attributes()
+    {
+        $parent = parent::attributes();
+
+        $attributes = [
+            'callNumber',
+        ];
+        return array_merge($parent, $attributes);
+    }
+
+    /**
      * @inheritdoc
      */
     public function attributeLabels()

@@ -66,7 +66,7 @@ class ApiLogSearch extends ApiLogs
         // 首先要setAttributes
         $this->setAttributes($params);
 
-        $query = ApiLogs::find();
+        $query = ApiLogs::find()->select(['`id`', '`api_name`', '`created_at`', '`call_poeple`', 'count(`id`) as `callNumber`']);
 
         // add conditions that should always apply here
 
@@ -101,6 +101,8 @@ class ApiLogSearch extends ApiLogs
 
         $query->andFilterWhere(['like', 'api_name', $this->api_name])
             ->andFilterWhere(['like', 'call_poeple', $this->call_poeple]);
+
+        $query->groupBy(['`api_name`']);
 
         return $dataProvider;
     }

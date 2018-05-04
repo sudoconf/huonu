@@ -59,6 +59,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         'call_poeple',
                         [
                             'class' => 'yii\grid\ActionColumn',
+                            'header' => '调用的次数',
+                            'template' => '{number}',
+                            'buttons' => [
+                                'number' => function ($url, $model, $key) {
+                                    return $model->callNumber;
+                                },
+                            ],
+                        ],
+                        [
+                            'class' => 'yii\grid\ActionColumn',
                             'header' => '更多操作',
                             'template' => '{sync}',
                             'buttons' => [

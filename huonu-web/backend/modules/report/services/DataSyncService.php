@@ -16,5 +16,4 @@ use yii\data\ActiveDataProvider;
 // 报表数据同步 service TODO
 class DataSyncService extends BaseService
 {
-
 }
