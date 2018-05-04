@@ -21,8 +21,30 @@ use yii\db\Exception;
 // TODO 报表 service
 class ReportService extends BaseService
 {
+    /**
+     * 复盘删除
+     */
+    public function deleteOperation()
+    {
+        $multitrayId = Yii::$app->request->get('multitrayId');
+        $multitray = Multitray::findOne($multitrayId);
+        if (empty($multitray)) {
+            CtHelper::response('false', '复盘不存在');
+        }
 
-    // 添加 复盘实际操作
+        $multitray->is_delete = 1;
+        if (!$multitray->save()) {
+            CtHelper::response('false', $multitray->getErrors());
+        }
+
+        CtHelper::response('true', '删除成功！');
+    }
+
+    /**
+     * 添加 复盘实际操作
+     * @throws Exception
+     * @throws \Exception
+     */
     public function createOperation()
     {
         // 第一步保存的数据
@@ -271,6 +293,9 @@ class ReportService extends BaseService
         // TODO 定向人群按日分析
 
         $result['multitrayId'] = $multitrayId;
+
+        $result['multitrayName'] = $multitray->multitray_name;
+
         $result['policyGroupName'] = array_column($statisticData, 'policy_group_name');
 
         // 花费

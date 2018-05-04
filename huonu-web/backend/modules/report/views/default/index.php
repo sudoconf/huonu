@@ -8,24 +8,58 @@ use yii\helpers\Url;
 /* @var $searchModel backend\models\searchs\MultitraySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '复盘';
+$this->title = '人群复盘列表';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div id="page-wrapper">
 
     <div class="row">
-        <div class="multitray-index">
+        <div class="col-lg-12">
+            <h3 class="page-title">
+                客户报表
+                <small><?= Html::encode($this->title) ?></small>
+            </h3>
+        </div>
+    </div>
 
-            <h1><?= Html::encode($this->title) ?></h1>
-            <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="<?= Url::toRoute('/site') ?>">Home</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="<?= Url::toRoute('index') ?>">客户报表</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+        </ul>
+    </div>
 
-            <p>
-                <?= Html::a('新建定向人群复盘', ['create'], ['class' => 'btn btn-success']) ?>
-            </p>
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="control-group">
+                <?= $this->render('_search', ['model' => $searchModel]); ?>
+            </div>
+
+            <div class="control-group">
+                <?= Html::a('新建定向人群复盘', ['create'], ['class' => 'btn btn-primary']) ?>
+            </div>
+
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 // 'filterModel' => $searchModel,
+                // 'pager' => [
+                //     // 'options' => [
+                //     //     'class' => 'hidden' //关闭自带分页
+                //     // ],
+                //     'firstPageLabel' => '首页',
+                //     'prevPageLabel' => '上一页',
+                //     'nextPageLabel' => '下一页',
+                //     'lastPageLabel' => '末页',
+                // ],
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'taobao_id',
@@ -33,11 +67,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     'multitray_name',
                     [
                         'attribute' => 'multitray_start_time',
-                        'format' => ['date', 'php:Y-m-d H:i:s'],
+                        'format' => ['date', 'php:Y-m-d'],
                     ],
                     [
                         'attribute' => 'multitray_end_time',
-                        'format' => ['date', 'php:Y-m-d H:i:s'],
+                        'format' => ['date', 'php:Y-m-d'],
                     ],
                     [
                         'attribute' => 'multitray_effect_model',
@@ -66,7 +100,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             },
                             'delete' => function ($url, $model, $key) {
                                 return Html::button('删除', [
-                                    'class' => 'btn btn-primary'
+                                    'class' => 'btn btn-primary delete-report',
+                                    'value' => $model->multitray_id
                                 ]);
                             },
                         ],
@@ -77,3 +112,46 @@ $this->params['breadcrumbs'][] = $this->title;
 
     </div>
 </div>
+
+<script>
+
+    // ajax 删除 复盘
+    $('.delete-report').click(function () {
+
+        var multitrayId = $(this).val();
+
+        $.ajax({
+            url: 'default/ajax-delete.html',
+            type: 'get',
+            data: {'multitrayId': multitrayId},
+            dataType: 'json',
+            beforeSend: function () {
+                i = SHOW_LOAD_LAYER();
+            },
+            success: function (response) {
+                CLOSE_LOAD_LAYER(i);
+
+                if (response.result == "true") {
+
+                    layer.msg('删除成功', {
+                        icon: 2,
+                        shade: [0.5],
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                    }, function () {
+
+                        CLOSE_LOAD_LAYER(i);
+
+                        window.location.href = 'default.html';
+                    });
+                } else {
+                    LAYER_MSG_FUNCTION('加载失败', i);
+                }
+
+            },
+            error: function (e, jqxhr, settings, exception) {
+                LAYER_MSG_FUNCTION('加载失败', i);
+            }
+        });
+    })
+
+</script>

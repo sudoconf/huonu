@@ -275,7 +275,7 @@ use yii\helpers\Url;
                                     </div>
 
 
-                                    <span id="oneStep" class="create btn btn-primary">下一步，添加对比组</span>
+                                    <span class="create btn btn-primary">下一步，添加对比组</span>
                                 </div>
                                 <?php \yii\bootstrap\ActiveForm::end(); ?>
                             </div>
@@ -334,7 +334,7 @@ use yii\helpers\Url;
 
                                     <div class="control-group">
                                         <input type="button" value="下一步，生成报表" class="btn btn-primary generate-report">
-                                        <input type="button" value="上一步" class="btn btn-primary" id="shangyibu">
+                                        <input type="button" value="上一步" class="btn btn-primary last-step">
                                     </div>
 
                                 </div>
@@ -472,7 +472,7 @@ use yii\helpers\Url;
                     }
                 },
                 error: function (XmlHttpRequest, textStatus, errorThrown) {
-                    LAYER_MSG_FUNCTION('网络异常 请稍后再试', i);
+                    LAYER_MSG_FUNCTION('网络异常 请稍后再试', 2, i);
                 }
             });
         },
@@ -513,6 +513,11 @@ use yii\helpers\Url;
             return false;
         }
 
+        if ($("input[name='multitray_field[]']:checked").length == 0) {
+            LAYER_MSG('请正确选择字段');
+            return false;
+        }
+
         var form = $('form#form-set-parame');
         // console.log(form.serialize());
 
@@ -525,13 +530,24 @@ use yii\helpers\Url;
                 i = SHOW_LOAD_LAYER();
             },
             success: function (response) {
-                CLOSE_LOAD_LAYER(i);
+
+                if (response.result == true) {
+                    LAYER_MSG_FUNCTION('提交成功', 1, i);
+                    $('.nav-tabs li').eq(0).removeClass('active').siblings('li').addClass('active');
+                    $('.nav-tabs li').eq(0).addClass('disabled');
+
+                    $('.tab-pane').eq(0).removeClass('active in');
+                    $('.tab-pane').eq(1).addClass('active in');
+
+                } else {
+                    LAYER_MSG_FUNCTION(response.message, 2, i);
+                }
+
             },
             error: function (e, jqxhr, settings, exception) {
-                LAYER_MSG_FUNCTION('加载失败', i);
+                LAYER_MSG_FUNCTION('加载失败', 2, i);
             }
         });
-        return false;
     });
 
     // 页面加载的时候获取定向人群
@@ -596,6 +612,11 @@ use yii\helpers\Url;
             return false;
         }
 
+        if ($("input.check-box:checked").length == 0) {
+            LAYER_MSG('请正确选择定向人群');
+            return false;
+        }
+
         // 策略组最多只能添加 9 个  这里只能通过 session 来判断
         var surveyGroupLength = $('.survey-group .card').length;
         if (surveyGroupLength > 8) {
@@ -614,9 +635,6 @@ use yii\helpers\Url;
             if ($(this).is(':checked')) {
                 htmlStr += '<li class="list-group-item">' + $(this).attr('title') + '</li>';
                 dataJson += '{"targetId": "' + $(this).val() + '","targetName": "' + $(this).attr('title') + '"},'
-            } else {
-                LAYER_MSG('请正确选择定向人群');
-                return false;
             }
         });
 
@@ -645,12 +663,12 @@ use yii\helpers\Url;
                     $('.survey-group').append(htmlStr);
                     layer.closeAll();
                 } else {
-                    LAYER_MSG_FUNCTION('加载失败', i);
+                    LAYER_MSG_FUNCTION('加载失败', 2, i);
                 }
 
             },
             error: function (e, jqxhr, settings, exception) {
-                LAYER_MSG_FUNCTION('加载失败', i);
+                LAYER_MSG_FUNCTION('加载失败', 2, i);
             }
         });
         return false;
@@ -682,12 +700,12 @@ use yii\helpers\Url;
                 CLOSE_LOAD_LAYER(i);
 
                 if (response.result != "true") {
-                    LAYER_MSG_FUNCTION('加载失败', i);
+                    LAYER_MSG_FUNCTION('加载失败', 2, i);
                 }
 
             },
             error: function (e, jqxhr, settings, exception) {
-                LAYER_MSG_FUNCTION('加载失败', i);
+                LAYER_MSG_FUNCTION('加载失败', 2, i);
             }
         });
 
@@ -695,52 +713,6 @@ use yii\helpers\Url;
 
     // TODO 编辑策略组
     $('.edit-strategic-group').click(function () {
-        $.ajax({
-            url: ajaxUrl,
-            type: 'get',
-            data: {'id': id},
-            beforeSend: function () {
-                i = SHOW_LOAD_LAYER();
-            },
-            success: function (msg) {
-                CLOSE_LOAD_LAYER(i);
-                var html = '<div class="form-group">';
-                html += '<form class="form-horizontal" role="form">';
-                html += '<div class="control-group">';
-                html += '<label for="target-name" class="col-sm-3 control-label">策略组名称</label>';
-                html += '<div class="col-sm-9">';
-                html += '<input type="text" class="form-control" name="target-name" id="target-name" placeholder="请输入策略组名称">';
-                html += '</div>';
-                html += '</div>';
-                html += '<div class="control-group">';
-                html += '<label for="lastname" class="col-sm-3 control-label">选择定向人群</label>';
-                html += '<div class="col-sm-9">';
-                html += '<ul class="list-group pre-scrollable" id="addhtml">';
-                html += '<li class="control-group"><input type="checkbox" id="select-all"><span>全选</span></li>';
-                html += '</ul>';
-                html += '</div>';
-                html += '</div>';
-                html += '<div class="control-group">';
-                html += '<label class="col-sm-3 control-label"></label>';
-                html += '<span class="btn btn-primary edit-survey-group-operate">修改</span>';
-                html += '</div>';
-                html += '</form>';
-                html += '</div>'';
-                layer.open({
-                    type: 1,
-                    title: '修改测策略组',
-                    shadeClose: true,
-                    shade: 0.5, // 遮罩
-                    anim: 1, // 动画
-                    maxmin: false, //开启最大化最小化按钮
-                    area: ['580px', '500px'],
-                    content: html,
-                });
-            },
-            error: function (e, jqxhr, settings, exception) {
-                LAYER_MSG_FUNCTION('加载失败', i);
-            }
-        });
     });
 
     // TODO 生成报表
@@ -755,52 +727,32 @@ use yii\helpers\Url;
                 i = SHOW_LOAD_LAYER();
             },
             success: function (response) {
-                CLOSE_LOAD_LAYER(i);
 
-                if (response.result == "true") {
+                if (response.result == true) {
 
-                    layer.msg('报表生成成功', {
-                        icon: 2,
-                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                    }, function () {
+                    LAYER_MSG_FUNCTION('报表生成成功', 1, i);
 
-                        CLOSE_LOAD_LAYER(i);
-
-                        // 报表生成成功 跳转页面
-                        window.location.href = 'default.html';
-                    });
+                    // 报表生成成功 跳转页面
+                    window.location.href = 'index.html';
                 } else {
-                    LAYER_MSG_FUNCTION('加载失败', i);
+                    LAYER_MSG_FUNCTION('加载失败', 2, i);
                 }
 
             },
             error: function (e, jqxhr, settings, exception) {
-                LAYER_MSG_FUNCTION('加载失败', i);
+                LAYER_MSG_FUNCTION('加载失败', 2, i);
             }
         });
         return false;
 
     });
 
-
-    //第一步
-    // $('#oneStep').on('click', function () {
-    //     var taobao_name = $('#taobao_name').val()//这是一个测试条件
-    //     if (taobao_name == "") {
-    //         layer.msg('请填写完整才能到下一步');
-    //     } else {
-    //         $('.nav-tabs li').eq(1).addClass('active').siblings('li').removeClass('active');
-    //         $('.tab-pane').eq(0).removeClass('active in');
-    //         $('.tab-pane').eq(1).addClass('active in');
-    //     }
-    // });
-
-    //上一步
-    // $('#shangyibu').on('click', function () {
-    //     $('.nav-tabs li').eq(0).addClass('active').siblings('li').removeClass('active');
-    //     $('.tab-pane').eq(1).removeClass('active in');
-    //     $('.tab-pane').eq(0).addClass('active in');
-    //
-    // });
+    // TODO 上一步
+    $('.last-step').on('click', function () {
+        $('.nav-tabs li').eq(1).removeClass('active').siblings('li').addClass('disabled');
+        $('.nav-tabs li').eq(0).addClass('active');
+        $('.tab-pane').eq(1).removeClass('active in');
+        $('.tab-pane').eq(0).addClass('active in');
+    });
 
 </script>

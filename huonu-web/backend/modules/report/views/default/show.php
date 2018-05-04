@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+$this->title = $reportData['multitrayName'] . ' - 复盘';
+$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div id="page-wrapper">
     <div class="row">
@@ -22,11 +25,15 @@ use yii\helpers\Url;
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
-                <a href="#">客户报表</a>
+                <a href="<?= Url::toRoute('index') ?>">客户报表</a>
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
-                <a href="#">人群复盘详情</a>
+                <a href="#">报表详情</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="#"><?= $reportData['multitrayName'] ?></a>
             </li>
         </ul>
     </div>
@@ -37,12 +44,16 @@ use yii\helpers\Url;
             <input type="hidden" id="policyGroupName" name="policyGroupName"
                    value="<?= implode(',', $reportData['policyGroupName']) ?>">
             <input type="hidden" id="charge" name="charge" value="<?= implode(',', $reportData['charge']) ?>">
-            <input type="hidden" id="alipayInshopAmt" name="alipayInshopAmt" value="<?= implode(',', $reportData['alipayInshopAmt']) ?>">
+            <input type="hidden" id="alipayInshopAmt" name="alipayInshopAmt"
+                   value="<?= implode(',', $reportData['alipayInshopAmt']) ?>">
             <input type="hidden" id="roi" name="roi" value="<?= implode(',', $reportData['roi']) ?>">
 
-            <input type="hidden" id="commodityCollectionRate" name="commodityCollectionRate" value="<?= implode(',', $reportData['commodityCollectionRate']) ?>">
-            <input type="hidden" id="purchaseRate" name="purchaseRate" value="<?= implode(',', $reportData['purchaseRate']) ?>">
-            <input type="hidden" id="purchaseCostGoodsCollection" name="purchaseCostGoodsCollection" value="<?= implode(',', $reportData['purchaseCostGoodsCollection']) ?>">
+            <input type="hidden" id="commodityCollectionRate" name="commodityCollectionRate"
+                   value="<?= implode(',', $reportData['commodityCollectionRate']) ?>">
+            <input type="hidden" id="purchaseRate" name="purchaseRate"
+                   value="<?= implode(',', $reportData['purchaseRate']) ?>">
+            <input type="hidden" id="purchaseCostGoodsCollection" name="purchaseCostGoodsCollection"
+                   value="<?= implode(',', $reportData['purchaseCostGoodsCollection']) ?>">
 
             <div class="testChart" id="testChart" style="width: 100%; height: 600px;"></div>
             <div class="testChart1" id="testChart1" style="width: 100%; height: 600px;"></div>

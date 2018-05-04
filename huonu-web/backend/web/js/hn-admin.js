@@ -96,9 +96,10 @@ function LAYER_MSG(msg) {
     });
 }
 
-function LAYER_MSG_FUNCTION(msg, i) {
+function LAYER_MSG_FUNCTION(msg, icon, i) {
     layer.msg(msg, {
-        icon: 2,
+        icon: icon,
+        shade: [0.5],
         time: 2000 //2秒关闭（如果不配置，默认是3秒）
     }, function () {
         CLOSE_LOAD_LAYER(i);

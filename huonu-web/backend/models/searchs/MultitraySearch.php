@@ -47,6 +47,14 @@ class MultitraySearch extends Multitray
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'created_at' => SORT_DESC,
+                ]
+            ],
         ]);
 
         $this->load($params);
@@ -62,6 +70,7 @@ class MultitraySearch extends Multitray
             'multitray_id' => $this->multitray_id,
             'multitray_start_time' => $this->multitray_start_time,
             'multitray_end_time' => $this->multitray_end_time,
+            'is_delete' => 0, // 已删除为1
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);

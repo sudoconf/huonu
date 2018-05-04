@@ -17,6 +17,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $multitray_effect_model 效果模型 click(点击效果) impression(展示效果)
  * @property int $multitray_cycle 数据周期 3、7、15 天
  * @property string $multitray_field 字段 json格式
+ * @property int $is_delete 是否删除
  * @property int $created_at 添加时间
  * @property int $updated_at 修改时间
  */
@@ -49,7 +50,6 @@ class Multitray extends \yii\db\ActiveRecord
             [['taobao_name'], 'string', 'max' => 30],
             [['multitray_name'], 'string', 'max' => 50],
             [['multitray_effect_model'], 'string', 'max' => 15],
-            [['multitray_cycle'], 'string', 'max' => 1],
             [['multitray_field'], 'string', 'max' => 150],
         ];
     }
@@ -69,6 +69,7 @@ class Multitray extends \yii\db\ActiveRecord
             'multitray_effect_model' => '效果模型',
             'multitray_cycle' => '数据周期',
             'multitray_field' => '字段',
+            'is_delete' => '删除',
             'created_at' => '添加时间',
             'updated_at' => '修改时间',
         ];
