@@ -32,6 +32,12 @@ class DefaultController extends BaseController
         return $this->render('index');
     }
 
+    // TODO 新建计划
+    public function actionCreate()
+    {
+        return $this->render('create');
+    }
+
     // TODO 改变计划状态
     public function actionAjaxChangePlanState()
     {
@@ -78,12 +84,6 @@ class DefaultController extends BaseController
     public function actionAjaxPlanSync()
     {
 
-    }
-
-    // TODO 新建计划
-    public function actionCreatePlan()
-    {
-        return $this->render('create-plan');
     }
 
     // TODO Ajax 创建调价模板

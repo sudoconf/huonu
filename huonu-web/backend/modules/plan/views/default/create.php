@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+$this->title = '客户计划 - 新建计划';
+
 ?>
 <div id="page-wrapper">
     <div class="row">
@@ -343,6 +345,4 @@ use yii\helpers\Url;
 
 <script>
     $("[data-toggle='tab']").tooltip(); // 工具提示（Tooltip）插件 - 锚
-
-    $('#myTab li:eq(2) a').tab('show')
 </script>

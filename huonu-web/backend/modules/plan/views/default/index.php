@@ -46,7 +46,7 @@ use yii\helpers\Url;
                     <div class="tab-pane fade in active" id="plan">
 
                         <div class="control-group form-inline pt15 pb15">
-                            <a href="<?= Url::toRoute('create-plan') ?>" id="create-plan" class="btn btn-primary create-plan">
+                            <a href="<?= Url::toRoute('create') ?>" id="create-plan" class="btn btn-primary create-plan">
                                 <i class="fa fa-plus"></i>
                                 新建推广计划
                             </a>

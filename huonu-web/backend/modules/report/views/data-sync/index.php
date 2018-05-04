@@ -61,7 +61,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         'sync' => function ($url, $model, $key) {
                             return Html::button('手动同步', [
                                 'class' => 'btn btn-primary manual-sync',
-                                'data-loading-text' => 'Loading...'
+                                'data-loading-text' => 'Loading...',
+                                'value' => $model->taobao_user_id,
+                                'sync-status' => $model->sync_status,
                             ]);
                         },
                     ],
@@ -74,11 +76,37 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <script>
 
-    $('.manual-sync').click(function () {
+    $(function () {
 
-        $(this).button('loading').delay(1000).queue(function () {
-            // $(this).button('reset');
-            // $(this).dequeue();
+        $('.manual-sync').click(function () {
+
+            var userId = $(this).val();
+            var syncStatus = $(this).attr('sync-status');
+
+            $(this).button('loading');
+
+            // ajax 提交
+            $.ajax({
+                url: 'data-sync/ajax-sync.html',
+                type: 'get',
+                data: {'userId': userId, 'syncStatus': syncStatus},
+                dataType: 'json',
+                success: function (response) {
+
+                    layer.msg('提交成功', {
+                        icon: 2,
+                        shade: [0.5],
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                    });
+
+                    $(".manual-sync").button('reset');
+                },
+                error: function (e, jqxhr, settings, exception) {
+                    $(".manual-sync").button('reset');
+                }
+            });
+            return false;
+
         });
 
     });

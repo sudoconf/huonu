@@ -8,6 +8,7 @@
 namespace backend\modules\report\controllers;
 
 use backend\controllers\BaseController;
+use backend\modules\report\services\DataSyncService;
 use Yii;
 use backend\models\TaobaoAuthorizeUser;
 use backend\models\searchs\TaobaoAuthorizeUserSearch;
@@ -60,8 +61,9 @@ class DataSyncController extends BaseController
     }
 
     // TODO ajax 数据同步
-    public function actionAjaxDataSync()
+    public function actionAjaxSync()
     {
+        DataSyncService::service()->SyncOperation();
     }
 
 }
