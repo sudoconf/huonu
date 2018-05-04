@@ -1,18 +1,25 @@
 <?php
 
-use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\grid\GridView;
+use yii\helpers\Url;
+
+/* @var $this yii\web\View */
+/* @var $searchModel backend\models\searchs\TaobaoAuthorizeUserSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = '客户报表 - 数据同步';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+
 <div id="page-wrapper">
+
     <div class="row">
         <div class="col-lg-12">
             <h3 class="page-title">
                 客户报表
-                <small>数据同步</small>
+                <small><?= Html::encode($this->title) ?></small>
             </h3>
         </div>
     </div>
@@ -21,11 +28,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <ul class="page-breadcrumb">
             <li>
                 <i class="fa fa-home"></i>
-                <a href="index.html">Home</a>
+                <a href="<?= Url::toRoute('/site') ?>">Home</a>
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
-                <a href="#">客户报表</a>
+                <a href="<?= Url::toRoute('index') ?>">客户报表</a>
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
@@ -33,12 +40,16 @@ $this->params['breadcrumbs'][] = $this->title;
             </li>
         </ul>
     </div>
+    <div class="taobao-authorize-user-index">
 
-    <div class="row col-lg-12">
+        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
+            // 'filterModel' => $searchModel,
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
+
                 'taobao_user_id',
                 'taobao_user_nick',
                 'sync_status',
@@ -58,6 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]); ?>
     </div>
+
 </div>
 
 <script>
@@ -65,8 +77,8 @@ $this->params['breadcrumbs'][] = $this->title;
     $('.manual-sync').click(function () {
 
         $(this).button('loading').delay(1000).queue(function () {
-            $(this).button('reset');
-            $(this).dequeue();
+            // $(this).button('reset');
+            // $(this).dequeue();
         });
 
     });

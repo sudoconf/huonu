@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="panel-body form-group form-inline api-logs-search">
+<div class="panel-body form-group form-inline">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
     <div class="form-group">
-        <span>时间选择</span>
+        <span class="mr10">时间选择：</span>
         <input type="text" placeholder="请选择时间" class="form-control select-time">
         <input type="hidden" name="startAt" id="startAt" value="<?= $model->getAttribute('endAt') ?>"/>
         <input type="hidden" name="endAt" id="endAt" value="<?= $model->getAttribute('endAt') ?>"/>

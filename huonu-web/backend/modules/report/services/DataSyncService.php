@@ -17,26 +17,4 @@ use yii\data\ActiveDataProvider;
 class DataSyncService extends BaseService
 {
 
-    // 同步成功之后 同步状态要更改为未同步
-
-    // 获取需要同步的店铺
-    public function getShopNeedSync()
-    {
-        $searchModel = new TaobaoAuthorizeUser();
-        //
-        $query = $searchModel::find()->select(['taobao_user_nick', 'taobao_user_id', 'sync_status']);
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-        ]);
-
-        return [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ];
-    }
-
 }

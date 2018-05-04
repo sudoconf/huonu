@@ -19,9 +19,34 @@ $this->params['breadcrumbs'][] = $this->title;
 <div id="page-wrapper">
 
     <div class="row">
-        <div class="admin-log-index">
+        <div class="col-lg-12">
+            <h3 class="page-title">
+                系统管理
+                <small></small>
+            </h3>
+        </div>
+    </div>
 
-            <h1><?= Html::encode($this->title) ?></h1>
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="index.html">Home</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="#">系统管理</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="#"><?= $this->title ?></a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="admin-log-index col-lg-12">
+
             <?php Pjax::begin(); ?>
             <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -33,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'username',
                     [
                         'attribute' => 'type',
-                        'value' => function($model) {
+                        'value' => function ($model) {
                             return SystemLog::getTypeDescription($model->type);
                         },
                     ],
@@ -72,7 +97,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <script>
-    $('.logo-info').on('click', function(){
+    $('.logo-info').on('click', function () {
         var id = this.value;
         var ajaxUrl = $(this).attr("data-url");
         $.ajax({
@@ -85,24 +110,24 @@ $this->params['breadcrumbs'][] = $this->title;
             success: function (msg) {
                 CLOSE_LOAD_LAYER(i);
                 console.log(msg);
-                var html = '<div class="layer-form-log-info"><div class="layer-form"><div class="form-group"><label class="control-label">操作用户</label><input type="text" class="form-control" value="'+ msg.data.username +'" readonly><p class="help-block"></p></div>';
-                    html += '<div class="form-group"><label class="control-label">日志类型</label><input type="text" class="form-control" value="'+ msg.data.type + '" readonly><p class="help-block"></p></div>';
+                var html = '<div class="layer-form-log-info"><div class="layer-form"><div class="form-group"><label class="control-label">操作用户</label><input type="text" class="form-control" value="' + msg.data.username + '" readonly><p class="help-block"></p></div>';
+                html += '<div class="form-group"><label class="control-label">日志类型</label><input type="text" class="form-control" value="' + msg.data.type + '" readonly><p class="help-block"></p></div>';
 
-                    html += '<div class="form-group"><label class="control-label">模块</label><input type="text" class="form-control" value="'+ msg.data.module + '" readonly><p class="help-block"></p></div>';
+                html += '<div class="form-group"><label class="control-label">模块</label><input type="text" class="form-control" value="' + msg.data.module + '" readonly><p class="help-block"></p></div>';
 
-                    html += '<div class="form-group"><label class="control-label">控制器</label><input type="text" class="form-control" value="'+ msg.data.controller + '" readonly><p class="help-block"></p></div>';
+                html += '<div class="form-group"><label class="control-label">控制器</label><input type="text" class="form-control" value="' + msg.data.controller + '" readonly><p class="help-block"></p></div>';
 
-                    html += '<div class="form-group"><label class="control-label">方法</label><input type="text" class="form-control" value="'+ msg.data.action + '" readonly><p class="help-block"></p></div>';
+                html += '<div class="form-group"><label class="control-label">方法</label><input type="text" class="form-control" value="' + msg.data.action + '" readonly><p class="help-block"></p></div>';
 
-                    html += '<div class="form-group"><label class="control-label">请求地址</label><input type="text" class="form-control" value="'+ msg.data.url + '" readonly><p class="help-block"></p></div>';
+                html += '<div class="form-group"><label class="control-label">请求地址</label><input type="text" class="form-control" value="' + msg.data.url + '" readonly><p class="help-block"></p></div>';
 
-                    html += "<div class='form-group'><label class='control-label'>请求参数</label><textarea class='form-control' readonly>"+msg.data.params+"</textarea><p class='help-block'></p></div>";
+                html += "<div class='form-group'><label class='control-label'>请求参数</label><textarea class='form-control' readonly>" + msg.data.params + "</textarea><p class='help-block'></p></div>";
 
-                    html += '<div class="form-group"><label class="control-label">操作用户IP</label><input type="text" class="form-control" value="'+ msg.data.ip + '" readonly><p class="help-block"></p></div>';
+                html += '<div class="form-group"><label class="control-label">操作用户IP</label><input type="text" class="form-control" value="' + msg.data.ip + '" readonly><p class="help-block"></p></div>';
 
-                    html += "<div class='form-group'><label class='control-label'>操作用户浏览器代理商</label><textarea class='form-control' readonly>"+msg.data.agent+"</textarea><p class='help-block'></p></div>";
+                html += "<div class='form-group'><label class='control-label'>操作用户浏览器代理商</label><textarea class='form-control' readonly>" + msg.data.agent + "</textarea><p class='help-block'></p></div>";
 
-                    html += '<div class="form-group"><label class="control-label">创建时间</label><input type="text" class="form-control" value="'+ msg.data.createdAt + '" readonly><p class="help-block"></p></div></div></div>';
+                html += '<div class="form-group"><label class="control-label">创建时间</label><input type="text" class="form-control" value="' + msg.data.createdAt + '" readonly><p class="help-block"></p></div></div></div>';
                 layer.open({
                     type: 1,
                     title: '日志详情',
@@ -119,7 +144,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 layer.msg('加载失败！', {
                     icon: 2,
                     time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                }, function(){
+                }, function () {
                     CLOSE_LOAD_LAYER(i);
                 });
             }

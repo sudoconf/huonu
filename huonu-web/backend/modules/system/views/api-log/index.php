@@ -48,31 +48,33 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
-            <?= GridView::widget([
-                'dataProvider' => $dataProvider,
-                // 'filterModel' => $searchModel,
-                'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-                    'api_name',
-                    'created_at',
-                    'call_poeple',
-                    [
-                        'class' => 'yii\grid\ActionColumn',
-                        'header' => '更多操作',
-                        'template' => '{sync}',
-                        'buttons' => [
-                            'sync' => function ($url, $model, $key) {
-                                return Html::button('查看详情', [
-                                    'class' => 'btn btn-primary log-info',
-                                    'data-loading-text' => 'Loading...',
-                                    'value' => $model->id,
-                                    'data-url' => Url::toRoute('api-log/ajax-get-log')
-                                ]);
-                            },
+            <div class="panel-body">
+                <?= GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    // 'filterModel' => $searchModel,
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
+                        'api_name',
+                        'created_at',
+                        'call_poeple',
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'header' => '更多操作',
+                            'template' => '{sync}',
+                            'buttons' => [
+                                'sync' => function ($url, $model, $key) {
+                                    return Html::button('查看详情', [
+                                        'class' => 'btn btn-primary log-info',
+                                        'data-loading-text' => 'Loading...',
+                                        'value' => $model->id,
+                                        'data-url' => Url::toRoute('api-log/ajax-get-log')
+                                    ]);
+                                },
+                            ],
                         ],
                     ],
-                ],
-            ]); ?>
+                ]); ?>
+            </div>
         </div>
 
     </div>

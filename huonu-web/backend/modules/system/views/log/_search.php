@@ -19,15 +19,21 @@ use backend\models\SystemLog;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'type')->dropDownList(SystemLog::getTypeDescription(), ['prompt' => '请选择']) ?>
+    <div class="form-group">
+        <?= $form->field($model, 'type')->dropDownList(SystemLog::getTypeDescription(), ['prompt' => '请选择']) ?>
 
-    <?= $form->field($model, 'module') ?>
+        <?= $form->field($model, 'module') ?>
 
-    <?= $form->field($model, 'controller') ?>
+        <?= $form->field($model, 'controller') ?>
 
-    <?= $form->field($model, 'action') ?>
+        <?= $form->field($model, 'action') ?>
 
-    <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+    </div>
+
+    <div class="form-group">
+        <?= Html::submitButton('搜索', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('重置', ['class' => 'btn btn-default']) ?>
+    </div>
 
     <?php ActiveForm::end(); ?>
 
