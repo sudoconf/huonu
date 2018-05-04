@@ -66,40 +66,8 @@ class DefaultController extends BaseController
      */
     public function actionCreate()
     {
-        $model = new Multitray();
-
-        $whetherOrNotComplete = Yii::$app->session->get('whetherOrNotComplete');
-        if ($whetherOrNotComplete) {
-            Yii::$app->session->remove('setParameter');
-            Yii::$app->session->remove('strategyGroup');
-            Yii::$app->session->remove('whetherOrNotComplete');
-        }
-
-        $setParameter = Yii::$app->session->get('setParameter');
-        if (empty($setParameter) && !isset($setParameter['multitray_name'])) {
-            $setParameter['multitray_name'] = '';
-            $setParameter['taobao_name'] = '';
-            $setParameter['taobao_id'] = '';
-            $setParameter['multitray_start_time'] = '';
-            $setParameter['multitray_end_time'] = '';
-            $setParameter['multitray_effect_model'] = '';
-            $setParameter['multitray_cycle'] = '';
-        }
-        if (!array_key_exists('multitray_field', $setParameter)) {
-            $setParameter['multitray_field'] = [];
-        }
-
-        $strategyGroup = Yii::$app->session->get('strategyGroup');
-        if (empty($strategyGroup)) {
-            $strategyGroup = [];
-        }
-
-        return $this->render('create', [
-                'model' => $model,
-                'setParameter' => $setParameter,
-                'strategyGroup' => $strategyGroup
-            ]
-        );
+        $result = ReportService::service()->create();
+        return $this->render('create', $result);
     }
 
     /**
@@ -158,7 +126,6 @@ class DefaultController extends BaseController
      */
     public function actionAjaxGenerateStatistic()
     {
-        // 生成统计数据
         ReportService::service()->createOperation();
     }
 
@@ -173,7 +140,9 @@ class DefaultController extends BaseController
         ]);
     }
 
-    // Ajax 获取复盘统计数据
+    /**
+     * Ajax 获取复盘统计数据
+     */
     public function actionAjaxGetStatisticData()
     {
         $multitrayId = Yii::$app->request->get('multitrayId');

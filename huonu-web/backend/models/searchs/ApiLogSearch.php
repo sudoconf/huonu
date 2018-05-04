@@ -2,17 +2,15 @@
 
 namespace backend\models\searchs;
 
-use backend\models\Admin;
-use backend\models\SystemLog;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Log;
+use backend\models\ApiLogs;
 
 /**
- * LogSearch represents the model behind the search form of `backend\models\Log`.
+ * ApiLogSearch represents the model behind the search form of `backend\models\ApiLogs`.
  */
-class LogSearch extends SystemLog
+class ApiLogSearch extends ApiLogs
 {
     /**
      * @inheritdoc
@@ -20,9 +18,31 @@ class LogSearch extends SystemLog
     public function rules()
     {
         return [
-            [['id', 'created_at', 'created_id'], 'integer'],
-            [['type', 'module', 'controller', 'action', 'url', 'params', 'ip'], 'safe'],
+            [['id'], 'integer'],
+            [['api_name', 'created_at', 'call_poeple', 'endAt', 'startAt'], 'safe'],
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributes()
+    {
+        return array_merge(parent::attributes(), [
+            'startAt',
+            'endAt'
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return array_merge(parent::attributeLabels(), [
+            'startAt' => '开始时间',
+            'endAt' => '结束时间',
+        ]);
     }
 
     /**
@@ -43,21 +63,20 @@ class LogSearch extends SystemLog
      */
     public function search($params)
     {
-        $query = SystemLog::find();
+        // 首先要setAttributes
+        $this->setAttributes($params);
+
+        $query = ApiLogs::find();
 
         // add conditions that should always apply here
-        $query->select(SystemLog::tableName().'.*,admin.username');
-        $query->join('left join', Admin::tableName().' admin', 'admin.id = zxht_system_log.created_id');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-
             'pagination' => [
-                'pageSize' => '10',
+                'pageSize' => 10,
             ],
             'sort' => [
                 'defaultOrder' => [
-                    'id' => SORT_DESC,
                     'created_at' => SORT_DESC,
                 ]
             ],
@@ -75,16 +94,13 @@ class LogSearch extends SystemLog
         $query->andFilterWhere([
             'id' => $this->id,
             'created_at' => $this->created_at,
-            'created_id' => $this->created_id,
         ]);
 
-        $query->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'module', $this->module])
-            ->andFilterWhere(['like', 'controller', $this->controller])
-            ->andFilterWhere(['like', 'action', $this->action])
-            ->andFilterWhere(['like', 'url', $this->url])
-            ->andFilterWhere(['like', 'params', $this->params])
-            ->andFilterWhere(['like', 'ip', $this->ip]);
+        $query->andFilterWhere(['>=', 'created_at', $this->getAttribute('startAt')]);
+        $query->andFilterWhere(['<=', 'created_at', $this->getAttribute('endAt')]);
+
+        $query->andFilterWhere(['like', 'api_name', $this->api_name])
+            ->andFilterWhere(['like', 'call_poeple', $this->call_poeple]);
 
         return $dataProvider;
     }

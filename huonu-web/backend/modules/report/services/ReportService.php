@@ -22,6 +22,49 @@ use yii\db\Exception;
 class ReportService extends BaseService
 {
     /**
+     * 添加首页展示数据
+     * @return array
+     */
+    public function create()
+    {
+        $model = new Multitray();
+
+        $whetherOrNotComplete = Yii::$app->session->get('whetherOrNotComplete');
+        if ($whetherOrNotComplete) {
+            Yii::$app->session->remove('setParameter');
+            Yii::$app->session->remove('strategyGroup');
+            Yii::$app->session->remove('whetherOrNotComplete');
+        }
+
+        $setParameter = Yii::$app->session->get('setParameter');
+        if (empty($setParameter) && !isset($setParameter['multitray_name'])) {
+            $setParameter['multitray_name'] = '';
+            $setParameter['taobao_name'] = '';
+            $setParameter['taobao_id'] = '';
+            $setParameter['multitray_start_time'] = '';
+            $setParameter['multitray_end_time'] = '';
+            $setParameter['multitray_effect_model'] = '';
+            $setParameter['multitray_cycle'] = '';
+        }
+        if (!array_key_exists('multitray_field', $setParameter)) {
+            $setParameter['multitray_field'] = [];
+        }
+
+        $strategyGroup = Yii::$app->session->get('strategyGroup');
+        if (empty($strategyGroup)) {
+            $strategyGroup = [];
+        }
+
+        $result = [
+            'model' => $model,
+            'setParameter' => $setParameter,
+            'strategyGroup' => $strategyGroup
+        ];
+
+        return $result;
+    }
+
+    /**
      * 复盘删除
      */
     public function deleteOperation()
@@ -260,7 +303,11 @@ class ReportService extends BaseService
         }
     }
 
-    // 统计展现(包括下载数据)
+    /**
+     * 统计展现(包括下载数据)
+     * @return mixed
+     * @throws Exception
+     */
     public function getShowOperation()
     {
         $multitrayId = Yii::$app->request->get('multitrayId');
@@ -319,7 +366,9 @@ class ReportService extends BaseService
         return $result;
     }
 
-    // TODO 下载
+    /**
+     * TODO 下载
+     */
     public function exportOperation()
     {
     }

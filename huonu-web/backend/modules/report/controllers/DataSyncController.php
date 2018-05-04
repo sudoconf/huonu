@@ -8,6 +8,7 @@
 namespace backend\modules\report\controllers;
 
 use backend\controllers\BaseController;
+use backend\modules\report\services\DataSyncService;
 use yii\filters\VerbFilter;
 
 class DataSyncController extends BaseController
@@ -27,10 +28,14 @@ class DataSyncController extends BaseController
         ];
     }
 
-    // TODO 数据同步列表
+    /**
+     * TODO 数据同步列表
+     * @return string
+     */
     public function actionIndex()
     {
-        return $this->render('index');
+        $result = DataSyncService::service()->getShopNeedSync();
+        return $this->render('index', $result);
     }
 
     // TODO ajax 数据同步

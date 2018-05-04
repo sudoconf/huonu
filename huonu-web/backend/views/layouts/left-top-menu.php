@@ -119,6 +119,12 @@ $tt = MenuHelper::getAssignedMenu(Yii::$app->user->id);
                                 操作日志
                             </a>
                         </li>
+                        <li>
+                            <a href="<?= Url::toRoute('/system/api-log') ?>">
+                                <i class="fa fa-list-alt"></i>
+                                api调用日志
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li>
