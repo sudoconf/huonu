@@ -4,6 +4,7 @@ use mdm\admin\AnimateAsset;
 use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\web\YiiAsset;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $routes [] */
@@ -24,6 +25,32 @@ $animateIcon = ' <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate
 <div id="page-wrapper">
 
     <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-title">
+                系统管理
+                <small>路由列表</small>
+            </h3>
+        </div>
+    </div>
+
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="<?= Url::toRoute('/site') ?>">Home</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="javascript:;">系统管理</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="javascript:;">路由列表</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="row col-lg-12">
 
         <h1><?=Html::encode($this->title);?></h1>
         <div class="row">

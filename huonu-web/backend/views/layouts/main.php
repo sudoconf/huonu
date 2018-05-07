@@ -2,6 +2,7 @@
 
 use backend\assets\AppAsset;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 
@@ -13,11 +14,12 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="<?= Url::to('@web/favicon.ico') ?>" type="image/x-icon"/>
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
 
     <!-- jQuery -->
-    <?= Html::jsFile('@web/vendor/jquery/jquery.min.js')?>
+    <?= Html::jsFile('@web/vendor/jquery/jquery.min.js') ?>
 
     <?php $this->head() ?>
 </head>
@@ -26,11 +28,9 @@ AppAsset::register($this);
 
 <div id="wrapper">
 
-    <?=
-    $this->render('left-top-menu');
-    ?>
+    <?= $this->render('left-top-menu'); ?>
 
-  <?= $content ?>
+    <?= $content ?>
 
 </div>
 

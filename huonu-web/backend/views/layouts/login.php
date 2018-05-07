@@ -44,7 +44,7 @@ $model = new \backend\models\AdminLoginForm();
             'title' => '换一个',
             'style' => 'cursor:pointer;',
         ],
-        'template' => '<div class="form-inline">{image}{input}</div>',
+        'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-9">{input}</div></div>',
     ]) ?>
     <input id="admin-url" type="hidden" value="<?= \yii\helpers\Url::toRoute('/site/captcha') ?>">
 

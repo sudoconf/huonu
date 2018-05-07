@@ -3,6 +3,7 @@
 namespace backend\modules\plan\controllers;
 
 use backend\controllers\BaseController;
+use backend\modules\plan\services\PlanService;
 use yii\filters\VerbFilter;
 
 class DefaultController extends BaseController
@@ -32,10 +33,17 @@ class DefaultController extends BaseController
         return $this->render('index');
     }
 
-    // TODO 新建计划
+    // TODO 新建计划 页面
     public function actionCreate()
     {
-        return $this->render('create');
+        $result = PlanService::service()->createPlan();
+        return $this->render('create', $result);
+    }
+
+    // TODO ajax 保存计划设置
+    public function actionAjaxSaveSetPlan()
+    {
+        PlanService::service()->savePlan();
     }
 
     // TODO 改变计划状态

@@ -6,6 +6,9 @@ use yii\helpers\Url;
 $this->title = '客户计划 - 新建计划';
 
 ?>
+
+<?= Html::cssFile('@web/css/period.css') ?>
+
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
@@ -41,34 +44,34 @@ $this->title = '客户计划 - 新建计划';
                     <div class="tabbable">
 
                         <ul class="nav nav-tabs" id="myTab">
+                            <!--                            <li class="active">-->
+                            <!--                                <a href="#select-promotion-scene" data-toggle="tab" data-placement="top" title="选择推广场景">-->
+                            <!--                                    <!--去掉 data-toggle="tab" 就不能切换了-->
+                            <!--                                    <i class="create-step">1</i>-->
+                            <!--                                    <i class="fa fa-bar-chart-o fa-fw"></i>-->
+                            <!--                                    选择推广场景-->
+                            <!--                                </a>-->
+                            <!--                            </li>-->
+
                             <li class="active">
-                                <a href="#select-promotion-scene" data-toggle="tab" data-placement="top" title="选择推广场景">
-                                    <!--去掉 data-toggle="tab" 就不能切换了-->
-                                    <i class="create-step">1</i>
-                                    <i class="fa fa-bar-chart-o fa-fw"></i>
-                                    选择推广场景
-                                </a>
-                            </li>
-                            
-                            <li class="disabled">
                                 <a href="#set-plan" data-toggle="tab" data-placement="top" title="设置计划">
-                                    <i class="create-step">2</i>
-                                    <i class="fa fa-bar-chart-o fa-fw"></i>
+                                    <i class="create-step">1</i>
+                                    <i class="glyphicon glyphicon-list-alt"></i>
                                     设置计划
                                 </a>
                             </li>
-                            
+
                             <li class="disabled">
                                 <a href="#set-unit" data-toggle="tab" data-placement="top" title="设置单元">
                                     <i class="create-step">2</i>
-                                    <i class="fa fa-bar-chart-o fa-fw"></i>
+                                    <i class="glyphicon glyphicon-list"></i>
                                     设置单元
                                 </a>
                             </li>
-                            
+
                             <li class="disabled">
                                 <a href="#add-creative" data-toggle="tab" data-placement="top" title="添加创意">
-                                    <i class="create-step">2</i>
+                                    <i class="create-step">3</i>
                                     <i class="fa fa-bar-chart-o fa-fw"></i>
                                     添加创意
                                 </a>
@@ -78,256 +81,19 @@ $this->title = '客户计划 - 新建计划';
                         <div class="tab-content">
 
                             <!--选择推广场景 start-->
-                            <div class="tab-pane fade in active" id="select-promotion-scene">
-                                
-                                <div class="control-group form-inline pd15">
-                                    <label for="name">店铺名称：</label>
-                                    <input type="text" class="form-control" id="name" placeholder="请输入店铺名称">
-                                </div>
-                                
-                                <!--设置营销参数 start -->
-                                <div class="control-group pd15">
-                                    <!--<div class="panel panel-primary">
-                                        <div class="panel-heading">
-                                            <i class="fa fa-bar-chart-o fa-fw"></i>
-                                            设置营销参数
-                                        </div>
-                                    </div>-->
-                                    <div class="well s_fs_16 pd15">
-                                        <i class="fa fa-bar-chart-o fa-fw"></i>
-                                        设置营销参数
-                                    </div>
-                                    <div class="form-inline">
-                                    <!--<div class="col-md-6 col-md-offset-1">-->
-                                        <label for="name">营销目标：</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="option2" id="option2" value="option2" checked> 不限
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="option2" id="option2"  value="option2"> 促进购买
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="option2" id="option2"  value="option2"> 促进进店
-                                        </label>
-                                    </div>
-                                </div>
-                                <!--设置营销参数 end -->
-                                
-                                <!--基本信息 start -->
-                                <div class="control-group pd15">
-                                    <div class="well s_fs_16">
-                                        <i class="fa fa-bar-chart-o fa-fw"></i>
-                                        基本信息
-                                    </div>
-                                    
-                                    <div class="form-inline pd10">
-                                        <label for="name">计划名称：</label>
-                                        <input type="text" class="form-control" id="name" placeholder="请输入名称">
-                                    </div>
-                                
-                                    <div class="form-inline pd10">
-                                        <label for="name">付款方式：</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="option2" id="option2" value="option2" checked> 按展现付费（CPM）
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="option2" id="option2"  value="option2"> 按点击付费（CPC）
-                                        </label>
-                                    </div>
-                                
-                                    <div class="form-inline pd10">
-                                        <label for="name">地域设置：</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="option2" id="option2" value="option2" checked> 自定义
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="option2" id="option2"  value="option2"> 使用模板
-                                        </label>
-                                        <select class="form-control">
-                                            <option>地域</option>
-                                            <option>常用地域(系统模板)</option>
-                                            <option>非偏远地区除外</option>
-                                          </select>
-                                    </div>
-                                    
-                                    <div class="form-inline pd10">
-                                        <label for="name">时段设置：</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="option2" id="option2" value="option2" checked> 自定义
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="option2" id="option2"  value="option2"> 使用模板
-                                        </label>
-                                        <select class="form-control">
-                                            <option>时段全选(系统模板)</option>
-                                          </select>
-                                    </div>
-                                
-                                    <div class="form-inline pd10">
-                                        <label for="name">投放日期：</label>
-                                        <input type="text" class="form-control" id="name" placeholder="请输入名称">
-                                    </div>
-                                
-                                    <div class="form-inline pd10">
-                                        <label for="name">投放方式：</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="option2" id="option2" value="option2" checked> 尽快投放
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="option2" id="option2"  value="option2"> 均匀投放
-                                        </label>
-                                    </div>
-                                
-                                    <div class="form-inline pd10">
-                                        <label for="name">出价方式：</label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="option2" id="option2" value="option2" checked> 手动出价
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="option2" id="option2"  value="option2"> 自动出价
-                                        </label>
-                                    </div>
-                                
-                                    <div class="form-inline pd10">
-                                        <label for="name">每日预算：</label>
-                                        <input type="text" class="form-control" placeholder="最低300元"
-                                        <span class="input-group-addon"> 元</span>
-                                    </div>
-                                </div>
-                                <!--基本信息 end -->
-                                
-                                <div class="control-group pd15">
-                                    <span class="btn btn-primary create-plan">下一步，设置推广单元</span>
-                                </div>
-                            </div>
+                            <?php //echo $this->render('select-promotion-scene.php'); ?>
                             <!--选择推广场景 end-->
 
                             <!--设置计划 start-->
-                            <div class="tab-pane fade" id="set-plan">
-                                
-                                <div class="control-group form-inline pd15">
-                                    <label for="name">单元名称：</label>
-                                    <input type="text" class="form-control" id="name" placeholder="请输入单元名称">
-                                </div>
-                                
-                                <!--设置定向人群 start -->
-                                <div class="control-group pd15">
-                                    <div class="well s_fs_16">
-                                        <i class="fa fa-bar-chart-o fa-fw"></i>
-                                        设置定向人群
-                                    </div>
-                                    <div class="form-inline pd10">
-                                        <label for="name">相似宝贝定向：</label>
-                                        <span class="pdl15 s_fc_9">近期对指定宝贝的竞品宝贝感兴趣的人群</span>
-                                        <a class="pdl15 s_fc_c" href="javascript:;">设置定向</a>
-                                    </div>
-                                    
-                                    <div class="form-inline pd10">
-                                        <label for="name">达摩盘定向：</label>
-                                        <span class="pdl15 s_fc_9">基于达摩盘自定义组合圈定的各类人群</span>
-                                        <a class="pdl15 s_fc_c" href="javascript:;">设置定向</a>
-                                    </div>
-                                    
-                                    <div class="form-inline pd10">
-                                        <label for="name">通投：</label>
-                                        <span class="pdl15 s_fc_9">不限人群投放</span>
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" id="inlineCheckbox2" value="option2">
-                                        </label>
-                                    </div>
-                                    
-                                    <div class="form-inline pd10">
-                                        <label for="name">营销场景定向：</label>
-                                        <span class="pdl15 s_fc_9">按用户与店铺之间更细粒度的营销关系划分圈定的人群</span>
-                                        <a class="pdl15 s_fc_c" href="javascript:;">设置定向</a>
-                                    </div>
-                                    
-                                    <div class="form-inline pd10">
-                                        <label for="name">访客定向：</label>
-                                        <span class="pdl15 s_fc_9">近期访问过某些店铺的人群</span>
-                                        <a class="pdl15 s_fc_c" href="javascript:;">设置定向</a>
-                                    </div>
-                                    
-                                    <div class="form-inline pd10">
-                                        <label for="name">行业店铺定向：</label>
-                                        <span class="pdl15 s_fc_9">近期访问过行业优质店铺的人群</span>
-                                        <a class="pdl15 s_fc_c" href="javascript:;">设置定向</a>
-                                    </div>
-                                    
-                                    <div class="form-inline pd10">
-                                        <label for="name">智能定向：</label>
-                                        <span class="pdl15 s_fc_9">系统根据店铺人群特征推荐的优质人群</span>
-                                        <a class="pdl15 s_fc_c" href="javascript:;">设置定向</a>
-                                    </div>
-                                    
-                                    <div class="form-inline pd10">
-                                        <label for="name">类目型定向-高级兴趣点：</label>
-                                        <span class="pdl15 s_fc_9">近期对某些购物兴趣点有意向的人群。兴趣点定向的升级版。</span>
-                                        <a class="pdl15 s_fc_c" href="javascript:;">设置定向</a>
-                                    </div>
-                                    
-                                    <div class="form-inline pd10">
-                                        <label for="name">店铺型定向：</label>
-                                        <span class="pdl15 s_fc_9">近期对某类店铺感兴趣的人群，或自己店铺的重定向人群</span>
-                                        <a class="pdl15 s_fc_c" href="javascript:;">设置定向</a>
-                                    </div>
-                                    
-                                    <div class="form-inline pd10">
-                                        <label for="name">达摩盘_平台精选：</label>
-                                        <span class="pdl15 s_fc_9">基于达摩盘丰富标签，由平台配置推荐的个性化人群包，满足您在活...</span>
-                                        <a class="pdl15 s_fc_c" href="javascript:;">设置定向</a>
-                                    </div>
-                                </div>
-                                <!--设置定向人群 end -->
-                                
-                                <!--选择投放资源位 start-->
-                                <div class="control-group pd15">
-                                    
-                                    <div class="well s_fs_16 pd15">
-                                        <i class="fa fa-bar-chart-o fa-fw"></i>
-                                        选择投放资源位
-                                    </div>
-                                    
-                                    <div class="text-center pt40 pb60">
-                                        <div class="s_fs_16 pd15">未选择任何资源位</div>
-                                        <span class="btn btn-primary">添加资源位</span>
-                                    </div>
-                                    
-                                </div>
-                                <!--选择投放资源位 end-->
-                                
-                                <!--设置出价 start-->
-                                <div class="control-group pd15">
-                                    
-                                    <div class="well s_fs_16">
-                                        <i class="fa fa-bar-chart-o fa-fw"></i>
-                                        设置出价
-                                    </div>
-                                    
-                                    <div class="text-center pt40 pb60">
-                                        <div class="s_fs_16">请先添加人群和资源位</div>
-                                    </div>
-                                    
-                                </div>
-                                <!--设置出价 end-->
-                                
-                                <div class="control-group pd15">
-                                    <span class="btn btn-primary create-plan">下一步，上传创意</span>
-                                </div>
-                                
-                            </div>
+                            <?= $this->render('set-plan.php', ['setPlan' => $setPlan]); ?>
                             <!--设置计划 end-->
-                            
+
                             <!--设置单元 start-->
-                            <div class="tab-pane fade" id="set-unit">
-                                33333333333
-                            </div>
+                            <?= $this->render('set-unit.php'); ?>
                             <!--设置单元 end-->
-                            
+
                             <!--添加创意 start-->
-                            <div class="tab-pane fade" id="add-creative">
-                                4444444444444
-                            </div>
+                            <?= $this->render('add-creative.php'); ?>
                             <!--添加创意 end-->
 
                         </div>
@@ -340,9 +106,107 @@ $this->title = '客户计划 - 新建计划';
 
 </div>
 
+
 <!-- 引入jQuery的js文件 -->
-<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="http://apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+<!-- 引入jQuery UI的js文件 -->
+<?= Html::jsFile('@web/vendor/jquery-ui/jquery-ui.js') ?>
+
+<?= Html::cssFile('@web/vendor/daterangepicker/daterangepicker.css') ?>
+<?= Html::jsFile('@web/vendor/daterangepicker/moment.js') ?>
+<?= Html::jsFile('@web/vendor/daterangepicker/daterangepicker.js') ?>
+<?= Html::jsFile('@web/js/plan/plan.js') ?>
 
 <script>
-    $("[data-toggle='tab']").tooltip(); // 工具提示（Tooltip）插件 - 锚
+    // 店铺名称
+    $('.taobao-shop-name').autocomplete({
+        minChars: 0,
+        max: 5,
+        autoFill: true,
+        matchContains: true,
+        scrollHeight: 220,
+        minLength: 1, // 输入框字符个等于2时开始查询
+        source: function (request, response) {
+            $.ajax({
+                url: '/huonu_zxht_web/backend/web/report/default/ajax-get-shop.html', // 后台请求路径
+                dataType: "json",
+                data: {
+                    "inputStr": request.term    // 获取输入框内容
+                },
+                success: function (res) {
+                    if (res.data != '') {
+                        response($.map(res.data, function (item) { // 此处是将返回数据转换为 JSON对象，并给每个下拉项补充对应参数
+                            // console.log(item.taobao_user_nick);
+                            return {
+                                label: item.taobao_user_nick, // 下拉框显示值
+                                value: item.taobao_user_nick, // 选中后，填充到下拉框的值
+                                id: item.taobao_user_id // 其它的值
+                            }
+                        }));
+                    }
+                },
+                error: function (XmlHttpRequest, textStatus, errorThrown) {
+                    LAYER_MSG_FUNCTION('网络异常 请稍后再试', 2, i);
+                }
+            });
+        },
+        focus: function (event, ui) {
+            $('.taobao-shop-name').val(ui.item.label);
+            return false;
+        },
+        select: function (event, ui) {
+            $('.taobao-shop-name').val(ui.item.label);
+            $('.taobao-shop-id').val(ui.item.id);
+            return false;
+        },
+        search: function () {
+            $('.taobao-shop-id').val('');
+        },
+        messages: {
+            noResults: '',
+            results: function () {
+            }
+        }
+    });
+
+
+    // 时间段选择
+    var cb = function (start, end, label) {
+        //赋值给隐藏输入框
+        $('.campaign-start-time').val(start.format('YYYY-MM-DD'));
+        $('.campaign-end-time').val(end.format('YYYY-MM-DD'));
+    };
+    var optionSet = {
+        'opens': 'right',
+        'drops': 'up',
+        'format': 'YYYY-MM-DD',
+        'autoUpdateInput': true, // 当前默认时间
+        'ranges': {
+            // '最近1小时': [moment().subtract('hours',1), moment()],
+            '今天': [moment().startOf('day'), moment()],
+            '昨天': [moment().subtract(1, 'days').startOf('day'), moment().subtract(1, 'days').endOf('day')],
+            '7天': [moment().subtract(7, 'days').startOf('day'), moment().endOf('day')],
+            '15天': [moment().subtract(15, 'days').startOf('day'), moment().endOf('day')],
+            '30天': [moment().subtract(30, 'days').startOf('day'), moment().endOf('day')],
+            '这个月': [moment().startOf('month').startOf('day'), moment().endOf('month').endOf('day')],
+            '上个月': [moment().subtract(1, 'month').startOf('month').startOf('day'), moment().subtract(1, 'month').endOf('month').endOf('day')],
+            // '近俩个月': [moment().subtract(2, 'month').startOf('month').startOf('day'), moment().subtract(1, 'month').endOf('month').endOf('day')],
+            '近三个月': [moment().subtract(3, 'month').startOf('month').startOf('day'), moment().subtract(1, 'month').endOf('month').endOf('day')]
+        },
+        'locale': {
+            'format': 'YYYY-MM-DD',
+            "separator": " 至 ",
+            "applyLabel": "确定",
+            "cancelLabel": "取消",
+            "fromLabel": "起始时间",
+            "toLabel": "结束时间'",
+            "customRangeLabel": "自定义",
+            "weekLabel": "W",
+            'daysOfWeek': ['日', '一', '二', '三', '四', '五', '六'],
+            'monthNames': ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+        },
+    };
+    $('.select-time').daterangepicker(optionSet, cb);
 </script>

@@ -34,9 +34,9 @@ $model = new \backend\models\AdminLoginForm();
 
     <?= $form->field($model, 'password')->passwordInput(['placeholder' => $model->getAttributeLabel('password')])->label(false) ?>
 
-  <div class="form-group">
+  <div class="form-group form-inline">
       <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
-          'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
+          'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-9">{input}</div></div>',
       ]) ?>
   </div>
 

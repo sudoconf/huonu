@@ -9,8 +9,10 @@ namespace backend\modules\report\services;
 
 use backend\models\TaobaoZsAdvertiserTargetDaySumList;
 use common\components\CtHelper;
+use common\components\Toolkit\ArrayToolkit;
 use common\services\BaseService;
 use Yii;
+use yii\base\InvalidArgumentException;
 
 class SetUpParameterService extends BaseService
 {
@@ -26,8 +28,8 @@ class SetUpParameterService extends BaseService
             return CtHelper::response('false', '参数错误');
         }
 
-        // TODO 校验提交的字段
-        // $this->check($data);
+        // 校验提交的字段
+        $this->filterCreateParameterFields($data);
 
         // 判断选定时间段是否有数据
         $taobaoZsAdvertiserTargetDaySumList = TaobaoZsAdvertiserTargetDaySumList::find()->select('sum(charge)')
@@ -61,12 +63,12 @@ class SetUpParameterService extends BaseService
 
     /**
      * 检测参数
-     * @param $data
-     * @return array
+     * @param $fields
+     * @return mixed
      */
-    private function check($data)
+    protected function filterCreateParameterFields($fields)
     {
-        $params = array(
+        $requiredFields = array(
             'multitray_name',
             'taobao_name',
             'taobao_id',
@@ -77,9 +79,35 @@ class SetUpParameterService extends BaseService
             'multitray_cycle',
         );
 
+        if (!ArrayToolkit::requires($fields, $requiredFields)) {
+            throw new InvalidArgumentException('Missing required fields when creating course');
+        }
 
+        return $fields;
+    }
 
-        return $params;
+    /**
+     * 检测参数
+     * @param $fields
+     * @return array
+     */
+    protected function filterUpdateParameterFields($fields)
+    {
+        $fields = ArrayToolkit::parts(
+            $fields,
+            array(
+                'multitray_name',
+                'taobao_name',
+                'taobao_id',
+                'multitray_start_time',
+                'multitray_end_time',
+                'multitray_field',
+                'multitray_effect_model',
+                'multitray_cycle',
+            )
+        );
+
+        return $fields;
     }
 
 }

@@ -27,4 +27,13 @@ class AppAsset extends AssetBundle
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
     ];
+
+    public static function addJsFile($view, $jsFile)
+    {
+        // POS_HEAD——head结束标签之前：$this->registerJs('alert(4)',View::POS_HEAD);
+        // POS_BEGIN——body开始标签之后：$this->registerJs('alert(4)',View::POS_BEGIN);
+        // POS_END——body结束标签之前：$this->registerJs('alert(4)',View::POS_END);
+        // POS_READY POS_LOAD：$this->registerJs('alert(4)', View::POS_READY);
+        $view->registerJsFile($jsFile, [AppAsset::className(), 'depends' => 'backend\assets\AppAsset', 'position' => $view::POS_END]);
+    }
 }

@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -13,6 +14,32 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div id="page-wrapper">
     <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-title">
+                系统管理
+                <small>菜单列表</small>
+            </h3>
+        </div>
+    </div>
+
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="<?= Url::toRoute('/site') ?>">Home</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="javascript:;">用户管理</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="javascript:;">菜单列表</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="row col-lg-12">
 
         <div class="menu-index">
 

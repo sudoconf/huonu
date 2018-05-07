@@ -694,31 +694,62 @@ ul.custom-fields li.placeholder:before {
 
 .pd10{ padding: 10px;}
 .pd15{ padding: 15px;}
+.pa20{padding: 20px}
+
+.m20{ margin: 20px}
 
 .pdl15{ padding-left: 15px}
+.pdl25{ padding-left: 25px}
+.pdl20{ padding-left: 20px}
+.pdl90{ padding-left: 90px}
+.pdl1{ padding-left: 1%}
+.pdr20{ padding-right: 20px}
 
 .pb60{ padding-bottom: 60px}
 .pb15{padding-bottom: 15px}
+.pb10{padding-bottom: 10px}
+.pb20{padding-bottom: 20px}
 
 .pt15{ padding-top: 15px}
+.pt25{ padding-top: 25px}
+.pt20{ padding-top: 20px}
 .pt40{ padding-top: 40px}
 
 .s_fs_16{ font-size: 16px}
-.s_fs_20{font-size:20px} 
+.s_fs_20{font-size:20px}
 
 .mb20 { margin-bottom: 20px}
+.mb10 { margin-bottom: 10px}
+.mb15{ margin-bottom: 15px}
+.mb30 { margin-bottom: 30px}
 .mr10{ margin-right: 10px}
+.ml70{ margin-left: 70px}
+.mt20{ margin-top: 20px}
+.mt40{ margin-top: 40px}
+.mr20{ margin-right: 20px}
 
 .s_fc_c{ color: #4d7fff}
 .s_fc_9{ color: #999}
 .s_fc_green{ color: #51A300}
 .s_fc_red{ color: #a40100}
+.bg-fafafa{background-color: #fafafa}
+.s_fc_brand{ color: #4d7fff}
+.radius4{border-radius:4px}
 
+body .s_fs_26{ font-size: 26px}
 
+.pr{ position: relative}
+.fl{ float: left}
 
-.w60 {
-    width: 60px;
-}
+body .lh32{ line-height: 32px}
+body .h32{ height: 32px}
+.bb-e6{border-bottom: 1px solid #e6e6e6;}
+.tips-help{margin-left: 2px; color: #ccc; cursor: help; font-size: 14px;}
+
+.w60 {width: 60px;}
+.w90{ width: 90px}
+
+body .cp, body .cursor-pointer, body .pointer{ cursor: pointer}
 
 .ux-status-handle {
     position: relative;
@@ -753,3 +784,25 @@ ul.custom-fields li.placeholder:before {
 .ux-status-handle .ux-status-info .ux-status-operations li .ux-operation-cur-icon{float: right; margin-right: 4px; color: #999; font-size: 10px;}
 
 #dataTables-example .operation-td{ padding-left: 56px; margin-left: 56px}
+
+
+/*地域设置*/
+.dpIb{ display: inline-block}
+.regionHalf{float: left;
+    width: 50%;}
+.w100{ width: 100%}
+.regionArea{ position: absolute;
+    top: 0;
+    left: 0;
+    width: 25px;
+    height: 100%;
+    line-height: 48px;
+    font-size: 14px;
+    color: #999;
+    font-weight: 700;}
+.provinceItem{position: relative;
+    float: left;
+    width: 110px;
+    height: 48px;
+    line-height: 48px;}
+

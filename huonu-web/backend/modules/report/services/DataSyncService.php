@@ -13,7 +13,6 @@ use common\components\CtHelper;
 use common\components\Toolkit\CurlToolkit;
 use common\services\BaseService;
 use Yii;
-use yii\data\ActiveDataProvider;
 
 // 报表数据同步 service
 class DataSyncService extends BaseService

@@ -104,7 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'buttons' => [
                                     'password' => function ($url, $model, $key) {
                                         return Html::button('重置密码', [
-                                            'class' => 'btn btn-primary reset-password'
+                                            'class' => 'btn btn-primary reset-password mr10'
                                         ]);
                                     },
                                     'disable' => function ($url, $model, $key) {
