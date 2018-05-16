@@ -10,7 +10,7 @@ use Yii;
  * @property int $id
  * @property string $api_name api 名称
  * @property string $created_at 调用时间
- * @property string $call_poeple 调用人
+ * @property string $call_people 调用人
  */
 class ApiLogs extends \yii\db\ActiveRecord
 {
@@ -28,9 +28,9 @@ class ApiLogs extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['api_name', 'created_at', 'call_poeple'], 'required'],
+            [['api_name', 'created_at', 'call_people'], 'required'],
             [['created_at'], 'safe'],
-            [['api_name', 'call_poeple'], 'string', 'max' => 255],
+            [['api_name', 'call_people'], 'string', 'max' => 255],
         ];
     }
 
@@ -57,7 +57,7 @@ class ApiLogs extends \yii\db\ActiveRecord
             'id' => 'ID',
             'api_name' => 'api 名称',
             'created_at' => '调用时间',
-            'call_poeple' => '调用人',
+            'call_people' => '调用人',
         ];
     }
 }

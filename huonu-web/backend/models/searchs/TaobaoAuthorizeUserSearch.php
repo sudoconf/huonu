@@ -45,8 +45,18 @@ class TaobaoAuthorizeUserSearch extends TaobaoAuthorizeUser
 
         // add conditions that should always apply here
 
+        $pageSize = isset($params['per-page']) ? intval($params['per-page']) : 20;
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+
+            'pagination' => [
+                'pageSize' => $pageSize,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'taobao_user_id' => SORT_DESC,
+                ]
+            ],
         ]);
 
         $this->load($params);
@@ -59,27 +69,11 @@ class TaobaoAuthorizeUserSearch extends TaobaoAuthorizeUser
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'expires_in' => $this->expires_in,
-            're_expires_in' => $this->re_expires_in,
-            'r1_expires_in' => $this->r1_expires_in,
-            'r2_expires_in' => $this->r2_expires_in,
-            'w1_expires_in' => $this->w1_expires_in,
-            'w2_expires_in' => $this->w2_expires_in,
-            'r1_valid' => $this->r1_valid,
-            'r2_valid' => $this->r2_valid,
-            'w1_valid' => $this->w1_valid,
-            'w2_valid' => $this->w2_valid,
-            'expire_time' => $this->expire_time,
-            'refresh_token_valid_time' => $this->refresh_token_valid_time,
-            'expire_date' => $this->expire_date,
             'sync_status' => $this->sync_status,
         ]);
 
         $query->andFilterWhere(['like', 'taobao_user_id', $this->taobao_user_id])
             ->andFilterWhere(['like', 'taobao_user_nick', $this->taobao_user_nick])
-            ->andFilterWhere(['like', 'access_token', $this->access_token])
-            ->andFilterWhere(['like', 'refresh_token', $this->refresh_token])
-            ->andFilterWhere(['like', 'token_type', $this->token_type])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'phone', $this->phone]);
 

@@ -3,7 +3,8 @@
     <div class="control-group form-inline pd15">
         <div class="form-inline pd10">
             <label for="name">单元名称</label>
-            <input type="text" class="form-control" id="name" placeholder="请输入单元名称">
+            <input style="width: 300px" type="text" class="form-control adgroup-name" placeholder="请输入单元名称"
+                   name="adgroup_name" value="<?= $setUnit['adgroup_name']; ?>">
         </div>
     </div>
 
@@ -108,6 +109,7 @@
 
     <div class="control-group pd15">
         <span class="btn btn-primary create-plan">下一步，上传创意</span>
+        <span class="btn btn-gray create-plan">返回上一步</span>
     </div>
 
 </div>

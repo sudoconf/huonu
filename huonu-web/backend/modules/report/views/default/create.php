@@ -539,6 +539,26 @@ use yii\helpers\Url;
                     $('.tab-pane').eq(0).removeClass('active in');
                     $('.tab-pane').eq(1).addClass('active in');
 
+                    // 页面加载的时候获取定向人群
+                    var taobaoId = $('#taobao_id').val();
+                    var htmlStr = '';
+                    $.ajax({
+                        url: 'ajax-get-target.html',
+                        type: 'get',
+                        data: {'taobao_id': taobaoId},
+                        dataType: 'json',
+                        success: function (res) {
+//                console.log(res);
+                            for (var i = 0; i < res.data.length; i++) {
+                                htmlStr += '<li class="control-group"><input class="check-box" type="checkbox" value="' + res.data[i].target_id + '" title="' + res.data[i].target_name + '"><span>' + res.data[i].target_name + '</span></li>';
+                            }
+                            $('#addhtml').append(htmlStr)
+                        },
+                        error: function () {
+                            console.log('网络异常 请稍后再试');
+                        }
+                    });
+
                 } else {
                     LAYER_MSG_FUNCTION(response.message, 2, i);
                 }
@@ -546,26 +566,6 @@ use yii\helpers\Url;
             },
             error: function (e, jqxhr, settings, exception) {
                 LAYER_MSG_FUNCTION('加载失败', 2, i);
-            }
-        });
-    });
-
-    // 页面加载的时候获取定向人群
-    $(document).ready(function () {
-        var htmlStr = '';
-        $.ajax({
-            url: 'ajax-get-target.html',
-            type: 'get',
-            dataType: 'json',
-            success: function (res) {
-//                console.log(res);
-                for (var i = 0; i < res.data.length; i++) {
-                    htmlStr += '<li class="control-group"><input class="check-box" type="checkbox" value="' + res.data[i].target_id + '" title="' + res.data[i].target_name + '"><span>' + res.data[i].target_name + '</span></li>';
-                }
-                $('#addhtml').append(htmlStr)
-            },
-            error: function () {
-                console.log('网络异常 请稍后再试');
             }
         });
     });

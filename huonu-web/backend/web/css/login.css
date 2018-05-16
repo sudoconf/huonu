@@ -68,3 +68,5 @@ body {
 input, img {
     vertical-align: middle;
 }
+
+body #captcha-img{border-radius:41px}

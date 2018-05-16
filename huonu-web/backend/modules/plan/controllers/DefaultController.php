@@ -3,12 +3,14 @@
 namespace backend\modules\plan\controllers;
 
 use backend\controllers\BaseController;
+use backend\models\TaobaoZsCampList;
 use backend\modules\plan\services\PlanService;
+use yii\data\Pagination;
 use yii\filters\VerbFilter;
+use Yii;
 
 class DefaultController extends BaseController
 {
-
     /**
      * @inheritdoc
      */
@@ -30,7 +32,18 @@ class DefaultController extends BaseController
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $query = TaobaoZsCampList::find();
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $models = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->orderBy(['sort' => SORT_DESC, 'id' => SORT_DESC])
+            ->all();
+
+        return $this->render('index', [
+            'models' => $models,
+            'pages' => $pages,
+        ]);
     }
 
     // TODO 新建计划 页面
@@ -49,7 +62,7 @@ class DefaultController extends BaseController
     // TODO 改变计划状态
     public function actionAjaxChangePlanState()
     {
-
+        PlanService::service()->changePlanState();
     }
 
     // TODO 计划设置
@@ -73,13 +86,15 @@ class DefaultController extends BaseController
     // TODO 移除计划
     public function actionAjaxRemovePlan()
     {
-
+        PlanService::service()->removePlan();
     }
 
-    // TODO 置顶计划
+    /**
+     * 置顶计划
+     */
     public function actionAjaxPlanSort()
     {
-
+        PlanService::service()->planSort();
     }
 
     // TODO 计划报表
@@ -91,19 +106,7 @@ class DefaultController extends BaseController
     // TODO 计划同步
     public function actionAjaxPlanSync()
     {
-
-    }
-
-    // TODO Ajax 创建调价模板
-    public function actionAjaxCreateAdjustPriceTemplate()
-    {
-
-    }
-
-    // TODO Ajax 创建地域模板
-    public function actionAjaxCreateRegionalTemplate()
-    {
-
+        PlanService::service()->ajaxPlanSync();
     }
 
 }

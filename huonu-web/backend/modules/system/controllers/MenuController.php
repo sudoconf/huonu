@@ -120,6 +120,22 @@ class MenuController extends BaseController
         return $this->redirect(['index']);
     }
 
+    public function getCatTree($cats, $bclassid = 0, $nu = 0)
+    {
+        $bx = '---|';
+        $nu++;
+        foreach ($cats as $cat) {
+            $catid = $cat['classid'];
+            $catname = $cat['classname'];
+            $catbid = $cat['bclassid'];
+            $islast = $cat['islast'];
+            if ($catbid == $bclassid) {
+                echo str_repeat($bx, $nu) . $catname . ($islast ? '_last' : '') . PHP_EOL;
+                getCatTree($cats, $catid, $nu);
+            }
+        }
+    }
+
     /**
      * 查一条
      * @param $id

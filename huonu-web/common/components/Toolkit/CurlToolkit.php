@@ -63,20 +63,20 @@ class CurlToolkit
         curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 
         $response = curl_exec($curl);
-        $curlinfo = curl_getinfo($curl);
+        $curlInfo = curl_getinfo($curl);
 
-        $header = substr($response, 0, $curlinfo['header_size']);
-        $body = substr($response, $curlinfo['header_size']);
+        $header = substr($response, 0, $curlInfo['header_size']);
+        $body = substr($response, $curlInfo['header_size']);
 
         curl_close($curl);
 
-        if (empty($curlinfo['namelookup_time'])) {
-            return array();
-        }
-
-        if (isset($conditions['contentType']) && $conditions['contentType'] == 'plain') {
-            return $body;
-        }
+        // if (empty($curlinfo['namelookup_time'])) {
+        //     return array();
+        // }
+        //
+        // if (isset($conditions['contentType']) && $conditions['contentType'] == 'plain') {
+        //     return $body;
+        // }
 
         $body = json_decode($body, true);
 

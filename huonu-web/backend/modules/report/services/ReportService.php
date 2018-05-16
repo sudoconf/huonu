@@ -13,6 +13,7 @@ use backend\models\Multitray;
 use backend\models\MultitrayPolicyGroup;
 use backend\models\MultitrayStatistics;
 use backend\models\SystemLog;
+use backend\models\TaobaoZsAdvertiserTargetDaySumList;
 use common\components\CtHelper;
 use common\services\BaseService;
 use Yii;
@@ -58,7 +59,7 @@ class ReportService extends BaseService
         $result = [
             'model' => $model,
             'setParameter' => $setParameter,
-            'strategyGroup' => $strategyGroup
+            'strategyGroup' => $strategyGroup,
         ];
 
         return $result;
@@ -121,11 +122,14 @@ class ReportService extends BaseService
             $multitrayId = Yii::$app->db->getLastInsertID();
 
             // 添加复盘日志
-            $analyseRemarks = sprintf('%s添加了复盘：%s', Yii::$app->user->identity->username, $setParameter['multitray_name']);
+            $analyseRemarks = sprintf(
+                '%s添加了复盘：%s',
+                Yii::$app->user->identity->username,
+                $setParameter['multitray_name']
+            );
             SystemLog::create(SystemLog::TYPE_CREATE, $multitrayId, $analyseRemarks, $setParameter);
 
-            // TODO 添加策略组 策略组最多只能有9个 所以数据库要分批存储
-            $policyGroupNameArray = [];
+            // 添加策略组 策略组最多只能有9个 所以数据库要分批存储
             foreach ($strategyGroup as $k => $v) {
 
                 foreach ($v as $sk => $sv) {
@@ -144,17 +148,20 @@ class ReportService extends BaseService
 
                     // 添加策略组日志
                     $policyGroupRemarks = sprintf('%s添加了策略组：%s', Yii::$app->user->identity->username, $k);
-                    SystemLog::create(SystemLog::TYPE_CREATE, $multitrayPolicyGroupId, $policyGroupRemarks, $strategicGroup);
-                }
+                    SystemLog::create(
+                        SystemLog::TYPE_CREATE,
+                        $multitrayPolicyGroupId,
+                        $policyGroupRemarks,
+                        $strategicGroup
+                    );
 
-                $policyGroupNameArray[] = $k;
+                }
             }
 
-            // TODO 添加完数据之后 生成统计数据
+            // 添加完数据之后 生成统计数据
             $field['multitrayName'] = $setParameter['multitray_name'];
             $field['startTime'] = $analyseArray['multitray_start_time'];
             $field['endTime'] = $analyseArray['multitray_end_time'];
-            $field['policyGroupNameArray'] = $policyGroupNameArray;
             $field['taoBaoId'] = $setParameter['taobao_id'];
             $field['effect'] = $analyseArray['multitray_cycle'];
             $field['effectType'] = $analyseArray['multitray_effect_model'];
@@ -171,7 +178,12 @@ class ReportService extends BaseService
         }
     }
 
-    // TODO 统计数据生成
+    /**
+     * 统计数据生成
+     * @param $field
+     * @throws Exception
+     * @throws \Exception
+     */
     protected function generateStatisticOperation($field)
     {
         $timeArray = [];
@@ -188,125 +200,259 @@ class ReportService extends BaseService
             $field['startTime'] = strtotime("+1 day", $field['startTime']);
         }
 
-        // 查询出数据
-        $resultSql = "select  sum(charge) as charge,
-                sum(ad_pv) as ad_pv,
-                sum(click) as click,
-                sum(uv) as uv,
-                sum(deep_inshop_uv) as deep_inshop_uv,
-                sum(avg_access_time) as avg_access_time,
-                sum(avg_access_page_num) as avg_access_page_num,
-                sum(inshop_item_col_num) as inshop_item_col_num,
-                sum(dir_shop_col_num) as dir_shop_col_num,
-                sum(cart_num) as cart_num,
-                sum(cart_num)*100/sum(uv) as purchase_rate_of_goods,
-                sum(inshop_item_col_num)*100/sum(uv) as commodity_collection_rate,
-                sum(charge)/sum(inshop_item_col_num) as commodity_collection_cost,
-                sum(charge)/sum(cart_num) as purchase_cost_of_goods,
-                sum(charge)/(sum(inshop_item_col_num)+sum(cart_num)) as purchase_cost_of_goods_collection,
-                sum(gmv_inshop_num) as gmv_inshop_num,
-                sum(gmv_inshop_amt) as gmv_inshop_amt,
-                sum(alipay_in_shop_num) as alipay_in_shop_num,
-                sum(alipay_inshop_amt) as alipay_inshop_amt,
-                sum(charge)/sum(alipay_in_shop_num) as average_cost_of_order,
-                sum(alipay_inshop_amt)/sum(alipay_in_shop_num) as order_average_amount,
-                sum(alipay_inshop_amt)/sum(charge) as roi,
-                sum(charge)*1000/sum(ad_pv) as ecpm,
-                sum(click)/sum(ad_pv) as ctr,
-                sum(charge)/sum(click) as ecpc,
-                sum(alipay_in_shop_num)/sum(click) as cvr,
-                policy_group_name,
-                log_date 
-                from    taobao_zs_advertiser_target_day_sum_list t1,
-                        huonu_multitray_policy_group t2
-                where 
-                        t1.target_id = t2.target_id 
-                and     log_date >= '2017-08-07' and log_date <= '2018-04-30' 
-                and     taobao_user_id='$taoBaoId' 
-                and     effect = '$effect' 
-                and     effect_type = '$effectType' 
-                group by log_date,policy_group_name order by log_date,policy_group_name";
-        $result = Yii::$app->db->createCommand($resultSql)->queryAll();
+        $tt = [];
 
-        if (!empty($result)) {
+        $zxht_multitray_policy_group_list = MultitrayPolicyGroup::find()
+            ->where(['multitray_id' => $multitrayId])
+            ->asArray()->all();
+        foreach ($zxht_multitray_policy_group_list as $k => $v) {
 
-            $lineInfoArray = [];
-            $newInfoArray = [];
+            $taobao_zs_advertiser_target_day_sum_list = TaobaoZsAdvertiserTargetDaySumList::find()
+                ->select(
+                    [
+                        'target_id',
+                        'sum(charge) as charge',
+                        'sum(ad_pv) as ad_pv',
+                        'sum(click) as click',
+                        'sum(uv) as uv',
+                        'sum(deep_inshop_uv) as deep_inshop_uv',
+                        'sum(avg_access_time) as avg_access_time',
+                        'sum(avg_access_page_num) as avg_access_page_num',
+                        'sum(inshop_item_col_num) as inshop_item_col_num',
+                        'sum(dir_shop_col_num) as dir_shop_col_num',
+                        'sum(cart_num) as cart_num',
+                        'sum(cart_num)*100/sum(uv) as purchase_rate_of_goods',
+                        'sum(inshop_item_col_num)*100/sum(uv) as commodity_collection_rate',
+                        'sum(charge)/sum(inshop_item_col_num) as commodity_collection_cost',
+                        'sum(charge)/sum(cart_num) as purchase_cost_of_goods',
+                        'sum(charge)/(sum(inshop_item_col_num)+sum(cart_num)) as purchase_cost_of_goods_collection',
+                        'sum(gmv_inshop_num) as gmv_inshop_num',
+                        'sum(gmv_inshop_amt) as gmv_inshop_amt',
+                        'sum(alipay_in_shop_num) as alipay_in_shop_num',
+                        'sum(alipay_inshop_amt) as alipay_inshop_amt',
+                        'sum(charge)/sum(alipay_in_shop_num) as average_cost_of_order',
+                        'sum(alipay_inshop_amt)/sum(alipay_in_shop_num) as order_average_amount',
+                        'sum(alipay_inshop_amt)/sum(charge) as roi',
+                        'sum(charge)*1000/sum(ad_pv) as ecpm',
+                        'sum(click)/sum(ad_pv) as ctr',
+                        'sum(charge)/sum(click) as ecpc',
+                        'sum(alipay_in_shop_num)/sum(click) as cvr',
+                        'log_date',
+                    ]
+                )
+                ->where(['>=', 'log_date', $logStartDate])
+                ->andWhere(['<=', 'log_date', $logEndDate])
+                ->andWhere(
+                    [
+                        'taobao_user_id' => $taoBaoId,
+                        'effect' => $effect,
+                        'effect_type' => $effectType,
+                        'target_id' => $v['target_id'],
+                    ]
+                )
+                ->groupBy(['log_date'])
+                ->asArray()->all();
 
-            foreach ($result as $k => $v) {
-                $lineInfo = '["' . round($v['purchase_rate_of_goods'], 2)
-                    . '","' . round($v['commodity_collection_rate'], 2)
-                    . '","' . round($v['commodity_collection_cost'], 2)
-                    . '","' . round($v['purchase_cost_of_goods'], 2)
-                    . '","' . round($v['purchase_cost_of_goods_collection'], 2)
-                    . '","' . round($v['average_cost_of_order'], 2)
-                    . '","' . round($v['order_average_amount'], 2)
-                    . '","' . round($v['alipay_inshop_amt'], 2)
-                    . '","' . round($v['alipay_in_shop_num'], 2)
-                    . '","' . round($v['gmv_inshop_amt'], 2)
-                    . '","' . round($v['gmv_inshop_num'], 2)
-                    . '","' . round($v['cart_num'], 2)
-                    . '","' . round($v['dir_shop_col_num'], 2)
-                    . '","' . round($v['inshop_item_col_num'], 2)
-                    . '","' . round($v['avg_access_page_num'], 2)
-                    . '","' . round($v['avg_access_time'], 2)
-                    . '","' . round($v['deep_inshop_uv'], 2)
-                    . '","' . round($v['charge'], 2)
-                    . '","' . round($v['click'], 2)
-                    . '","' . round($v['ad_pv'], 2)
-                    . '","' . round($v['uv'], 2)
-                    . '","' . round($v['ecpm'], 2)
-                    . '","' . round($v['ecpc'], 2)
-                    . '","' . round($v['ctr'], 2)
-                    . '","' . round($v['cvr'], 2)
-                    . '","' . round($v['roi'], 2) . '"]';
+            if (!empty($taobao_zs_advertiser_target_day_sum_list)) {
 
-                $lineKey = strtotime($v['log_date']);
-                $lineInfoArray[$v['policy_group_name']][$lineKey] = $lineInfo;
+                foreach ($taobao_zs_advertiser_target_day_sum_list as $tk => $tv) {
+
+                    $tt[$v['policy_group_name']][] = $tv;
+
+                }
+
+            }
+
+        }
+        // 总花费
+        $charge = [];
+
+        // 总成交额
+        $alipayInshopAmt = [];
+
+        // 总消耗产出比
+        $roi = [];
+
+        // 总商品收藏率
+        $commodityCollectionRate = [];
+
+        // 总商品加购率
+        $purchaseRate = [];
+
+        // 总商品收藏加购成本
+        $purchaseCostGoodsCollection = [];
+
+
+        $lineInfoArray = [];
+        foreach ($tt as $sk => $sv) {
+
+            foreach ($sv as $wk => $wv) {
+
+                $logDateKey = date('Y-m-d', strtotime($wv['log_date']));
+
+                if (isset($lineInfoArray[$sk][$logDateKey])) {
+                    $lineInfoArray[$sk][$logDateKey]['charge'] += $wv['charge'];
+                    $lineInfoArray[$sk][$logDateKey]['ad_pv'] += $wv['ad_pv'];
+                    $lineInfoArray[$sk][$logDateKey]['click'] += $wv['click'];
+                    $lineInfoArray[$sk][$logDateKey]['uv'] += $wv['uv'];
+                    $lineInfoArray[$sk][$logDateKey]['deep_inshop_uv'] += $wv['deep_inshop_uv'];
+                    $lineInfoArray[$sk][$logDateKey]['avg_access_time'] += $wv['avg_access_time'];
+                    $lineInfoArray[$sk][$logDateKey]['avg_access_page_num'] += $wv['avg_access_page_num'];
+                    $lineInfoArray[$sk][$logDateKey]['inshop_item_col_num'] += $wv['inshop_item_col_num'];
+                    $lineInfoArray[$sk][$logDateKey]['dir_shop_col_num'] += $wv['dir_shop_col_num'];
+                    $lineInfoArray[$sk][$logDateKey]['cart_num'] += $wv['cart_num'];
+                    $lineInfoArray[$sk][$logDateKey]['purchase_rate_of_goods'] += $wv['purchase_rate_of_goods'];
+                    $lineInfoArray[$sk][$logDateKey]['commodity_collection_rate'] += $wv['commodity_collection_rate'];
+                    $lineInfoArray[$sk][$logDateKey]['commodity_collection_cost'] += $wv['commodity_collection_cost'];
+                    $lineInfoArray[$sk][$logDateKey]['purchase_cost_of_goods'] += $wv['purchase_cost_of_goods'];
+                    $lineInfoArray[$sk][$logDateKey]['purchase_cost_of_goods_collection'] += $wv['purchase_cost_of_goods_collection'];
+                    $lineInfoArray[$sk][$logDateKey]['gmv_inshop_num'] += $wv['gmv_inshop_num'];
+                    $lineInfoArray[$sk][$logDateKey]['gmv_inshop_amt'] += $wv['gmv_inshop_amt'];
+                    $lineInfoArray[$sk][$logDateKey]['alipay_in_shop_num'] += $wv['alipay_in_shop_num'];
+                    $lineInfoArray[$sk][$logDateKey]['alipay_inshop_amt'] += $wv['alipay_inshop_amt'];
+                    $lineInfoArray[$sk][$logDateKey]['average_cost_of_order'] += $wv['average_cost_of_order'];
+                    $lineInfoArray[$sk][$logDateKey]['order_average_amount'] += $wv['order_average_amount'];
+                    $lineInfoArray[$sk][$logDateKey]['roi'] += $wv['roi'];
+                    $lineInfoArray[$sk][$logDateKey]['ecpm'] += $wv['ecpm'];
+                    $lineInfoArray[$sk][$logDateKey]['ctr'] += $wv['ctr'];
+                    $lineInfoArray[$sk][$logDateKey]['ecpc'] += $wv['ecpc'];
+                    $lineInfoArray[$sk][$logDateKey]['cvr'] += $wv['cvr'];
+
+                    $charge[$sk] += $wv['charge'];
+                    $alipayInshopAmt[$sk] += $wv['alipay_inshop_amt'];
+                    $roi[$sk] += $wv['roi'];
+                    $commodityCollectionRate[$sk] += $wv['commodity_collection_rate'];
+                    $purchaseRate[$sk] += $wv['purchase_rate_of_goods'];
+                    $purchaseCostGoodsCollection[$sk] += $wv['purchase_cost_of_goods_collection'];
+
+                } else {
+                    $lineInfoArray[$sk][$logDateKey] = $wv;
+
+                    $charge[$sk] = $wv['charge'];
+                    $alipayInshopAmt[$sk] = $wv['alipay_inshop_amt'];
+                    $roi[$sk] = $wv['roi'];
+                    $commodityCollectionRate[$sk] = $wv['commodity_collection_rate'];
+                    $purchaseRate[$sk] = $wv['purchase_rate_of_goods'];
+                    $purchaseCostGoodsCollection[$sk] = $wv['purchase_cost_of_goods_collection'];
+                }
 
                 foreach ($timeArray as $tk => $tv) {
-                    $lineInfoArray[$v['policy_group_name']][strtotime($tv)] = '[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]';
+
+                    if (!array_key_exists($tv, $lineInfoArray[$sk])) {
+                        $lineInfoArray[$sk][$tv] = [
+                            'charge' => 0,
+                            'ad_pv' => 0,
+                            'click' => 0,
+                            'uv' => 0,
+                            'deep_inshop_uv' => 0,
+                            'avg_access_time' => 0,
+                            'avg_access_page_num' => 0,
+                            'inshop_item_col_num' => 0,
+                            'dir_shop_col_num' => 0,
+                            'cart_num' => 0,
+                            'purchase_rate_of_goods' => 0,
+                            'commodity_collection_rate' => 0,
+                            'commodity_collection_cost' => 0,
+                            'purchase_cost_of_goods' => 0,
+                            'purchase_cost_of_goods_collection' => 0,
+                            'gmv_inshop_num' => 0,
+                            'gmv_inshop_amt' => 0,
+                            'alipay_in_shop_num' => 0,
+                            'alipay_inshop_amt' => 0,
+                            'average_cost_of_order' => 0,
+                            'order_average_amount' => 0,
+                            'roi' => 0,
+                            'ecpm' => 0,
+                            'ctr' => 0,
+                            'ecpc' => 0,
+                            'cvr' => 0,
+                        ];
+                    }
                 }
+
             }
 
-            foreach ($lineInfoArray as $k => $v) {
-                ksort($v, SORT_ASC);
-                foreach ($v as $tk => $tv) {
-                    $newInfoArray[$k][date('Y-m-d', $tk)] = $tv;
-                }
+        }
+
+        $newLineInfoArray = [];
+        foreach ($lineInfoArray as $ak => $av) {
+
+            ksort($av, SORT_ASC);
+
+            foreach ($av as $ok => $ov) {
+
+                $lineInfo = '["' . round($ov['charge'], 2)
+                    . '","' . round($ov['ad_pv'], 2)
+                    . '","' . round($ov['click'], 2)
+                    . '","' . round($ov['uv'], 2)
+                    . '","' . round($ov['deep_inshop_uv'], 2)
+                    . '","' . round($ov['avg_access_time'], 2)
+                    . '","' . round($ov['avg_access_page_num'], 2)
+                    . '","' . round($ov['inshop_item_col_num'], 2)
+                    . '","' . round($ov['dir_shop_col_num'], 2)
+                    . '","' . round($ov['cart_num'], 2)
+                    . '","' . round($ov['purchase_rate_of_goods'], 2)
+                    . '","' . round($ov['commodity_collection_rate'], 2)
+                    . '","' . round($ov['commodity_collection_cost'], 2)
+                    . '","' . round($ov['purchase_cost_of_goods'], 2)
+                    . '","' . round($ov['purchase_cost_of_goods_collection'], 2)
+                    . '","' . round($ov['gmv_inshop_num'], 2)
+                    . '","' . round($ov['gmv_inshop_amt'], 2)
+                    . '","' . round($ov['alipay_in_shop_num'], 2)
+                    . '","' . round($ov['alipay_inshop_amt'], 2)
+                    . '","' . round($ov['average_cost_of_order'], 2)
+                    . '","' . round($ov['order_average_amount'], 2)
+                    . '","' . round($ov['roi'], 2)
+                    . '","' . round($ov['ecpm'], 2)
+                    . '","' . round($ov['ctr'], 2)
+                    . '","' . round($ov['ecpc'], 2)
+                    . '","' . round($ov['cvr'], 2) . '"]';
+
+                $newLineInfoArray[$ak][$ok] = $lineInfo;
             }
 
-            $transaction = Yii::$app->db->beginTransaction();
-            try {
+        }
 
-                $multitrayStatistics = new MultitrayStatistics();
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
 
-                $multitrayStatisticsArray['multitray_id'] = $multitrayId;
-                $multitrayStatisticsArray['multitray_statistics_content_json'] = json_encode($newInfoArray);
+            $multitrayStatistics = new MultitrayStatistics();
 
-                $multitrayStatistics->setAttributes($multitrayStatisticsArray);
-                if (!$multitrayStatistics->save()) {
-                    throw new Exception('统计数据添加失败：' . current($multitrayStatistics->getFirstErrors()));
-                }
+            $multitrayStatisticsArray['multitray_id'] = $multitrayId;
+            $multitrayStatisticsArray['multitray_statistics_content_json'] = json_encode($newLineInfoArray, JSON_UNESCAPED_UNICODE);
+            $multitrayStatisticsArray['charge'] = json_encode($charge, JSON_UNESCAPED_UNICODE);
+            $multitrayStatisticsArray['alipay_inshop_amt'] = json_encode($alipayInshopAmt, JSON_UNESCAPED_UNICODE);
+            $multitrayStatisticsArray['roi'] = json_encode($roi, JSON_UNESCAPED_UNICODE);
+            $multitrayStatisticsArray['commodity_collection_rate'] = json_encode($commodityCollectionRate, JSON_UNESCAPED_UNICODE);
+            $multitrayStatisticsArray['purchase_rate'] = json_encode($purchaseRate, JSON_UNESCAPED_UNICODE);
+            $multitrayStatisticsArray['purchase_cost_of_goods_collection'] = json_encode($purchaseCostGoodsCollection, JSON_UNESCAPED_UNICODE);
 
-                $multitrayStatisticsId = Yii::$app->db->getLastInsertID();
-
-                // 添加统计数据日志
-                $multitrayStatisticRemark = sprintf('%s添加了计划统计数据：%s', Yii::$app->user->identity->username, $multitrayName);
-                SystemLog::create(SystemLog::TYPE_CREATE, $multitrayStatisticsId, $multitrayStatisticRemark, $multitrayStatisticsArray);
-
-                $transaction->commit();
-            } catch (Exception $e) {
-                $transaction->rollBack();
-                throw new \Exception($e->getMessage());
+            $multitrayStatistics->setAttributes($multitrayStatisticsArray);
+            if (!$multitrayStatistics->save()) {
+                throw new Exception('统计数据添加失败：' . current($multitrayStatistics->getFirstErrors()));
             }
+
+            $multitrayStatisticsId = Yii::$app->db->getLastInsertID();
+
+            // 添加统计数据日志
+            $multitrayStatisticRemark = sprintf('%s添加了计划统计数据：%s', Yii::$app->user->identity->username, $multitrayName);
+            SystemLog::create(
+                SystemLog::TYPE_CREATE,
+                $multitrayStatisticsId,
+                $multitrayStatisticRemark,
+                $multitrayStatisticsArray
+            );
+
+            $transaction->commit();
+        } catch (Exception $e) {
+            $transaction->rollBack();
+            throw new \Exception($e->getMessage());
         }
     }
 
     /**
-     * 统计展现(包括下载数据)
+     * 统计展现
      * @return mixed
-     * @throws Exception
      */
     public function getShowOperation()
     {
@@ -317,51 +463,126 @@ class ReportService extends BaseService
             CtHelper::response('false', '');
         }
 
-        $logStartDate = '2017-02-01';//date('Y-m-d', $multitray->multitray_start_time);
+        $multitrayPolicyGroup = MultitrayPolicyGroup::find()->select('policy_group_name,target_id')->where(
+            ['multitray_id' => $multitrayId]
+        )->asArray()->all();
+
+        $logStartDate = date('Y-m-d', $multitray->multitray_start_time);
         $logEndDate = date('Y-m-d', $multitray->multitray_end_time);
 
-        // 花费占比(charge)、投入产出比(alipay_inshop_amt、roi)
-        $statisticDataSql = "select sum(charge) as charge, 
-                                sum(alipay_inshop_amt) as alipay_inshop_amt,
-                                sum(roi) as roi, policy_group_name,
-                                sum(cart_num)*100/sum(uv) as purchase_rate,
-                                sum(inshop_item_col_num)*100/sum(uv) as commodity_collection_rate,
-                                sum(charge)/(sum(inshop_item_col_num)+sum(cart_num)) as purchase_cost_of_goods_collection
-                    from taobao_zs_advertiser_target_day_sum_list t1, huonu_multitray_policy_group t2  where log_date >= '$logStartDate' and log_date <= '$logEndDate'
-                    and     t1.target_id = t2.target_id 
-                    and     taobao_user_id='$multitray->taobao_id'
-                    and     effect = '$multitray->multitray_cycle'
-                    and     effect_type = '$multitray->multitray_effect_model'  group by policy_group_name order by policy_group_name";
-        $statisticData = Yii::$app->db->createCommand($statisticDataSql)->queryAll();
+        $targetIdArray = [];
+        $policyGroup = [];
+        foreach ($multitrayPolicyGroup as $v) {
+            $targetIdArray[] = $v['target_id'];
+            $policyGroup[$v['policy_group_name']][] = $v['target_id'];
+        }
 
         // TODO 按时日期分析
+        $onTimeAnalysis = TaobaoZsAdvertiserTargetDaySumList::find()
+            ->select(
+                [
+                    'sum(charge) as charge',
+                    'sum(ad_pv) as ad_pv',
+                    'sum(click) as click',
+                    'sum(inshop_item_col_num) as inshop_item_col_num',
+                    'sum(cart_num) as cart_num',
+                    'sum(alipay_in_shop_num) as alipay_in_shop_num',
+                    'sum(alipay_inshop_amt) as alipay_inshop_amt',
+                    'sum(alipay_inshop_amt)/sum(charge) as roi',
+                    'sum(charge)*1000/sum(ad_pv) as ecpm',
+                    'sum(click)/sum(ad_pv) as ctr',
+                    'sum(charge)/sum(click) as ecpc',
+                    'sum(alipay_in_shop_num)/sum(click) as cvr',
+                    'log_date',
+                ]
+            )
+            ->where(['in', 'target_id', $targetIdArray])
+            ->andWhere(['>=', 'log_date', $logStartDate])
+            ->andWhere(['<=', 'log_date', $logEndDate])
+            ->andWhere(
+                [
+                    'effect' => $multitray->multitray_cycle,
+                    'effect_type' => $multitray->multitray_effect_model,
+                ]
+            )
+            ->groupBy(['log_date'])
+            ->asArray()->all();
+
         // TODO 按人群分析
+        $crowdAnalysis = TaobaoZsAdvertiserTargetDaySumList::find()
+            ->select(
+                [
+                    MultitrayPolicyGroup::tableName() . '.policy_group_name',
+                    'sum(charge) as charge',
+                    'sum(ad_pv) as ad_pv',
+                    'sum(click) as click',
+                    'sum(inshop_item_col_num) as inshop_item_col_num',
+                    'sum(cart_num) as cart_num',
+                    'sum(alipay_in_shop_num) as alipay_in_shop_num',
+                    'sum(alipay_inshop_amt) as alipay_inshop_amt',
+                    'sum(alipay_inshop_amt)/sum(charge) as roi',
+                    'sum(charge)*1000/sum(ad_pv) as ecpm',
+                    'sum(click)/sum(ad_pv) as ctr',
+                    'sum(charge)/sum(click) as ecpc',
+                    'sum(alipay_in_shop_num)/sum(click) as cvr',
+                ]
+            )
+            ->join('LEFT JOIN', MultitrayPolicyGroup::tableName(), MultitrayPolicyGroup::tableName() . '.target_id = ' . TaobaoZsAdvertiserTargetDaySumList::tableName() . '.target_id')
+            ->where(['in', MultitrayPolicyGroup::tableName() . '.target_id', $targetIdArray])
+            ->andWhere(['>=', 'log_date', $logStartDate])
+            ->andWhere(['<=', 'log_date', $logEndDate])
+            ->andWhere(
+                [
+                    'effect' => $multitray->multitray_cycle,
+                    'effect_type' => $multitray->multitray_effect_model,
+                ]
+            )
+            ->groupBy([MultitrayPolicyGroup::tableName() . '.policy_group_name'])
+            ->asArray()->all();
+
         // TODO 策略组按日分析
+
         // TODO 定向人群按日分析
+        $directedCrowdAnalyzedDaily = TaobaoZsAdvertiserTargetDaySumList::find()
+            ->select(
+                [
+                    'log_date',
+                    'target_name',
+                    'sum(charge) as charge',
+                    'sum(ad_pv) as ad_pv',
+                    'sum(click) as click',
+                    'sum(inshop_item_col_num) as inshop_item_col_num',
+                    'sum(cart_num) as cart_num',
+                    'sum(alipay_inshop_amt)/sum(charge) as roi',
+                    'sum(charge)*1000/sum(ad_pv) as ecpm',
+                    'sum(click)/sum(ad_pv) as ctr',
+                    'sum(charge)/sum(click) as ecpc',
+                    'sum(alipay_in_shop_num)/sum(click) as cvr',
+                    'sum(alipay_in_shop_num) as alipay_in_shop_num',
+                    'sum(alipay_inshop_amt) as alipay_inshop_amt',
+                ]
+            )
+            ->where(['in', 'target_id', $targetIdArray])
+            ->andWhere(['>=', 'log_date', $logStartDate])
+            ->andWhere(['<=', 'log_date', $logEndDate])
+            ->andWhere(
+                [
+                    'effect' => $multitray->multitray_cycle,
+                    'effect_type' => $multitray->multitray_effect_model,
+                ]
+            )
+            ->groupBy('target_name')
+            ->asArray()->all();
 
-        $result['multitrayId'] = $multitrayId;
+        $result['multitray'] = $multitray->toArray();
 
-        $result['multitrayName'] = $multitray->multitray_name;
+        $result['policyGroupName'] = array_unique(array_column($multitrayPolicyGroup, 'policy_group_name'));
 
-        $result['policyGroupName'] = array_column($statisticData, 'policy_group_name');
+        $result['onTimeAnalysis'] = $onTimeAnalysis;
 
-        // 花费
-        $result['charge'] = array_column($statisticData, 'charge');
+        $result['crowdAnalysis'] = $crowdAnalysis;
 
-        // 成交额
-        $result['alipayInshopAmt'] = array_column($statisticData, 'alipay_inshop_amt');
-
-        // 消耗产出比
-        $result['roi'] = array_column($statisticData, 'roi');
-
-        // 商品收藏率
-        $result['commodityCollectionRate'] = array_column($statisticData, 'commodity_collection_rate');
-
-        // 商品加购率
-        $result['purchaseRate'] = array_column($statisticData, 'purchase_rate');
-
-        // 商品收藏加购成本
-        $result['purchaseCostGoodsCollection'] = array_column($statisticData, 'purchase_cost_of_goods_collection');
+        $result['directedCrowdAnalyzedDaily'] = $directedCrowdAnalyzedDaily;
 
         return $result;
     }
@@ -371,5 +592,81 @@ class ReportService extends BaseService
      */
     public function exportOperation()
     {
+        $multitrayId = Yii::$app->request->get('multitray_id');
+
+        $multitray = Multitray::findOne($multitrayId)->toArray();
+        if (empty($multitray)) {
+            CtHelper::response(false, '参数错误');
+        }
+
+        $multitrayPolicyGroup = MultitrayPolicyGroup::find()->select('policy_group_name,target_id')->where(
+            ['multitray_id' => $multitrayId]
+        )->asArray()->all();
+
+        $targetIdArray = [];
+        foreach ($multitrayPolicyGroup as $v) {
+            $targetIdArray[] = $v['target_id'];
+        }
+
+        $logStartDate = date('Y-m-d', $multitray['multitray_start_time']);
+        $logEndDate = date('Y-m-d', $multitray['multitray_end_time']);
+
+        $taobaoZsAdvertiserTargetDaySumList = TaobaoZsAdvertiserTargetDaySumList::find()
+            ->where(['in', 'target_id', $targetIdArray])
+            ->andWhere(['>=', 'log_date', $logStartDate])
+            ->andWhere(['<=', 'log_date', $logEndDate])
+            ->andWhere(
+                [
+                    'effect' => $multitray['multitray_cycle'],
+                    'effect_type' => $multitray['multitray_effect_model'],
+                ]
+            )
+            ->asArray()->all();
+
+        $filePath = Yii::$app->basePath . '\web\excel-template\haixin-test.xlsx';
+        //读取文件
+        if (!file_exists($filePath)) {
+            CtHelper::response(false, '模板不存在');
+        }
+
+        $objPHPExcel = \PHPExcel_IOFactory::load($filePath);
+        $sheet = $objPHPExcel->getSheet(0); // 读取第一個工作表
+        $highestRow = $sheet->getHighestRow(); // 取得总行数
+
+        $objPHPExcel->setActiveSheetIndex(0);
+
+        foreach ($taobaoZsAdvertiserTargetDaySumList as $k => $v) {
+
+            $k = $k + 3;
+            $objPHPExcel->getactivesheet()->setcellvalue('A' . $k, $v['target_name']);
+            $objPHPExcel->getactivesheet()->setcellvalue('B' . $k, date('Y-m-d', strtotime($v['log_date'])));
+            $objPHPExcel->getactivesheet()->setcellvalue('C' . $k, '');
+            $objPHPExcel->getactivesheet()->setcellvalue('D' . $k, $v['ad_pv']);
+            $objPHPExcel->getactivesheet()->setcellvalue('E' . $k, $v['click']);
+            $objPHPExcel->getactivesheet()->setcellvalue('F' . $k, $v['charge']);
+            $objPHPExcel->getactivesheet()->setcellvalue('G' . $k, $v['inshop_item_col_num']);
+            $objPHPExcel->getactivesheet()->setcellvalue('H' . $k, $v['cart_num']);
+            $objPHPExcel->getactivesheet()->setcellvalue('I' . $k, $v['alipay_in_shop_num']);
+            $objPHPExcel->getactivesheet()->setcellvalue('J' . $k, $v['alipay_inshop_amt']);
+
+        }
+
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, "Excel5");
+
+        $filename = date('Y-m-d-His') . '-数据明细' . '.xlsx';
+        $filename = iconv('UTF-8', 'GBK//IGNORE', $filename);
+        ob_end_clean();
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control:must-revalidate, post-check=0, pre-check=0");
+        header("Content-Type:application/force-download");
+        header("Content-Type:application/vnd.ms-execl");
+        header("Content-Type:application/octet-stream");
+        header("Content-Type:application/download");
+        header('Content-Disposition:attachment;filename="' . $filename . '"');
+        header("Content-Transfer-Encoding:binary");
+        $objWriter->save('php://output');
+
+        CtHelper::response(true, 'ok');
     }
 }

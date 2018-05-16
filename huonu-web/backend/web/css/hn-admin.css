@@ -698,12 +698,14 @@ ul.custom-fields li.placeholder:before {
 
 .m20{ margin: 20px}
 
+.pdl5{ padding-left: 5px}
 .pdl15{ padding-left: 15px}
 .pdl25{ padding-left: 25px}
 .pdl20{ padding-left: 20px}
 .pdl90{ padding-left: 90px}
 .pdl1{ padding-left: 1%}
 .pdr20{ padding-right: 20px}
+.pdr70{ padding-right: 70px}
 
 .pb60{ padding-bottom: 60px}
 .pb15{padding-bottom: 15px}
@@ -722,13 +724,16 @@ ul.custom-fields li.placeholder:before {
 .mb10 { margin-bottom: 10px}
 .mb15{ margin-bottom: 15px}
 .mb30 { margin-bottom: 30px}
+.mb60 { margin-bottom: 60px}
 .mr10{ margin-right: 10px}
 .ml70{ margin-left: 70px}
 .mt20{ margin-top: 20px}
 .mt40{ margin-top: 40px}
+.mt80{ margin-top: 80px}
 .mr20{ margin-right: 20px}
 
 .s_fc_c{ color: #4d7fff}
+.s_fc_ct{color: #ccc;}
 .s_fc_9{ color: #999}
 .s_fc_green{ color: #51A300}
 .s_fc_red{ color: #a40100}
@@ -737,6 +742,7 @@ ul.custom-fields li.placeholder:before {
 .radius4{border-radius:4px}
 
 body .s_fs_26{ font-size: 26px}
+body .s_fs_18{ font-size: 18px}
 
 .pr{ position: relative}
 .fl{ float: left}
@@ -750,6 +756,21 @@ body .h32{ height: 32px}
 .w90{ width: 90px}
 
 body .cp, body .cursor-pointer, body .pointer{ cursor: pointer}
+body .cursor-help{cursor: help;}
+
+body .displacement-2{top: 2px;}
+
+body .dpn{ display: none}
+
+.btn-gray{ background-color: #e6e6e6; color: #333; border-color: #e6e6e6}
+
+.table th, .table td {
+    text-align: left;
+    vertical-align: middle!important;
+    height: 60px; line-height: 60px;
+}
+
+body .tal{ text-align: left;}
 
 .ux-status-handle {
     position: relative;
@@ -762,7 +783,7 @@ body .cp, body .cursor-pointer, body .pointer{ cursor: pointer}
 .ux-status-handle .ux-status-info {
     position: absolute;
     left: 0;
-    top: 0;
+    top: -1px;
     z-index: 9996;
     width: 246px;
     box-shadow: 0 6px 8px rgba(51, 51, 51, .08);
@@ -775,6 +796,18 @@ body .cp, body .cursor-pointer, body .pointer{ cursor: pointer}
     word-wrap: break-word;
     overflow: hidden;
 }
+.ux-status-handle .ux-status-arrow{position: absolute;
+    left: 22px;
+    margin-top: 10px;
+    width: 0;
+    height: 0;
+    line-height: 0;
+    font-size: 0;
+    overflow: hidden;
+    border-style: solid;
+    border-width: 3px 3px 0;
+    border-color: #999 transparent transparent;}
+
 .ux-status-handle .ux-status-info .ux-status-operations li.ux-operation-cur{cursor: default}
 .ux-status-handle .ux-status-info .ux-status-operations li{list-style-type: none; list-style-image: none; height: 44px; line-height: 32px; padding: 5px 10px; cursor: pointer;}
 .ux-status-handle .ux-status-info .ux-status-operations{ padding: 0px; margin: -5px 0 0 0 }
@@ -805,4 +838,9 @@ body .cp, body .cursor-pointer, body .pointer{ cursor: pointer}
     width: 110px;
     height: 48px;
     line-height: 48px;}
+
+#field-select .dropdown-menu{ margin-top: 0px}
+
+.detail-data-head ul{ margin-top: 0px; border: none}
+.detail-data-head ul li { margin-top: 0px; width: 80px}
 

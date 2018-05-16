@@ -36,7 +36,7 @@ $model = new \backend\models\AdminLoginForm();
 
   <div class="form-group form-inline">
       <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
-          'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-9">{input}</div></div>',
+          'template' => '<div class="row"><div class="col-lg-4">{image}</div><div class="col-lg-8">{input}</div></div>',
       ]) ?>
   </div>
 

@@ -27,6 +27,11 @@ class CreativeController extends BaseController
         ];
     }
 
+    public function actionIndex()
+    {
+        return $this->render('index');
+    }
+
     // TODO 创意同步
     public function actionAjaxCreativeSync()
     {

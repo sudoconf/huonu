@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['class' => 'yii\grid\SerialColumn'],
                         'api_name',
                         'created_at',
-                        'call_poeple',
+                        'call_people',
                         [
                             'class' => 'yii\grid\ActionColumn',
                             'header' => '调用的次数',
@@ -104,19 +104,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
     // 时间段选择
     var cb = function (start, end, label) {
-        // 赋值给隐藏输入框
-        $('#startAt').val(start.format('YYYY-MM-DD'));
-        $('#endAt').val(end.format('YYYY-MM-DD'));
+        // 选择时间之后给隐藏输入框赋值
+        $('#startAt').val(start.format('YYYY-MM-DD HH:mm:ss'));
+        $('#endAt').val(end.format('YYYY-MM-DD HH:mm:ss'));
     };
     var optionSet = {
+        'maxDate': moment(), // 最大时间
         'ranges': {
-            '今天': [moment().startOf('day'), moment()],
+            '今日': [moment().startOf('day'), moment()],
             '昨天': [moment().subtract(1, 'days').startOf('day'), moment().subtract(1, 'days').endOf('day')],
             '7天': [moment().subtract(7, 'days').startOf('day'), moment().endOf('day')],
             '15天': [moment().subtract(15, 'days').startOf('day'), moment().endOf('day')],
+            '30天': [moment().subtract(30, 'days').startOf('day'), moment().endOf('day')],
         },
         'locale': {
-            'format': 'YYYY-MM-DD',
+            'format' : 'YYYY-MM-DD',
             "separator": " 至 ",
             "applyLabel": "确定",
             "cancelLabel": "取消",
@@ -152,7 +154,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 var html = '<div class="layer-form-log-info"><div class="layer-form"><div class="form-group"><label class="control-label">api 名称</label><input type="text" class="form-control" value="' + msg.data.api_name + '" readonly><p class="help-block"></p></div>';
                 html += '<div class="form-group"><label class="control-label">调用时间</label><input type="text" class="form-control" value="' + msg.data.created_at + '" readonly><p class="help-block"></p></div>';
 
-                html += '<div class="form-group"><label class="control-label">调用人</label><input type="text" class="form-control" value="' + msg.data.call_poeple + '" readonly><p class="help-block"></p></div></div></div>';
+                html += '<div class="form-group"><label class="control-label">调用人</label><input type="text" class="form-control" value="' + msg.data.call_people + '" readonly><p class="help-block"></p></div></div></div>';
                 layer.open({
                     type: 1,
                     title: 'api 日志调用详情',

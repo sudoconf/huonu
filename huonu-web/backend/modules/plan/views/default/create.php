@@ -89,7 +89,7 @@ $this->title = '客户计划 - 新建计划';
                             <!--设置计划 end-->
 
                             <!--设置单元 start-->
-                            <?= $this->render('set-unit.php'); ?>
+                            <?= $this->render('set-unit.php', ['setUnit' => $setUnit]); ?>
                             <!--设置单元 end-->
 
                             <!--添加创意 start-->
@@ -117,6 +117,7 @@ $this->title = '客户计划 - 新建计划';
 <?= Html::cssFile('@web/vendor/daterangepicker/daterangepicker.css') ?>
 <?= Html::jsFile('@web/vendor/daterangepicker/moment.js') ?>
 <?= Html::jsFile('@web/vendor/daterangepicker/daterangepicker.js') ?>
+<?= Html::jsFile('@web/vendor/layer/layer.js') ?>
 <?= Html::jsFile('@web/js/plan/plan.js') ?>
 
 <script>
@@ -158,6 +159,7 @@ $this->title = '客户计划 - 新建计划';
         },
         select: function (event, ui) {
             $('.taobao-shop-name').val(ui.item.label);
+            $('#taobao-shop-name').val(ui.item.label);
             $('.taobao-shop-id').val(ui.item.id);
             return false;
         },

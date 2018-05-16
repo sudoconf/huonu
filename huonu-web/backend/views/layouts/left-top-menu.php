@@ -152,9 +152,9 @@ $tt = MenuHelper::getAssignedMenu(Yii::$app->user->id);
                         <i class="glyphicon glyphicon-list-alt"></i> 客户管理
                         <span class="fa arrow"></span>
                     </a>
-                    <ul class="nav nav-second-level">
+                    <ul class="nav nav-second-level <?=(Yii::$app->controller->module->id == 'customer') ? 'in' : '';?>">
                         <li>
-                            <a href="<?= Url::toRoute('/report/egew') ?>">
+                            <a class="<?=(Yii::$app->controller->id == 'default') ? 'active' : '';?>" href="<?= Url::toRoute('/customer/default') ?>">
                                 <i class="fa fa-list-alt"></i>
                                 客户列表
                             </a>
@@ -166,17 +166,11 @@ $tt = MenuHelper::getAssignedMenu(Yii::$app->user->id);
                         <i class="glyphicon glyphicon-list-alt"></i> 客户报表
                         <span class="fa arrow"></span>
                     </a>
-                    <ul class="nav nav-second-level">
+                    <ul class="nav nav-second-level <?=(Yii::$app->controller->module->id == 'report') ? 'in' : '';?>">
                         <li>
-                            <a href="<?= Url::toRoute('/report/default') ?>">
+                            <a class="<?=(Yii::$app->controller->id == 'default') ? 'active' : '';?>" href="<?= Url::toRoute('/report/default') ?>">
                                 <i class="fa fa-list-alt"></i>
                                 人群复盘列表
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?= Url::toRoute('/report/data-sync') ?>">
-                                <i class="fa fa-list-alt"></i>
-                                数据同步
                             </a>
                         </li>
                     </ul>
@@ -186,9 +180,9 @@ $tt = MenuHelper::getAssignedMenu(Yii::$app->user->id);
                         <i class="glyphicon glyphicon-list"></i> 客户计划
                         <span class="fa arrow"></span>
                     </a>
-                    <ul class="nav nav-second-level">
+                    <ul class="nav nav-second-level <?=(Yii::$app->controller->module->id == 'plan') ? 'in' : '';?>">
                         <li>
-                            <a href="<?= Url::toRoute('/plan/default') ?>">
+                            <a class="<?=(Yii::$app->controller->module->id == 'plan') ? 'active' : '';?>" href="<?= Url::toRoute('/plan/default') ?>">
                                 <i class="fa fa-list-alt"></i>
                                 计划列表
                             </a>

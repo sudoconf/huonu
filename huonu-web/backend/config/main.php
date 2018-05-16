@@ -81,15 +81,18 @@ return [
         'class' => 'backend\components\AccessControl',
         'allowActions' => [
             // 这里是允许访问的action
-            'site/login',
-            'site/captcha',
-            'site/error',
-            // '*'
+            // 'site/login',
+            // 'site/captcha',
+            // 'site/error',
+            '*'
         ]
     ],
     'modules' => [
         'system' => [
             'class' => 'backend\modules\system\SystemModule',
+        ],
+        'customer' => [
+            'class' => 'backend\modules\customer\CustomerModule',
         ],
         'report' => [
             'class' => 'backend\modules\report\ReportModule',

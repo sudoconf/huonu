@@ -8,28 +8,30 @@
 
 namespace common\components\OAuthClient;
 
-// oauth client 抽象类 TODO
 abstract class AbstractOAuthClient
 {
-    protected $config;
-
-    protected $userAgent = 'Benzuo OAuth Client 1.0';
-
     protected $connectTimeout = 30;
 
     protected $timeout = 30;
 
-    public function __construct($config)
+    public function __construct()
     {
-        $this->config = $config;
     }
 
-    abstract public function getAuthorizeUrl($callbackUrl);
+    /**
+     * 获取code 跳转至回调地址
+     * @param $redirectUri
+     * @return mixed
+     */
+    abstract public function getAuthorizeUrl($redirectUri);
 
-    // 获取token
-    abstract public function getAccessToken($code);
-
-    abstract public function getUserInfo($token);
+    /**
+     * 获取token
+     * @param $code
+     * @param $redirectUri
+     * @return mixed
+     */
+    abstract public function getAccessToken($code, $redirectUri);
 
     /**
      * HTTP POST.
@@ -44,7 +46,6 @@ abstract class AbstractOAuthClient
         $curl = curl_init();
 
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($curl, CURLOPT_USERAGENT, $this->userAgent);
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $this->connectTimeout);
         curl_setopt($curl, CURLOPT_TIMEOUT, $this->timeout);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -52,8 +53,6 @@ abstract class AbstractOAuthClient
         curl_setopt($curl, CURLOPT_POST, 1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
         curl_setopt($curl, CURLOPT_URL, $url);
-
-        // curl_setopt($curl, CURLINFO_HEADER_OUT, TRUE );
 
         $response = curl_exec($curl);
 
@@ -63,7 +62,7 @@ abstract class AbstractOAuthClient
     }
 
     /**
-     * HTTP POST.
+     * HTTP GET.
      *
      * @param string $url 要请求的url地址
      * @param array $params 请求的参数
@@ -75,13 +74,12 @@ abstract class AbstractOAuthClient
         $curl = curl_init();
 
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($curl, CURLOPT_USERAGENT, $this->userAgent);
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $this->connectTimeout);
         curl_setopt($curl, CURLOPT_TIMEOUT, $this->timeout);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_HEADER, 0);
 
-        $url = $url.'?'.http_build_query($params);
+        $url = $url . '?' . http_build_query($params);
         curl_setopt($curl, CURLOPT_URL, $url);
 
         $response = curl_exec($curl);

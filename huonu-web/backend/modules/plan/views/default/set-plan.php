@@ -1,11 +1,19 @@
 <div class="tab-pane fade in active" id="set-plan">
-
+    <?php
+    $form = \yii\bootstrap\ActiveForm::begin(
+        [
+            'id' => 'form-set-plan',
+            'method' => 'post',
+            'action' => 'ajax-save-set-plan.html',
+        ]
+    );
+    ?>
     <div class="control-group pd15">
         <div class="form-inline pd10">
             <label for="name">店铺名称</label>
             <input type="text" class="form-control taobao-shop-name" placeholder="请输入店铺名称">
             <input type="hidden" class="taobao-shop-id" name="taobao_user_id">
-            <input type="hidden" class="taobao-shop-name" name="taobao_shop_name">
+            <input type="hidden" class="taobao-shop-name" id="taobao_shop_name">
         </div>
     </div>
 
@@ -164,7 +172,7 @@
 
         <div class="form-inline pd10">
             <label for="name">计划名称</label>
-            <input style="width: 300px" type="text" class="form-control campaign-name" placeholder="请输入名称"
+            <input style="width: 300px" type="text" class="form-control campaign-name" placeholder="请输入计划名称"
                    name="campaign_name" value="<?= $setPlan['campaign_name']; ?>">
         </div>
 
@@ -188,14 +196,12 @@
                     <input type="radio" name="region" class="region" value="2" checked> 使用模板
                 </label>
                 <select class="form-control">
-                    <option>地域</option>
                     <option>常用地域(系统模板)</option>
-                    <option>非偏远地区除外</option>
                 </select>
                 <input type="hidden" class="area-template-id" name="area_template_id">
             </div>
 
-            <div class="form-inline region-select ml70 pa20 mt20 bg-fafafa radius4" style="display: none">
+            <div class="form-inline region-select ml70 pa20 mt20 bg-fafafa radius4" style="display: block">
 
                 <div class="control-group input-group col-md-5">
                     <span class="input-group-addon"><i class="fa fa-search"></i></span>
@@ -218,7 +224,7 @@
                                 <div class="regionProvince">
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 安徽
+                                               value="1"> 安徽
                                     </div>
                                 </div>
                             </div>
@@ -229,7 +235,7 @@
                                 <div class="regionProvince">
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 北京
+                                               value="19"> 北京
                                     </div>
                                 </div>
                             </div>
@@ -241,7 +247,7 @@
                                 <div class="regionProvince">
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 重庆
+                                               value="532"> 重庆
                                     </div>
                                 </div>
                             </div>
@@ -253,7 +259,7 @@
                                 <div class="regionProvince">
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 福建
+                                               value="39"> 福建
                                     </div>
                                 </div>
                             </div>
@@ -265,19 +271,19 @@
                                 <div class="regionProvince">
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 广东
+                                               value="68"> 广东
                                     </div>
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 广西
+                                               value="92"> 广西
                                     </div>
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 贵州
+                                               value="109"> 贵州
                                     </div>
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 甘肃
+                                               value="52"> 甘肃
                                     </div>
                                 </div>
                             </div>
@@ -288,27 +294,27 @@
                                 <div class="regionProvince">
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 黑龙江
+                                               value="165"> 黑龙江
                                     </div>
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 河北
+                                               value="125"> 河北
                                     </div>
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 河南
+                                               value="145"> 河南
                                     </div>
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 湖北
+                                               value="184"> 湖北
                                     </div>
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 湖南
+                                               value="212"> 湖南
                                     </div>
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 海南
+                                               value="120"> 海南
                                     </div>
                                 </div>
                             </div>
@@ -319,15 +325,15 @@
                                 <div class="regionProvince">
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 吉林
+                                               value="234"> 吉林
                                     </div>
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 江苏
+                                               value="255"> 江苏
                                     </div>
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 江西
+                                               value="279"> 江西
                                     </div>
                                 </div>
                             </div>
@@ -341,7 +347,7 @@
                                 <div class="regionProvince">
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 辽宁
+                                               value="294"> 辽宁
                                     </div>
                                 </div>
                             </div>
@@ -352,11 +358,11 @@
                                 <div class="regionProvince">
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 内蒙古
+                                               value="333"> 内蒙古
                                     </div>
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 宁夏
+                                               value="351"> 宁夏
                                     </div>
                                 </div>
                             </div>
@@ -367,7 +373,7 @@
                                 <div class="regionProvince">
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 青海
+                                               value="357"> 青海
                                     </div>
                                 </div>
                             </div>
@@ -378,23 +384,23 @@
                                 <div class="regionProvince">
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 山西
+                                               value="393"> 山西
                                     </div>
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 陕西
+                                               value="406"> 陕西
                                     </div>
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 山东
+                                               value="368"> 山东
                                     </div>
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 上海
+                                               value="417"> 上海
                                     </div>
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 四川
+                                               value="438"> 四川
                                     </div>
                                 </div>
                             </div>
@@ -406,7 +412,7 @@
                                 <div class="regionProvince">
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 天津
+                                               value="461"> 天津
                                     </div>
                                 </div>
                             </div>
@@ -417,7 +423,7 @@
                                 <div class="regionProvince">
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 云南
+                                               value="488"> 云南
                                     </div>
                                 </div>
                             </div>
@@ -428,7 +434,7 @@
                                 <div class="regionProvince">
                                     <div class="provinceItem">
                                         <input type="checkbox" name="area-id-list[]" class="common-area"
-                                               value="option2"> 浙江
+                                               value="508"> 浙江
                                     </div>
                                 </div>
                             </div>
@@ -437,29 +443,28 @@
                     </div>
 
                     <div class="form-inline mb10">
-                        <input type="checkbox" name="area-id-list[]" class="select-all-rarely-used-area"
-                               value="option2">
+                        <input type="checkbox" id="select-all-rarely-used-area" class="select-all-rarely-used-area">
                         <label for="name">全选 - 非常用地域</label>
                     </div>
 
                     <div class="form-inline dpIb">
                         <div class="provinceItem">
-                            <input type="checkbox" name="area-id-list[]" class="rarely-used-area" value="option2"> 新疆
+                            <input type="checkbox" name="area-id-list[]" class="rarely-used-area" value="471"> 新疆
                         </div>
                         <div class="provinceItem">
-                            <input type="checkbox" name="area-id-list[]" class="rarely-used-area" value="option2"> 西藏
+                            <input type="checkbox" name="area-id-list[]" class="rarely-used-area" value="463"> 西藏
                         </div>
                         <div class="provinceItem">
-                            <input type="checkbox" name="area-id-list[]" class="rarely-used-area" value="option2"> 台湾
+                            <input type="checkbox" name="area-id-list[]" class="rarely-used-area" value="577"> 台湾
                         </div>
                         <div class="provinceItem">
-                            <input type="checkbox" name="area-id-list[]" class="rarely-used-area" value="option2"> 香港
+                            <input type="checkbox" name="area-id-list[]" class="rarely-used-area" value="599"> 香港
                         </div>
                         <div class="provinceItem">
-                            <input type="checkbox" name="area-id-list[]" class="rarely-used-area" value="option2"> 澳门
+                            <input type="checkbox" name="area-id-list[]" class="rarely-used-area" value="576"> 澳门
                         </div>
                         <div class="provinceItem">
-                            <input type="checkbox" name="area-id-list[]" class="rarely-used-area" value="option2"> 中国其他
+                            <input type="checkbox" name="area-id-list[]" class="rarely-used-area" value="531"> 中国其他
                         </div>
                     </div>
                 </div>
@@ -468,14 +473,15 @@
                     <span class="btn btn-primary area-list-show-input">保存为模板</span>
                 </div>
                 <div class="control-group show-area-input" style="display: none">
-                    <input type="text" class="form-control fl mr10" placeholder="模板名" name="area_template_name">
-                    <span class="cp save-plan-operate">
+                    <input type="text" class="form-control fl mr10 area-template-name" placeholder="模板名" name="area_template_name">
+                    <span class="cp save-area-operate">
                         <i class="fa fa-check-circle-o s_fc_brand s_fs_26 h32 lh32"></i>
                     </span>
                     <span class="cp cancel-plan-operate">
                         <i class="fa fa-times-circle-o s_fc_9 s_fs_26 h32 lh32"></i>
                     </span>
                 </div>
+                <input type="hidden" class="ajax_create_area_template" value="<?php echo \yii\helpers\Url::toRoute('template/ajax-create-area-template')?>">
             </div>
         </div>
 
@@ -1448,4 +1454,5 @@
     <div class="control-group pd15">
         <span class="btn btn-primary create-plan">下一步，设置推广单元</span>
     </div>
+    <?php \yii\bootstrap\ActiveForm::end(); ?>
 </div>

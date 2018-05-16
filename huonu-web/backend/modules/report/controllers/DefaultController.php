@@ -4,10 +4,10 @@ namespace backend\modules\report\controllers;
 
 use backend\controllers\BaseController;
 use backend\models\AuthorizeUser;
-use backend\models\Multitray;
 use backend\models\MultitrayStatistics;
 use backend\models\searchs\MultitraySearch;
 use backend\models\TaobaoZsAdvertiserTargetDaySumList;
+use backend\models\TaobaoZsTargetList;
 use backend\modules\report\services\ReportService;
 use backend\modules\report\services\SetUpParameterService;
 use backend\modules\report\services\StrategyGroupService;
@@ -95,7 +95,8 @@ class DefaultController extends BaseController
      */
     public function actionAjaxGetTarget()
     {
-        $shop = TaobaoZsAdvertiserTargetDaySumList::find()->select('target_id,target_name')->where(['taobao_user_id' => '3015595177'])->limit(50)->asArray()->all();
+        $taobaoId = Yii::$app->request->get('taobao_id');
+        $shop = TaobaoZsTargetList::find()->select('id as target_id,crowd_name as target_name')->where(['taobao_user_id' => $taobaoId])->limit(50)->asArray()->all();
         CtHelper::response(200, 'success', $shop);
     }
 

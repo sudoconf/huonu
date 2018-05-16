@@ -27,6 +27,11 @@ class ResourceController extends BaseController
         ];
     }
 
+    public function actionIndex()
+    {
+        return $this->render('index');
+    }
+
     // TODO 资源位同步
     public function actionAjaxResourceSync()
     {

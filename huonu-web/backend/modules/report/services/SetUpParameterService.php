@@ -7,6 +7,7 @@
 
 namespace backend\modules\report\services;
 
+use backend\models\Multitray;
 use backend\models\TaobaoZsAdvertiserTargetDaySumList;
 use common\components\CtHelper;
 use common\components\Toolkit\ArrayToolkit;
@@ -28,11 +29,24 @@ class SetUpParameterService extends BaseService
             return CtHelper::response('false', '参数错误');
         }
 
+        // 判断是否存在复盘
+        $multitray = Multitray::find()
+            ->where(
+                [
+                    'multitray_name' => $data['multitray_name'],
+                    'taobao_id' => $data['taobao_id'],
+                ]
+            )
+            ->asArray()->all();
+        if (!empty($multitray)) {
+            CtHelper::response(false, '复盘已经存在');
+        }
+
         // 校验提交的字段
         $this->filterCreateParameterFields($data);
 
         // 判断选定时间段是否有数据
-        $taobaoZsAdvertiserTargetDaySumList = TaobaoZsAdvertiserTargetDaySumList::find()->select('sum(charge)')
+        $taobaoZsAdvertiserTargetDaySumList = TaobaoZsAdvertiserTargetDaySumList::find()->select('target_id')
             ->where(['>=', 'log_date', $data['multitray_start_time']])
             ->andWhere(['<=', 'log_date', $data['multitray_end_time']])
             ->andWhere(['taobao_user_id' => $data['taobao_id']])
@@ -57,7 +71,7 @@ class SetUpParameterService extends BaseService
             Yii::$app->session->set('setParameter', $data);
         }
 
-        return CtHelper::response('true', '保存成功');
+        return CtHelper::response(true, '保存成功');
 
     }
 

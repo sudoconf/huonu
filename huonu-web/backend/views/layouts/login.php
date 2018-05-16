@@ -44,7 +44,7 @@ $model = new \backend\models\AdminLoginForm();
             'title' => '换一个',
             'style' => 'cursor:pointer;',
         ],
-        'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-9">{input}</div></div>',
+        'template' => '<div class="row"><div class="col-lg-4">{image}</div><div class="col-lg-8">{input}</div></div>',
     ]) ?>
     <input id="admin-url" type="hidden" value="<?= \yii\helpers\Url::toRoute('/site/captcha') ?>">
 
@@ -54,7 +54,8 @@ $model = new \backend\models\AdminLoginForm();
     <?php ActiveForm::end(); ?>
 
     <div class="clear"></div>
-    <div class="copyright">© 火奴软件</div>
+
+    <div class="copyright">© 火奴软件 2012-2018</div>
 
 </div>
 

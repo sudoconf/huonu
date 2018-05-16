@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use \backend\models\SystemLog;
-use \yii\widgets\DetailView;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
@@ -44,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </ul>
     </div>
 
-    <div class="row">
+    <div class="row pb60">
         <div class="admin-log-index col-lg-12">
 
             <?php Pjax::begin(); ?>
@@ -74,6 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'created_at',
                         'format' => ['date', 'php:Y-m-d H:i:s'],
                     ],
+                    'remarks',
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => '更多操作',
@@ -88,6 +88,21 @@ $this->params['breadcrumbs'][] = $this->title;
                             },
                         ],
                     ],
+                ],
+                'filterSelector' => "select[name='" . $dataProvider->getPagination()->pageSizeParam . "'],input[name='" . $dataProvider->getPagination()->pageParam . "']",
+                'pager' => [
+                    'class' => \backend\components\widget\LinkPager::className(),
+                    'options' => ['class' => 'pagination', 'style' => "display:block;"],// 关闭自带分页
+                    'template' => '{pageButtons} {customPage} {pageSize}', // 分页栏布局
+                    'maxButtonCount' => 5, // 显示页数
+                    'firstPageLabel' => '首页',
+                    // 'prevPageLabel' => '上一页',
+                    // 'nextPageLabel' => '下一页',
+                    'lastPageLabel' => '末页',
+                    'pageSizeList' => [10, 20, 30, 50], // 页大小下拉框值
+                    'customPageWidth' => 50,            // 自定义跳转文本框宽度
+                    'customPageBefore' => ' 跳转到第 ',
+                    'customPageAfter' => ' 页 ',
                 ],
             ]); ?>
             <?php Pjax::end(); ?>

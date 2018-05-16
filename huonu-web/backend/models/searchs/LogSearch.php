@@ -46,14 +46,15 @@ class LogSearch extends SystemLog
         $query = SystemLog::find();
 
         // add conditions that should always apply here
-        $query->select(SystemLog::tableName().'.*,admin.username');
-        $query->join('left join', Admin::tableName().' admin', 'admin.id = zxht_system_log.created_id');
+        $query->select(SystemLog::tableName() . '.*,admin.username');
+        $query->join('left join', Admin::tableName() . ' admin', 'admin.id = zxht_system_log.created_id');
 
+        $pageSize = isset($params['per-page']) ? intval($params['per-page']) : 20;
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
 
             'pagination' => [
-                'pageSize' => '10',
+                'pageSize' => $pageSize,
             ],
             'sort' => [
                 'defaultOrder' => [

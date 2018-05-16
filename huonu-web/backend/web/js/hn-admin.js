@@ -106,7 +106,6 @@ function LAYER_MSG_FUNCTION(msg, icon, i) {
     });
 }
 
-
 // 客户计划
 $('.plan-table tr:even').hover(function () {
     // console.log($(this).index(this))
@@ -114,6 +113,7 @@ $('.plan-table tr:even').hover(function () {
     $(this).next().show();
 });
 
+// 计划状态
 $('.ux-status-handle').hover(function () {
     $(this).find('.ux-status-info').show();
 }, function () {

@@ -40,12 +40,69 @@ $(function () {
         $('.save-plan').css('display', 'none');
         $('.show-area-input').css('display', 'block');
     });
-    
+
     // 取消地域保存
     $('.cancel-plan-operate').click(function () {
         $('.show-area-input').css('display', 'none');
         $('.save-plan').css('display', 'block');
     });
+
+    // ajax 保存地域模板
+    $('.save-area-operate').click(function () {
+
+        var taobaoUserId = $('.taobao-shop-id').val();
+        if (taobaoUserId == '') {
+            LAYER_MSG('请正确选择店铺');
+            return false;
+        }
+
+        // 判断模板名称
+        var areaTemplateName = $('.area-template-name').val();
+        if (areaTemplateName == '') {
+            LAYER_MSG('请输入模板名');
+            return false;
+        }
+
+        var areaIdList = new Array();
+        $('input[name="area-id-list[]"]:checked').each(function () {
+            areaIdList.push($(this).val()); // 向数组中添加元素
+        });
+
+        if (areaIdList.length <= 0) {
+            LAYER_MSG('请至少选择一个投放地域');
+            return false;
+        }
+
+        areaIdList = areaIdList.sort(function (a, b) {
+            return a - b;
+        });
+
+        var areaIdListStr = areaIdList.join(',');
+        // console.log(areaIdListStr);
+        var url = $('.ajax_create_area_template').val();
+        console.log(url);
+        $.ajax({
+            url: url,
+            dataType: "json",
+            type: 'post',
+            data: {
+                'area_id_list': areaIdListStr,
+                'area_template_name': areaTemplateName,
+                'taobao_user_id': taobaoUserId,
+            },
+            success: function (res) {
+                if (res.result = true) {
+
+                    // ajax 更新列表
+
+                }
+            },
+            error: function (XmlHttpRequest, textStatus, errorThrown) {
+                LAYER_MSG('网络异常 请稍后再试');
+            }
+        });
+    });
+
 
     // 时间保存 div
     $('.period-list-show-input').click(function () {
@@ -80,7 +137,7 @@ $(function () {
                     var e = JSON.parse(n), a = this;
                     a.timeTargetMap = a.toMap(e, {}), a.data = {
                         hours: function (n) {
-                            for (var e = 0; e < 24; e++)n.push({
+                            for (var e = 0; e < 24; e++) n.push({
                                 index: e,
                                 indexNext: e + 1,
                                 milestone: e % 6 == 0,
@@ -163,7 +220,7 @@ $(function () {
                     this.timeTargetMap = this.toMap(e, {}), this.fixStyle()
                 },
                 doDataBeforeSubmit: function () {
-                    for (var n = this, e = n.getSelected(), s = !1, l = 0; l < e.length; l++)s = s || !a.isEmpty(e[l].timeSpanList);
+                    for (var n = this, e = n.getSelected(), s = !1, l = 0; l < e.length; l++) s = s || !a.isEmpty(e[l].timeSpanList);
                     return s ? {ok: !0, params: {templateValue: JSON.stringify(e)}} : {
                         ok: !1,
                         msg: "\u8bf7\u81f3\u5c11\u9009\u62e9\u4e00\u4e2a\u65f6\u6bb5"
@@ -171,6 +228,46 @@ $(function () {
                 }
             })
         }, {requires: ["mxext/view", "components/underscore/", "app/views/main/assets/period.css"]});
+
+    });
+
+    // ajax 提交 计划设置
+    $('.create-plan').click(function () {
+
+        if ($('#taobao_shop_name').val() == '' || $('.taobao_user_id').val() == '') {
+            LAYER_MSG('请正确选择店铺');
+            return false;
+        }
+
+        var form = $('form#form-set-plan');
+
+        //表单提交
+        $.ajax({
+            url: form.attr('action'),
+            type: 'post',
+            data: form.serialize(),
+            beforeSend: function () {
+                i = SHOW_LOAD_LAYER();
+            },
+            success: function (response) {
+
+                if (response.result == true) {
+                    LAYER_MSG_FUNCTION('提交成功', 1, i);
+                    $('.nav-tabs li').eq(0).removeClass('active').siblings('li').addClass('active');
+                    $('.nav-tabs li').eq(0).addClass('disabled');
+
+                    $('.tab-pane').eq(0).removeClass('active in');
+                    $('.tab-pane').eq(1).addClass('active in');
+
+                } else {
+                    LAYER_MSG_FUNCTION(response.message, 2, i);
+                }
+
+            },
+            error: function (e, jqxhr, settings, exception) {
+                LAYER_MSG_FUNCTION('加载失败', 2, i);
+            }
+        });
 
     });
 
