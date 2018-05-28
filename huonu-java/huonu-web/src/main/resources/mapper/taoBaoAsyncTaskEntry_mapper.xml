@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.huonu.domain.model.TaobaoAsyncTaskEntry">
+
+
+ 	<insert id="insertOrUpdateTaobaoAsyncTaskEntryList">
+        insert into taobao_async_task_list(taobaoUserId, userName, taskId, startDate, endDate, campModel, taskStatus, hierarchy, effectType, creatTime)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.taobaoUserId},#{item.userName},#{item.taskId},#{item.startDate},#{item.endDate},#{item.campModel},#{item.taskStatus},#{item.hierarchy},#{item.effectType},#{item.creatTime})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        startDate = VALUES(startDate),
+        endDate = VALUES(endDate),
+        campModel = VALUES(campModel),
+        taskStatus = VALUES(taskStatus),
+        hierarchy = VALUES(hierarchy),
+        effectType = VALUES(effectType),
+        creatTime = VALUES(creatTime)
+    </insert>
+	
+	<select id="getTodayTaobaoAsyncTaskByUserIdAndTaskStatus" resultType="TaobaoAsyncTaskEntry">
+        select * from taobao_async_task_list where taobaoUserId =#{taobaoUserId} and endDate=#{endDate} and taskStatus=#{taskStatus};
+    </select>
+    
+    <update id="updateTaobaoAsyncTaskStatus"  parameterType="TaobaoAsyncTaskEntry">
+        update taobao_async_task_list SET taskStatus=#{taskStatus} , error_Msg = #{error_Msg} where taobaoUserId =#{taobaoUserId} and endDate=#{endDate} and campModel=#{campModel} and hierarchy=#{hierarchy} and effectType=#{effectType} and startDate=#{startDate};
+    </update>
+    
+</mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.huonu.domain.model.TaobaoZsCampEntry">
+	<resultMap id="taobaoZsCampEntryMap" type="TaobaoZsCampEntry">
+		<result property="taobao_user_id" column="taobao_user_id" jdbcType="VARCHAR" />
+		<result property="id" column="id" jdbcType="BIGINT" />
+	</resultMap>
+
+	<insert id="insertOrUpdateTaobaoZsCampEntrylist" parameterType="java.util.List">
+        insert into taobao_zs_camp_list(taobao_user_id,week_ends,workdays,online_status,speed_type,start_time,name,type,id,end_time,day_budget,marketingdemand,life_cycle,last_update_time)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.taobao_user_id},#{item.week_ends},#{item.workdays},#{item.online_status},#{item.speed_type},#{item.start_time},#{item.name},#{item.type},
+            #{item.id},#{item.end_time},#{item.day_budget},#{item.marketingdemand},#{item.life_cycle},#{item.last_update_time})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        week_ends = VALUES(week_ends),
+        workdays = VALUES(workdays),
+        online_status = VALUES(online_status),
+        speed_type = VALUES(speed_type),
+        start_time = VALUES(start_time),
+        name = VALUES(name),
+        type = VALUES(type),
+        end_time = VALUES(end_time),
+        day_budget = VALUES(day_budget),
+        marketingdemand = VALUES(marketingdemand),
+        life_cycle = VALUES(life_cycle),
+        last_update_time = VALUES(last_update_time)
+    </insert>
+    
+	<select id="getTaobaoZsCampEntryListByUserId" resultMap="taobaoZsCampEntryMap">
+        select id from taobao_zs_camp_list where taobao_user_id=#{tabao_user_id} and (online_status = 0 or online_status = 1)
+    </select>
+	
+	<update id="updateTaobaoZsCampEntryOnlineStatus"  parameterType="TaobaoZsCampEntry">
+        update taobao_zs_camp_list SET online_status=#{online_status},last_update_time=#{last_update_time} where taobao_user_id=#{taobao_user_id} and id=#{id}
+    </update>
+    
+    <delete id="deleteTaobaoZsCampEntryByConditions"  parameterType="TaobaoZsCampEntry">
+        delete from taobao_zs_camp_list  where taobao_user_id=#{taobao_user_id} and id=#{id}
+    </delete>
+    
+    <delete id="deleteTaobaoZsCampEntryByUserId"  parameterType="String">
+        delete from taobao_zs_camp_list  where taobao_user_id=#{taobao_user_id} 
+    </delete>
+</mapper>

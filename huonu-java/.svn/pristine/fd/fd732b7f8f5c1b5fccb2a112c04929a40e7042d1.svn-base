@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.huonu.domain.model.TaobaoZsAdvertiserAdzoneTotalEntry">
+
+	 <insert id="insertOrUpdateTaobaoZsAdvertiserAdzoneTotalEntryList" >
+        insert into taobao_zs_advertiser_adzone_total_list(taobao_user_id,cvr,alipay_inshop_amt,alipay_in_shop_num,gmv_inshop_amt,gmv_inshop_num,cart_num,dir_shop_col_num,inshop_item_col_num,avg_access_page_num,avg_access_time,deep_inshop_uv,uv,ecpm,ecpc,ctr,charge,click,ad_pv,roi,effect,effect_type,campaign_model,last_update_time,campaign_id,campaign_name,adgroup_id,adgroup_name,adzone_id,adzone_name)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.taobao_user_id},#{item.cvr},#{item.alipay_inshop_amt},#{item.alipay_in_shop_num},#{item.gmv_inshop_amt},#{item.gmv_inshop_num},#{item.cart_num},#{item.dir_shop_col_num},#{item.inshop_item_col_num},#{item.avg_access_page_num},#{item.avg_access_time},#{item.deep_inshop_uv},#{item.uv},#{item.ecpm},#{item.ecpc},#{item.ctr},#{item.charge},#{item.click},#{item.ad_pv},#{item.roi},#{item.effect},#{item.effect_type},#{item.campaign_model},#{item.last_update_time},#{item.campaign_id},#{item.campaign_name},#{item.adgroup_id},#{item.adgroup_name},#{item.adzone_id},#{item.adzone_name})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        cvr = VALUES(cvr),
+        alipay_inshop_amt = VALUES(alipay_inshop_amt),
+        alipay_in_shop_num = VALUES(alipay_in_shop_num),
+        gmv_inshop_amt = VALUES(gmv_inshop_amt),
+        gmv_inshop_num = VALUES(gmv_inshop_num),
+        cart_num = VALUES(cart_num),
+        dir_shop_col_num = VALUES(dir_shop_col_num),
+        inshop_item_col_num = VALUES(inshop_item_col_num),
+        avg_access_page_num = VALUES(avg_access_page_num),
+        avg_access_time = VALUES(avg_access_time),
+        deep_inshop_uv = VALUES(deep_inshop_uv),
+        uv = VALUES(uv),
+        ecpm = VALUES(ecpm),
+        ecpc = VALUES(ecpc),
+        ctr = VALUES(ctr),
+        charge = VALUES(charge),
+        click = VALUES(click),
+        ad_pv = VALUES(ad_pv),
+        roi = VALUES(roi),
+        last_update_time = VALUES(last_update_time),
+        campaign_name = VALUES(campaign_name),
+        adgroup_name = VALUES(adgroup_name),
+        adzone_name = VALUES(adzone_name)
+    </insert>
+	
+    
+</mapper>

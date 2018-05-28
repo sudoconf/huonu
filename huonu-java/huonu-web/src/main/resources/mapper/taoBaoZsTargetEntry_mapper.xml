@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.huonu.domain.model.TaobaoZsTargetEntry">
+
+
+ 	<insert id="insertOrUpdateTaobaoZsTargetEntrylist">
+        insert into taobao_zs_target_list(taobao_user_id,adgroup_id,campaign_id,crowd_name,crowd_type,crowd_value,gmt_create,gmt_modified,id,matrix_price_d_t_o,sub_crowd_d_t_o,last_update_time)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.taobao_user_id},#{item.adgroup_id},#{item.campaign_id},#{item.crowd_name},
+            #{item.crowd_type},#{item.crowd_value},#{item.gmt_create},#{item.gmt_modified},
+            #{item.id},#{item.matrix_price_d_t_o},#{item.sub_crowd_d_t_o},#{item.last_update_time})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        crowd_name = VALUES(crowd_name),
+        crowd_type = VALUES(crowd_type),
+        last_update_time = VALUES(last_update_time),
+        crowd_value = VALUES(crowd_value),
+        gmt_create = VALUES(gmt_create),
+        gmt_modified = VALUES(gmt_modified),
+        matrix_price_d_t_o = VALUES(matrix_price_d_t_o),
+        sub_crowd_d_t_o = VALUES(sub_crowd_d_t_o)
+    </insert>
+	
+	
+	<delete id="deleteZsTargetByTime" parameterType="TaobaoZsTargetEntry">
+        DELETE FROM taobao_zs_target_list WHERE last_update_time &lt;#{last_update_time}
+    </delete>
+    
+    <delete id="deleteZsTargetByUserId" parameterType="String">
+        DELETE FROM taobao_zs_target_list WHERE taobao_user_id = #{taobao_user_id}
+    </delete>
+    
+</mapper>

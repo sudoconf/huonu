@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.huonu.domain.model.TaobaoZsCatEntry">
+
+     <insert id="insertOrUpdateTaobaoZsCatEntryList" >
+        insert into taobao_zs_cat_list(taobao_user_id, cat_id, campaign_type,cat_name,option_name,option_value,last_update_time)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.taobao_user_id},#{item.cat_id},#{item.campaign_type},#{item.cat_name},#{item.option_name},#{item.option_value},#{item.last_update_time})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        cat_name = VALUES(cat_name),
+        last_update_time = VALUES(last_update_time)
+    </insert>
+    
+</mapper>

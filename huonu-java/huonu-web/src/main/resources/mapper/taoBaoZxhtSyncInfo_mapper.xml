@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.huonu.domain.model.TaobaoZxhtSyncInfo">
+
+	<insert id="insertTaobaoZxhtSyncInfo" parameterType="TaobaoZxhtSyncInfo">
+       insert into taobao_zxht_sync_info(taobao_user_id, run_status, last_update_time,log_date)
+       VALUES
+       (#{taobao_user_id},#{run_status},#{last_update_time},#{log_date})
+        ON DUPLICATE KEY UPDATE
+        taobao_user_id = VALUES(taobao_user_id),
+        run_status = VALUES(run_status),
+        last_update_time = VALUES(last_update_time),
+        log_date = VALUES(log_date)
+    </insert>
+    
+    <update id="updateRunStatusbyUserIdAndDate"  parameterType="TaobaoZxhtSyncInfo">
+        update taobao_zxht_sync_info SET run_status=#{run_status},last_update_time=#{last_update_time} where taobao_user_id=#{taobao_user_id} and log_date=#{log_date}
+    </update>
+	
+</mapper>

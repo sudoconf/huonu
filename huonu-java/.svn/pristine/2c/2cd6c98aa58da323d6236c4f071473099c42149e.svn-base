@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.huonu.domain.model.ZxhtZzCampaignInfo">
+
+	<select id="getChangeStatusAdgroup" resultType="ZxhtZzCampaignInfo">
+        select * from zxht_zz_campaign_info_list where zxht_model = 0 and adgroup_status=1 and taobao_user_id=#{taobao_user_id}
+    </select>
+
+	<select id="getCreativetestMonitorUserId" resultType="ZxhtZzCampaignInfo">
+        select distinct(taobao_user_id),creative_start_time,creative_test_type,creative_test_num,mail from zxht_zz_campaign_info_list where zxht_model = 0 and campaign_status=1 and adgroup_status=1
+    </select>
+    
+     <select id="getCreativetestMonitorInfo" resultType="ZxhtZzCampaignInfo">
+        select * from zxht_zz_campaign_info_list where taobao_user_id=#{tabao_user_id} and zxht_model = 0 and campaign_status=1 and adgroup_status=1
+    </select>
+    
+    <update id="updateTimeExpiresStatus"  parameterType="ZxhtZzCampaignInfo">
+        update zxht_zz_campaign_info_list SET adgroup_status=0,last_update_time=#{last_update_time} where taobao_user_id=#{taobao_user_id} and zxht_model = 0
+    </update>
+    
+    <select id="getCtrMonitorInfo" resultType="ZxhtZzCampaignInfo">
+        select * from zxht_zz_campaign_info_list where taobao_user_id=#{taobao_user_id} and campaign_status=1 and adgroup_status=1 and creative_monitor = 1
+    </select>
+    
+    <select id="getCreativeMonitorCtrUserId" resultType="ZxhtZzCampaignInfo">
+        select distinct(taobao_user_id) from zxht_zz_campaign_info_list where creative_monitor = 1 and zxht_model = 1 and campaign_status=1 and adgroup_status=1
+    </select>
+    
+    <select id="getCrowdMonitorCoverageUserId" resultType="ZxhtZzCampaignInfo">
+    	select distinct(taobao_user_id) from zxht_zz_campaign_info_list where coverage_monitor = 1 and zxht_model = 1 and campaign_status=1 and adgroup_status=1
+	</select>
+	
+	<select id="getChargeMonitorUserId" resultType="ZxhtZzCampaignInfo">
+        select distinct(taobao_user_id) from zxht_zz_campaign_info_list where charge_monitor != 0 and zxht_model = 1 and campaign_status=1 and adgroup_status=1
+    </select>
+    
+    <select id="getChargeMonitorInfo" resultType="ZxhtZzCampaignInfo">
+        select * from zxht_zz_campaign_info_list where taobao_user_id=#{tabao_user_id} and charge_monitor !=0 and campaign_status=1 and adgroup_status=1 group by campaign_id
+    </select>
+    
+    <select id="getPriceMonitorTemplateUserId" resultType="ZxhtZzCampaignInfo">
+        select distinct(taobao_user_id) from zxht_zz_campaign_info_list where price_template_status = 1 and zxht_model = 1 and campaign_status=1 and adgroup_status=1
+    </select>
+    
+</mapper>

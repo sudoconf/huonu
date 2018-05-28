@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.huonu.domain.model.TaobaoZsAdvertiserTargetDaySumEntry">
+	<resultMap id="taobaoZsAdvertiserTargetDaySumEntryMap" type="TaobaoZsAdvertiserTargetDaySumEntry">
+        <result property="taobao_user_id" column="taobao_user_id" jdbcType="VARCHAR" ></result>
+        <result property="cvr" column="cvr" jdbcType="NUMERIC" ></result>
+        <result property="alipay_inshop_amt" column="alipay_inshop_amt" jdbcType="NUMERIC" ></result>
+        <result property="alipay_in_shop_num" column="alipay_in_shop_num" jdbcType="NUMERIC" ></result>
+        <result property="gmv_inshop_amt" column="gmv_inshop_amt" jdbcType="NUMERIC" ></result>
+        <result property="gmv_inshop_num" column="gmv_inshop_num" jdbcType="NUMERIC" ></result>
+        <result property="cart_num" column="cart_num" jdbcType="NUMERIC" ></result>
+        <result property="dir_shop_col_num" column="dir_shop_col_num" jdbcType="NUMERIC" ></result>
+        <result property="inshop_item_col_num" column="inshop_item_col_num" jdbcType="NUMERIC" ></result>
+        <result property="avg_access_page_num" column="avg_access_page_num" jdbcType="NUMERIC" ></result>
+        <result property="avg_access_time" column="avg_access_time" jdbcType="NUMERIC" ></result>
+        <result property="deep_inshop_uv" column="deep_inshop_uv" jdbcType="NUMERIC" ></result>
+        <result property="uv" column="uv" jdbcType="NUMERIC" ></result>
+        <result property="ecpm" column="ecpm" jdbcType="NUMERIC" ></result>
+        <result property="ecpc" column="ecpc" jdbcType="NUMERIC" ></result>
+        <result property="ctr" column="ctr" jdbcType="NUMERIC" ></result>
+        <result property="charge" column="charge" jdbcType="NUMERIC" ></result>
+        <result property="click" column="click" jdbcType="NUMERIC" ></result>
+        <result property="ad_pv" column="ad_pv" jdbcType="NUMERIC" ></result>
+        <result property="roi" column="roi" jdbcType="NUMERIC" ></result>
+        <result property="item_cart_rate" column="item_cart_rate" jdbcType="NUMERIC" ></result>
+        <result property="item_col_rate" column="item_col_rate" jdbcType="NUMERIC" ></result>
+        <result property="item_cart_price" column="item_cart_price" jdbcType="NUMERIC" ></result>
+        <result property="item_col_price" column="item_col_price" jdbcType="NUMERIC" ></result>
+        <result property="item_cartcol_price" column="item_cartcol_price" jdbcType="NUMERIC" ></result>
+        <result property="alipay_avg_price" column="alipay_avg_price" jdbcType="NUMERIC" ></result>
+        <result property="alipay_avg_amt" column="alipay_avg_amt" jdbcType="NUMERIC" ></result>
+        <result property="log_date" column="log_date" jdbcType="VARCHAR" ></result>
+        <result property="effect" column="effect" jdbcType="NUMERIC" ></result>
+        <result property="effect_type" column="effect_type" jdbcType="VARCHAR" ></result>
+        <result property="last_update_time" column="last_update_time" jdbcType="TIMESTAMP" ></result>
+        <result property="target_id" column="target_id" jdbcType="VARCHAR" ></result>
+        <result property="target_name" column="target_name" jdbcType="VARCHAR" ></result>
+    </resultMap>
+
+	<select id = "getTargetDaySumEntryListByUseridAndDate" resultMap="taobaoZsAdvertiserTargetDaySumEntryMap"  parameterType="TaobaoZsAdvertiserTargetDayEntry">
+        SELECT taobao_user_id, ROUND(sum(alipay_in_shop_num)/sum(click),4) as cvr,sum(alipay_inshop_amt) as alipay_inshop_amt, sum(alipay_in_shop_num) as alipay_in_shop_num,
+        sum(gmv_inshop_amt) as gmv_inshop_amt, sum(gmv_inshop_num) as gmv_inshop_num,sum(cart_num) as cart_num,sum(dir_shop_col_num) as dir_shop_col_num,sum(inshop_item_col_num) as inshop_item_col_num,ROUND(sum(uv*avg_access_page_num)/sum(uv),0) as avg_access_page_num,ROUND(sum(uv*avg_access_time)/sum(uv),0) as avg_access_time,sum(deep_inshop_uv) deep_inshop_uv,sum(uv) as uv,ROUND(sum(charge)*1000/sum(ad_pv),2) as ecpm,ROUND(sum(charge)/sum(click),2) as ecpc,ROUND(sum(click)/sum(ad_pv),4) as ctr,sum(charge) as charge,sum(click) as click,sum(ad_pv) as ad_pv,ROUND(sum(alipay_inshop_amt)/sum(charge),2) as roi,ROUND(sum(cart_num)/sum(uv),4) as item_cart_rate,ROUND(sum(inshop_item_col_num)/sum(uv),4) as item_col_rate,ROUND(sum(charge)/sum(cart_num),4) as item_cart_price,ROUND(sum(charge)/sum(inshop_item_col_num),4) as item_col_price,ROUND(sum(charge)/sum(cart_num+inshop_item_col_num),4) as item_cartcol_price,ROUND(sum(charge)/sum(alipay_in_shop_num),4) as alipay_avg_price,ROUND(sum(alipay_inshop_amt)/sum(alipay_in_shop_num),4) as alipay_avg_amt,log_date,effect,effect_type,last_update_time,target_id,target_name
+        FROM taobao_zs_advertiser_target_day_list WHERE taobao_user_id=#{taobao_user_id} and log_date>=#{log_date}
+        GROUP BY taobao_user_id,log_date,target_name,effect,effect_type;
+    </select>
+
+    <insert id="insertOrUpdateTaobaoZsAdvertiserTargetDaySumEntryList">
+        INSERT INTO taobao_zs_advertiser_target_day_sum_list(taobao_user_id, cvr, alipay_inshop_amt, alipay_in_shop_num, gmv_inshop_amt, gmv_inshop_num, cart_num, dir_shop_col_num, inshop_item_col_num, avg_access_page_num, avg_access_time, deep_inshop_uv, uv, ecpm, ecpc, ctr, charge, click, ad_pv, roi, item_cart_rate, item_col_rate, item_cart_price, item_col_price, item_cartcol_price, alipay_avg_price, alipay_avg_amt, log_date, effect, effect_type, last_update_time, target_id,target_name)
+        VALUE
+        <foreach collection="list" item="item" separator=",">
+            (#{item.taobao_user_id},#{item.cvr},#{item.alipay_inshop_amt},#{item.alipay_in_shop_num},
+            #{item.gmv_inshop_amt},#{item.gmv_inshop_num},#{item.cart_num},#{item.dir_shop_col_num},
+            #{item.inshop_item_col_num},#{item.avg_access_page_num},#{item.avg_access_time},
+            #{item.deep_inshop_uv},#{item.uv},#{item.ecpm},#{item.ecpc},#{item.ctr},#{item.charge},
+            #{item.click},#{item.ad_pv},#{item.roi},#{item.item_cart_rate},#{item.item_col_rate},
+            #{item.item_cart_price},#{item.item_col_price},#{item.item_cartcol_price},#{item.alipay_avg_price},
+            #{item.alipay_avg_amt},#{item.log_date},#{item.effect},#{item.effect_type},
+            #{item.last_update_time},#{item.target_id},#{item.target_name})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        cvr = VALUES(cvr),
+        alipay_inshop_amt = VALUES(alipay_inshop_amt),
+        alipay_in_shop_num = VALUES(alipay_in_shop_num),
+        gmv_inshop_amt = VALUES(gmv_inshop_amt),
+        gmv_inshop_num = VALUES(gmv_inshop_num),
+        cart_num = VALUES(cart_num),
+        dir_shop_col_num = VALUES(dir_shop_col_num),
+        inshop_item_col_num = VALUES(inshop_item_col_num),
+        avg_access_page_num = VALUES(avg_access_page_num),
+        avg_access_time = VALUES(avg_access_time),
+        deep_inshop_uv = VALUES(deep_inshop_uv),
+        uv = VALUES(uv),
+        ecpm = VALUES(ecpm),
+        ecpc = VALUES(ecpc),
+        ctr = VALUES(ctr),
+        charge = VALUES(charge),
+        click = VALUES(click),
+        ad_pv = VALUES(ad_pv),
+        roi = VALUES(roi),
+        item_cart_rate = VALUES(item_cart_rate),
+        item_col_rate = VALUES(item_col_rate),
+        item_cart_price = VALUES(item_cart_price),
+        item_col_price = VALUES(item_col_price),
+        item_cartcol_price = VALUES(item_cartcol_price),
+        alipay_avg_price = VALUES(alipay_avg_price),
+        alipay_avg_amt = VALUES(alipay_avg_amt),
+        last_update_time = VALUES(last_update_time),
+        target_name = VALUES(target_name)
+    </insert>
+
+</mapper>

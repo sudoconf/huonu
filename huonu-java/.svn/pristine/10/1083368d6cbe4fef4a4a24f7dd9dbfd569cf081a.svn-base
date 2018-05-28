@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.huonu.domain.model.TaobaoAuthorizeUser">
+	<resultMap id="taobaoAuthorizeUserMap" type="TaobaoAuthorizeUser">
+		<result property="taobao_user_id" column="taobao_user_id" jdbcType="VARCHAR" />
+		<result property="taobao_user_nick" column="taobao_user_nick" jdbcType="VARCHAR" />
+		<result property="access_token" column="access_token" jdbcType="VARCHAR" />
+		<result property="refresh_token" column="refresh_token" jdbcType="VARCHAR" />
+		<result property="expires_in" column="expires_in" jdbcType="BIGINT" />
+		<result property="re_expires_in" column="re_expires_in" jdbcType="BIGINT" />
+		<result property="r1_expires_in" column="r1_expires_in" jdbcType="BIGINT" />
+		<result property="r2_expires_in" column="r2_expires_in" jdbcType="BIGINT" />
+		<result property="w1_expires_in" column="w1_expires_in" jdbcType="BIGINT" />
+		<result property="w2_expires_in" column="w2_expires_in" jdbcType="BIGINT" />
+		<result property="r1_valid" column="r1_valid" jdbcType="BIGINT" />
+		<result property="r2_valid" column="r2_valid" jdbcType="BIGINT" />
+		<result property="w1_valid" column="w1_valid" jdbcType="BIGINT" />
+		<result property="w2_valid" column="w2_valid" jdbcType="BIGINT" />
+		<result property="expire_time" column="expire_time" jdbcType="BIGINT" />
+		<result property="refresh_token_valid_time" column="refresh_token_valid_time" jdbcType="BIGINT" />
+		<result property="token_type" column="token_type" jdbcType="VARCHAR" />
+		<result property="expire_date" column="expire_date" jdbcType="TIMESTAMP" />
+		<result property="sync_status" column="sync_status" jdbcType="BIGINT" />
+		<result property="email" column="email" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<select id="getAllUserInfos" resultMap="taobaoAuthorizeUserMap">
+        select * from taobao_authorize_user;
+    </select>
+
+	<select id="getUserInfoByTaoBaoUserId" resultMap="taobaoAuthorizeUserMap" parameterType="String">
+        select * from taobao_authorize_user where taobao_user_id=#{userid}
+    </select>
+    
+     <select id="getUserInfosBySyncStatusId" resultMap="taobaoAuthorizeUserMap" parameterType="Long">
+        select * from taobao_authorize_user where sync_status=#{sync_statusid}
+    </select>
+    
+    <update id="updateSyncStatusByTaoBaoUserId"  parameterType="TaobaoAuthorizeUser">
+        update taobao_authorize_user SET sync_status=#{sync_status} where taobao_user_id=#{taobao_user_id}
+    </update>
+	
+</mapper>

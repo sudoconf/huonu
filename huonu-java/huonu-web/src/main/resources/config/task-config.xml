@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"  
+    default-lazy-init="true">  
+
+	<!--这个类是用来设置触发时间的， startJobs方法启动调度容器 -->     
+    <bean id="quartzManager" class="com.huonu.schedul.QuartzManager" lazy-init="false" init-method="startJobs" >  
+        <!--这个对象一定要注入，这样类才能进行管理，还有在类型要用get set方法，不然会报错。-->  
+        <property name="scheduler" ref="schedulerFactory" />  
+    </bean>   
+    
+    <!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序  -->  
+    <bean id="schedulerFactory" lazy-init="true" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
+        <property name="triggers">  
+            <list>  
+                <ref bean="autoDailyCronTrigger"/>
+                <ref bean="downloadCronTrigger"/> 
+               <!--<ref bean="campRtrptsTotalCronTrigger"/>
+                <ref bean="deleteTargetCronTrigger"/> -->
+            </list>  
+        </property>  
+    </bean> 
+    
+    
+    
+    <bean id="autoDailyCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <property name="jobDetail" ref="autoDailyJobTask"/>  
+        <!-- cron表达式  -->  
+        <property name="cronExpression" value="00 00 10 * * ? *"/>  
+    </bean>
+    <bean id="campRtrptsTotalCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <property name="jobDetail" ref="campRtrptsTotalJobTask"/>  
+        <!-- cron表达式  每个小时执行一次-->  
+        <property name="cronExpression" value="0 00 * * * ?"/>  
+    </bean>
+    <bean id="downloadCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <property name="jobDetail" ref="downloadJobTask"/>  
+        <!-- cron表达式  -->  
+        <property name="cronExpression" value="0 0 11,12 * * ?"/>  
+    </bean>
+    <bean id="deleteTargetCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <property name="jobDetail" ref="deleteTargetJobTask"/>  
+        <!-- cron表达式  -->  
+        <property name="cronExpression" value="0 00 9 * * ? *"/>  
+    </bean>
+     
+    
+    
+    <!-- 定时任务 -->  
+    <bean id="autoDailyJobTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+        <!-- 调用的类  -->  
+        <property name="targetObject" ref="dailyJob"/>  
+        <!-- 调用类中的方法  -->  
+        <property name="targetMethod" value="invoke"/>  
+        <!-- 是否并发  -->  
+        <property name ="concurrent" value ="true"/>                  
+    </bean>
+    <bean id="campRtrptsTotalJobTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+        <property name="targetObject" ref="campRtrptsTotalJob"/>  
+        <property name="targetMethod" value="invoke"/>  
+        <property name ="concurrent" value ="true"/>                  
+    </bean>
+    <bean id="downloadJobTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+        <property name="targetObject" ref="downloadJob" />  
+        <property name="targetMethod" value="invoke" />  
+        <property name ="concurrent" value ="true"  />                  
+    </bean>
+    <bean id="deleteTargetJobTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+        <property name="targetObject" ref="deleteTargetJob" />  
+        <property name="targetMethod" value="invoke" />  
+        <property name ="concurrent" value ="true"  />                  
+    </bean>
+    
+    
+    
+    
+     <!-- 这个类用来做需要完成的业务-->  
+    <bean id="dailyJob" class="com.huonu.schedul.job.AutoDailyJob"></bean> 
+    <bean id="campRtrptsTotalJob" class="com.huonu.schedul.job.AutoCampRtrptsTotalJob"></bean> 
+    <bean id="downloadJob" class="com.huonu.schedul.job.AutoDownloadJob"></bean>
+	<bean id="deleteTargetJob" class="com.huonu.schedul.job.AutoDeleteTargetJob"></bean>
+	
+</beans>

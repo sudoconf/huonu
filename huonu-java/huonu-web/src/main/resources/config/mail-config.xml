@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:core="http://activemq.apache.org/schema/core" xmlns:task="http://www.springframework.org/schema/task"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd">
+           
+ <context:property-placeholder location="classpath:config/jdbc.properties" />
+
+	<!-- 使用SSL，企业邮箱必需！ -->
+    <bean id="mailSSLSocketFactory" class="com.sun.mail.util.MailSSLSocketFactory">
+        <property name="trustAllHosts" value="true"></property>
+    </bean>
+    
+    <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${mail-host}"></property>
+        <property name="port" value="${mail-port}"></property>
+        <property name="username" value="${mail-account}"></property>
+        <property name="password" value="${mail-pass}"></property>
+        <property name="protocol" value="${mail-protocol}"></property>
+        <property name="defaultEncoding" value="UTF-8"></property>
+        <property name="javaMailProperties">
+            <props>
+                <!-- 使用SMTP身份验证 -->
+                <prop key="mail.smtp.auth">${mail-smtp.auth}</prop>
+                <!-- Debug模式 -->
+                <prop key="mail.debug">${mail-debug}</prop>
+                <!-- 使用SSL -->
+                <!-- <prop key="mail.smtp.ssl.enable">${mail-smtp.ssl.enable}</prop>
+                配置MailSSLSocketFactory
+                <prop key="mail.smtp.ssl.socketFactory">mailSSLSocketFactory</prop> -->
+            </props>
+        </property>
+    </bean>
+
+    
+</beans>         

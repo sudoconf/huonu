@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "classpath:dtd//mybatis-3-config.dtd">
+<configuration>
+
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<setting name="localCacheScope" value="STATEMENT" />
+	</settings>
+
+	<typeAliases>
+		<typeAlias type="com.huonu.domain.model.Person" alias="Person"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoAuthorizeUser" alias="TaobaoAuthorizeUser"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZxhtSyncInfo" alias="TaobaoZxhtSyncInfo"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsAdgroupEntry" alias="TaobaoZsAdgroupEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoAsyncTaskEntry" alias="TaobaoAsyncTaskEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsAdgroupAdzoneEntry" alias="TaobaoZsAdgroupAdzoneEntry"/>
+		<typeAlias type="com.huonu.domain.model.ZxhtZzCampaignInfo" alias="ZxhtZzCampaignInfo"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZxhtCreativeSyncInfo" alias="TaobaoZxhtCreativeSyncInfo"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZxhtDmpSyncInfo" alias="TaobaoZxhtDmpSyncInfo"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsDmpEntry" alias="TaobaoZsDmpEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsTargetEntry" alias="TaobaoZsTargetEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsCreativeEntry" alias="TaobaoZsCreativeEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsCatEntry" alias="TaobaoZsCatEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsCampEntry" alias="TaobaoZsCampEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsAdvertiserTargetTotalEntry" alias="TaobaoZsAdvertiserTargetTotalEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsAdvertiserCampDayEntry" alias="TaobaoZsAdvertiserCampDayEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsAdvertiserAdgroupDayEntry" alias="TaobaoZsAdvertiserAdgroupDayEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsAdvertiserCreativeTotalEntry" alias="TaobaoZsAdvertiserCreativeTotalEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsAdvertiserAdzoneTotalEntry" alias="TaobaoZsAdvertiserAdzoneTotalEntry"/>	
+		<typeAlias type="com.huonu.domain.model.TaobaoZsAdvertiserTargetDayEntry" alias="TaobaoZsAdvertiserTargetDayEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsAdvertiserTargetDaySumEntry" alias="TaobaoZsAdvertiserTargetDaySumEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsAdvertiserCreativeDayEntry" alias="TaobaoZsAdvertiserCreativeDayEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsAdvertiserAdzoneDayEntry" alias="TaobaoZsAdvertiserAdzoneDayEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsAdvertiserCampRtrptsTotalEntry" alias="TaobaoZsAdvertiserCampRtrptsTotalEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsAdvertiserAdgroupRtrptsTotalEntry" alias="TaobaoZsAdvertiserAdgroupRtrptsTotalEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsAdvertiserCreativeRtrptsTotalEntry" alias="TaobaoZsAdvertiserCreativeRtrptsTotalEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsAdvertiserAdzoneRtrptsTotalEntry" alias="TaobaoZsAdvertiserAdzoneRtrptsTotalEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsAdvertiserTargetRtrptsTotalEntry" alias="TaobaoZsAdvertiserTargetRtrptsTotalEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsAdvertiserCreativeMonitorTestRtrptsTotalEntry" alias="TaobaoZsAdvertiserCreativeMonitorTestRtrptsTotalEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoCrowdMonitorCoverageEntry" alias="TaobaoCrowdMonitorCoverageEntry"/>
+		<typeAlias type="com.huonu.domain.model.ZxhtZzAdgroupCreativeBindInfo" alias="ZxhtZzAdgroupCreativeBindInfo"/>
+		<typeAlias type="com.huonu.domain.model.ApiLog" alias="ApiLog"/>
+		<typeAlias type="com.huonu.domain.model.User" alias="User"/>
+		<typeAlias type="com.huonu.domain.model.AreaEntry" alias="AreaEntry"/>
+		<typeAlias type="com.huonu.domain.model.TaobaoZsAdzoneEntry" alias="TaobaoZsAdzoneEntry"/>
+		
+	</typeAliases>
+	
+	
+	<mappers>
+		<mapper resource="mapper/person_mapper.xml"/>
+		<mapper resource="mapper/taoBaoAuthorizeUser_mapper.xml"/>
+		<mapper resource="mapper/taoBaoAsyncTaskEntry_mapper.xml"/>
+		<mapper resource="mapper/taoBaoZxhtSyncInfo_mapper.xml"/>
+		<mapper resource="mapper/taoBaoZsCampEntry_mapper.xml"/>
+		<mapper resource="mapper/taoBaoZsTargetEntry_mapper.xml"/>
+		
+		<mapper resource="mapper/taoBaoZsAdgroupEntry_mapper.xml"/>
+		<mapper resource="mapper/taoBaoZsAdgroupAdzoneEntry_mapper.xml"/>
+		
+		<mapper resource="mapper/taoBaoZsAdvertiserTargetTotalEntry_mapper.xml"/>
+		<mapper resource="mapper/taoBaoZsAdvertiserCampDayEntry_mapper.xml"/>
+		<mapper resource="mapper/taoBaoZsAdvertiserAdgroupDayEntry_mapper.xml"/>
+		<mapper resource="mapper/taoBaoZsAdvertiserCreativeTotalEntry_mapper.xml"/>
+		<mapper resource="mapper/taoBaoZsAdvertiserAdzoneTotalEntry_mapper.xml"/>
+		
+		<mapper resource="mapper/taoBaoZsAdvertiserTargetDayEntry_mapper.xml"/>
+		<mapper resource="mapper/taoBaoZsAdvertiserTargetDaySumEntry_mapper.xml"/>
+		<mapper resource="mapper/taoBaoZsAdvertiserCreativeDayEntry_mapper.xml"/>
+		<mapper resource="mapper/taoBaoZsAdvertiserAdzoneDayEntry_mapper.xml"/>
+		
+		<mapper resource="mapper/taoBaoZsAdvertiserCampRtrptsTotalEntry_mapper.xml"/>
+		<mapper resource="mapper/taoBaoZsAdvertiserAdgroupRtrptsTotalEntry_mapper.xml"/>
+		<mapper resource="mapper/taoBaoZsDmpEntry_mapper.xml"/>
+		<mapper resource="mapper/taoBaoZxhtDmpSyncInfo_mapper.xml"/>
+		<mapper resource="mapper/taoBaoZsCatEntry_mapper.xml"/>
+		<mapper resource="mapper/taoBaoZxhtCreativeSyncInfo_mapper.xml"/>
+		<mapper resource="mapper/taoBaoZsCreativeEntry_mapper.xml"/>
+		
+		<mapper resource="mapper/zxhtZzCampaignInfo_mapper.xml"/>
+		<mapper resource="mapper/taoBaoZsAdvertiserCreativeRtrptsTotalEntry_mapper.xml"/>
+		<mapper resource="mapper/taoBaoZsAdvertiserAdzoneRtrptsTotalEntry_mapper.xml"/>
+		<mapper resource="mapper/zxhtZzAdgroupCreativeBindInfo_mapper.xml"/>
+		<mapper resource="mapper/user_mapper.xml"/>
+		<mapper resource="mapper/taoBaoZsAdvertiserCreativeMonitorTestRtrptsTotalEntry_mapper.xml"/>
+		<mapper resource="mapper/taoBaoCrowdMonitorCoverageEntry_mapper.xml"/>
+		<mapper resource="mapper/apiLogs_mapper.xml"/>
+		<mapper resource="mapper/taoBaoZsAdvertiserTargetRtrptsTotalEntry_mapper.xml"/>
+		<mapper resource="mapper/area_mapper.xml"/>
+		
+		<mapper resource="mapper/taoBaoZsAdZoneEntry_mapper.xml"/>
+		
+	</mappers>
+</configuration>

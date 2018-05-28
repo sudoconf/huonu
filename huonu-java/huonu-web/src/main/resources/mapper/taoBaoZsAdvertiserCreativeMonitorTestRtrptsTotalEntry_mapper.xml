@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.huonu.domain.model.TaobaoZsAdvertiserCreativeMonitorTestRtrptsTotalEntry">
+
+
+	<select id="getUnbindData" resultType="com.huonu.domain.model.TaobaoZsAdvertiserCreativeMonitorTestRtrptsTotalEntry">
+        SELECT * FROM taobao_zs_advertiser_creative_monitor_test_rtrpts_total_list where taobao_user_id=#{taobao_user_id} and log_date=#{log_date}
+    </select>
+    
+</mapper>

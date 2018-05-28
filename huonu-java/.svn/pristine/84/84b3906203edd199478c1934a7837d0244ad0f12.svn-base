@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.huonu.domain.model.ZxhtZzAdgroupCreativeBindInfo">
+
+	<update id="updateStatusByUerIdAndCampaignId"  parameterType="ZxhtZzAdgroupCreativeBindInfo">
+        update zxht_zz_adgroup_creative_bind_info_list SET bind_status=#{bind_status},last_update_time=#{last_update_time} where taobao_user_id=#{taobao_user_id} and campaign_id=#{campaign_id}
+    </update>
+    
+</mapper>
