@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+    <style>
+		body{ background-color: #F3F3F3 }
+        *{margin: 0; padding: 0;}
+        .container{margin-left: 30px; margin-top: 20px;}
+        .containers{margin-left: 30px; margin-top: 10px;}
+        h1{padding-bottom: 10px; color: darkmagenta; font-weight: bolder;}
+        img{cursor: pointer;}
+        #pic{position: absolute; display: none;}
+        #pic1{ width: 400px; height: 300px; border-radius: 5px; -webkit-box-shadow: 5px 5px 5px 5px hsla(0,0%,5%,1.00); box-shadow: 5px 5px 5px 0px hsla(0,0%,5%,0.3); } 
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Beautiful Pictures</h1>
+        <a href="img/1.png"><img src="img/1.png" width="150" height="100"></a>
+        <a href="img/2.png"><img src="img/2.png" width="150" height="100"></a>
+        <a href="img/3.png"><img src="img/3.png" width="150" height="100"></a>
+        <a href="img/4.png"><img src="img/4.png" width="150" height="100"></a>
+        <a href="img/5.png"><img src="img/5.png" width="150" height="100"></a>
+        <a href="img/2.png"><img src="img/2.png" width="150" height="100"></a>
+        <a href="img/3.png"><img src="img/3.png" width="150" height="100"></a>
+        <a href="img/4.png"><img src="img/4.png" width="150" height="100"></a>
+        <a href="img/5.png"><img src="img/5.png" width="150" height="100"></a>
+        <a href="img/2.png"><img src="img/2.png" width="150" height="100"></a>
+        <a href="img/3.png"><img src="img/3.png" width="150" height="100"></a>
+        <a href="img/4.png"><img src="img/4.png" width="150" height="100"></a>
+        <a href="img/5.png"><img src="img/5.png" width="150" height="100"></a>
+        <a href="img/2.png"><img src="img/2.png" width="150" height="100"></a>
+        <a href="img/3.png"><img src="img/3.png" width="150" height="100"></a>
+        <a href="img/4.png"><img src="img/4.png" width="150" height="100"></a>
+        <a href="img/5.png"><img src="img/5.png" width="150" height="100"></a>
+        <a href="img/2.png"><img src="img/2.png" width="150" height="100"></a>
+        <a href="img/3.png"><img src="img/3.png" width="150" height="100"></a>
+        <a href="img/4.png"><img src="img/4.png" width="150" height="100"></a>
+        <a href="img/5.png"><img src="img/5.png" width="150" height="100"></a>
+        <a href="img/2.png"><img src="img/2.png" width="150" height="100"></a>
+        <a href="img/3.png"><img src="img/3.png" width="150" height="100"></a>
+        <a href="img/4.png"><img src="img/4.png" width="150" height="100"></a>
+        <a href="img/5.png"><img src="img/5.png" width="150" height="100"></a>
+        <a href="img/2.png"><img src="img/2.png" width="150" height="100"></a>
+        <a href="img/3.png"><img src="img/3.png" width="150" height="100"></a>
+        <a href="img/4.png"><img src="img/4.png" width="150" height="100"></a>
+        <a href="img/5.png"><img src="img/5.png" width="150" height="100"></a>
+        <a href="img/2.png"><img src="img/2.png" width="150" height="100"></a>
+        <a href="img/3.png"><img src="img/3.png" width="150" height="100"></a>
+        <a href="img/4.png"><img src="img/4.png" width="150" height="100"></a>
+        <a href="img/5.png"><img src="img/5.png" width="150" height="100"></a>
+        <a href="img/2.png"><img src="img/2.png" width="150" height="100"></a>
+        <a href="img/3.png"><img src="img/3.png" width="150" height="100"></a>
+        <a href="img/4.png"><img src="img/4.png" width="150" height="100"></a>
+        <a href="img/5.png"><img src="img/5.png" width="150" height="100"></a>
+        <a href="img/2.png"><img src="img/2.png" width="150" height="100"></a>
+        <a href="img/3.png"><img src="img/3.png" width="150" height="100"></a>
+        <a href="img/4.png"><img src="img/4.png" width="150" height="100"></a>
+        <a href="img/5.png"><img src="img/5.png" width="150" height="100"></a>
+        <a href="img/2.png"><img src="img/2.png" width="150" height="100"></a>
+        <a href="img/3.png"><img src="img/3.png" width="150" height="100"></a>
+        <a href="img/4.png"><img src="img/4.png" width="150" height="100"></a>
+        <a href="img/5.png"><img src="img/5.png" width="150" height="100"></a>
+        <a href="img/2.png"><img src="img/2.png" width="150" height="100"></a>
+        <a href="img/3.png"><img src="img/3.png" width="150" height="100"></a>
+        <a href="img/4.png"><img src="img/4.png" width="150" height="100"></a>
+        <a href="img/5.png"><img src="img/5.png" width="150" height="100"></a>
+    </div>
+</body>
+<script>
+    $(function(){
+        $(".container a").hover(function(){
+            $(this).append("<p id='pic'><img src='"+this.href+"' id='pic1'></p>");
+            $(".container a").mousemove(function(e){
+                $("#pic").css({
+                    "top":(e.pageY+10)+"px",
+                    "left":(e.pageX+20)+"px"
+                }).fadeIn("fast");
+                // $("#pic").fadeIn("fast");
+            });
+        },function(){
+            $("#pic").remove();
+        });
+    });
+</script>
+</html>
