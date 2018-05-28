@@ -1,8 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\widgets\LinkPager;
+use backend\models\TaobaoZsCreativeList;
 
 $this->title = '创意列表';
 $this->params['breadcrumbs'][] = $this->title;
@@ -96,59 +95,117 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
 
                         <div class="control-group table-responsive">
-                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <table class="table table-hover" id="dataTables-example">
                                 <thead>
                                 <tr>
                                     <th><input type="checkbox"></th>
-                                    <th>创意信息</th>
-                                    <th>创意状态</th>
-                                    <th>消耗</th>
-                                    <th>展现量</th>
-                                    <th>点击量</th>
-                                    <th>千次展现成本</th>
-                                    <th>点击率</th>
-                                    <th>点击单价</th>
+                                    <th>创意基本信息</th>
+                                    <th>创意状态<i class="fa fa-question-circle tips-help" data-placement="bottom"
+                                               data-toggle="tab" title="创意所处的审核状态，未审核通过的创意将自动从推广单元中去除。"></i></th>
+                                    <th>上下线时间<i class="fa fa-question-circle tips-help" data-placement="bottom"
+                                                data-toggle="tab" title="可对创意设置上下线时间，时间开始自动投放，时间到期自动结束。"></i></th>
+                                    <th>消耗<i class="fa fa-question-circle tips-help" data-placement="bottom"
+                                             data-toggle="tab" title="所有创意在钻石展位资源上被展现后所产生的费用。单位元。"></i></th>
+                                    <th>展现量<i class="fa fa-question-circle tips-help" data-placement="bottom"
+                                              data-toggle="tab"
+                                              title="所有创意在钻石展位资源上被买家看到的次数。注意，虚假展现会被反作弊体系过滤，该数据为反作弊系统过滤后的数据。"></i></th>
+                                    <th>点击量<i class="fa fa-question-circle tips-help" data-placement="bottom"
+                                              data-toggle="tab" title="所有创意在钻石展位资源上被买家点击的次数"></i></th>
+                                    <th>千次展现成本<i class="fa fa-question-circle tips-help" data-placement="bottom"
+                                                 data-toggle="tab"
+                                                 title="千次展现成本=消耗/（展现/1000），表示创意在每获得1000次展现后所产生的平均费用。"></i></th>
+                                    <th>点击率<i class="fa fa-question-circle tips-help" data-placement="bottom"
+                                              data-toggle="tab"
+                                              title="点击率=点击/展现，可直观表示创意对买家的吸引程度，点击率越高说明创意对买家的吸引程度越大。"></i></th>
+                                    <th>点击单价<i class="fa fa-question-circle tips-help" data-placement="bottom"
+                                               data-toggle="tab" title="点击单价=消耗/点击，表示创意在每获得1次点击后所产生的平均费用。单位元。"></i></th>
                                 </tr>
                                 </thead>
                                 <tbody class="plan-table">
 
-                                <tr class="odd gradeX operation-open">
-                                    <th><input type="checkbox"></th>
-                                    <td>Trident</td>
-                                    <td>Trident</td>
-                                    <td>Internet Explorer 4.0</td>
-                                    <td class="center">4</td>
-                                    <td>Trident</td>
-                                    <td>Win 95+</td>
-                                    <td class="center">4</td>
-                                    <td>Trident</td>
-                                </tr>
-                                <tr class="odd gradeX cur-table-operation-tr dpn">
-                                    <td colspan="9" class="operation-td">
-                                        <a href="javascript:;" class="btn btn-primary mr10">移除</a>
-                                        <a href="javascript:;" class="btn btn-primary mr10">同步</a>
-                                        <a href="javascript:;" class="btn btn-primary mr10">报表</a>
-                                    </td>
-                                </tr>
+                                <?php foreach ($models as $k => $v) { ?>
+                                    <tr class="odd gradeX operation-open">
+                                        <th><input type="checkbox"></th>
+                                        <td>
+                                            <div style="width: 300px;" class="pr clearfix">
+                                                <div class="creativeImgLi"
+                                                     style="position: absolute; width: 102px; overflow: hidden; text-align: center; top:50%; margin-top: -50px;">
+                                                    <div class="vertical-align-middle-100"
+                                                         style="border: 1px solid #e6e6e6;">
+                                                        <div class="inline-block" data-url="<?= $v['image_path'] ?>"
+                                                             data-clickurl="<?= $v['image_path'] ?>">
+                                                            <img src="<?= $v['image_path'] ?>"
+                                                                 style="width: 100px; height: 31.25px; max-width: 100px; max-height: 100px;">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="pic-preview hide">
+                                                    <img src="<?= $v['image_path'] ?>">
+                                                </div>
+                                                <div style="float: right; width: 190px; overflow: hidden;">
+                                                    <div class="nowrap">
+                                                        <div class="editable">
+                                                            <div class="editable-toggle">
+                                                                <span class="editable-content nowrap"
+                                                                      style="max-width: 165px;"><?= $v['creative_name'] ?></span>
+                                                                <a href="javascript:;" class="operation"
+                                                                   title="创意ID：<?= $v['creative_id'] ?>">
+                                                                    <i class="fa fa-tasks s_fc_9 ml5"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="s_fc_9 mt4">计划：</div>
+                                                    <div class="s_fc_9 mt4">单元：</div>
+                                                    <div class="s_fc_9 mt4">
+                                                        创意等级/类型：<?= TaobaoZsCreativeList::$creativeLevel[$v['creative_level']] ?>
+                                                        /图片
+                                                    </div>
+                                                    <div class="s_fc_9 mt4">创意尺寸：<?= $v['creative_size'] ?></div>
+                                                    <div class="s_fc_9 ellipsis s_fc_9 mt4">
+                                                        URL：<?= $v['click_url'] ?></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <?php
+                                            if (in_array($v['audit_status'], TaobaoZsCreativeList::$toAudit)) {
+                                                echo '待审核';
+                                            } else if (in_array($v['audit_status'], TaobaoZsCreativeList::$passAudit)) {
+                                                echo '<span class="qualification_status_P">审核通过</span>';
+                                            } else if (in_array($v['audit_status'], TaobaoZsCreativeList::$auditRefused)) {
+                                                echo '审核拒绝';
+                                            }
+                                            ?>
+                                        </td>
+                                        <td>起：<?= $v['create_time'] ?><br>止：<?= $v['exprie_time'] ?></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="odd gradeX cur-table-operation-tr dpn">
+                                        <td colspan="10" class="operation-td">
+                                            <a href="javascript:;" class="btn btn-primary mr10"
+                                               data-value="<?= $v['creative_id'] ?>">移除</a>
+                                            <a href="javascript:;" class="btn btn-primary mr10"
+                                               data-value="<?= $v['creative_id'] ?>">报表</a>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
 
                                 </tbody>
                             </table>
 
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination">
-                                    <li>
-                                        <a href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li><a href="#">1</a></li>
-                                    <li>
-                                        <a href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
+                            <?= \backend\components\widget\GoLinkPager::widget([
+                                'pagination' => $pages,
+                                'maxButtonCount' => 5,
+                                'firstPageLabel' => '首页',
+                                'lastPageLabel' => '末页',
+                                'go' => true,
+                            ]); ?>
                         </div>
 
                     </div>
@@ -166,6 +223,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
     $(function () {
         $("[data-toggle='tab']").tooltip(); // 工具提示（Tooltip）插件 - 锚
+
+        $(".creativeImgLi").hover(function () {
+            var x = $('.creativeImgLi').offset();
+            $(".creativeImgLi").mousemove(function (e) {
+                $(this).siblings().css({
+                    "top": (10) + "px",
+                    "left": (111) + "px"
+                }).removeClass('hide')
+            });
+        }, function () {
+            $('.pic-preview').addClass('hide');
+        });
+
     });
 
 </script>

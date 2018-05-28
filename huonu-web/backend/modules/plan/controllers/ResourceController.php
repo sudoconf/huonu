@@ -8,6 +8,7 @@
 namespace backend\modules\plan\controllers;
 
 use backend\controllers\BaseController;
+use backend\modules\plan\services\ResourceService;
 use yii\filters\VerbFilter;
 
 class ResourceController extends BaseController
@@ -48,5 +49,21 @@ class ResourceController extends BaseController
     public function actionAddResource()
     {
 
+    }
+
+    /**
+     * 获取资源位筛选条件
+     */
+    public function actionAjaxGetResourceCondition()
+    {
+        ResourceService::service()->getResourceCondition();
+    }
+
+    /**
+     * 获取资源位列表
+     */
+    public function actionAjaxGetResources()
+    {
+        ResourceService::service()->getResources();
     }
 }

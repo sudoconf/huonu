@@ -9,9 +9,21 @@ $(function () {
 
         var regionVal = $(this).val();
         if (regionVal == 1) {
-            $('.region-select').css('display', 'block')
+            $('.area-template-id').hide();
+            $('.area-template-id').removeAttr('name');
+
+            $('.common-area').attr('name', 'area_id_list[]');
+            $('.rarely-used-area').attr('name', 'area_id_list[]');
+
+            $('.region-select').show();
         } else {
-            $('.region-select').css('display', 'none')
+            $('.area-template-id').show();
+            $('.area-template-id').attr('name', 'area-template-id');
+
+            $('.common-area').removeAttr('name');
+            $('.rarely-used-area').removeAttr('name');
+
+            $('.region-select').hide();
         }
     });
 
@@ -80,7 +92,6 @@ $(function () {
         var areaIdListStr = areaIdList.join(',');
         // console.log(areaIdListStr);
         var url = $('.ajax_create_area_template').val();
-        console.log(url);
         $.ajax({
             url: url,
             dataType: "json",
@@ -91,10 +102,42 @@ $(function () {
                 'taobao_user_id': taobaoUserId,
             },
             success: function (res) {
-                if (res.result = true) {
+                if (res.result == true) {
 
-                    // ajax 更新列表
+                    $('.show-area-input').hide();
+                    $('.save-success').show().delay(1000).fadeOut();
+                    $('.save-plan').show();
 
+                    // 获取店铺地域模板
+                    var ajaxGetUserAreaTemplates = $('.ajax-get-user-area-templates').val();
+                    var taobaoShopId = $('.taobao-shop-id').val();
+                    $.ajax({
+                        url: ajaxGetUserAreaTemplates,
+                        dataType: "json",
+                        data: {
+                            "taobaoShopId": taobaoShopId
+                        },
+                        success: function (res) {
+                            if (res.data != '') {
+                                // 获取店铺地域模板
+                                var selectOptionStr = '';
+                                $.each(res.data.userAreaTemplates, function (i, v) {
+                                    selectOptionStr += '<option value="' + v.area_template_id + '">' + v.area_template_name + '</option>';
+                                });
+
+                                $(".area-template-id option").remove();
+                                $(".area-template-id").append(selectOptionStr);
+                            }
+                        },
+                        error: function (XmlHttpRequest, textStatus, errorThrown) {
+                            console.log('获取店铺地域模板网络异常 请稍后再试')
+                        }
+                    });
+
+                    return false;
+
+                } else {
+                    LAYER_MSG('已存在同名模板');
                 }
             },
             error: function (XmlHttpRequest, textStatus, errorThrown) {
@@ -116,126 +159,137 @@ $(function () {
         $('.save-period').css('display', 'block');
     });
 
+    // ajax 保存时间模板
+    $('.save-period-operate').click(function () {
+
+        var taobaoUserId = $('.taobao-shop-id').val();
+        if (taobaoUserId == '') {
+            LAYER_MSG('请正确选择店铺');
+            return false;
+        }
+
+        // 判断模板名称
+        var timeTemplateName = $('.time-template-name').val();
+        if (timeTemplateName == '') {
+            LAYER_MSG('请输入模板名');
+            return false;
+        }
+
+        // 获取时间下拉框的val
+        var workDays = $('#work-days').val();
+        var weekEnds = $('#week-ends').val();
+
+        // var array = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'];
+        // var workDaysValue = ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'];
+        //
+        // var weekEndsValue = ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'];
+        //
+        // for (var i = 0; i < workDays.length; i++) {
+        //     var index = $.inArray(workDays[i], array);
+        //     if (index >= 0) {
+        //         workDaysValue.splice(index, 1, 'true');
+        //     }
+        // }
+        //
+        // for (var i = 0; i < weekEnds.length; i++) {
+        //     var index = $.inArray(weekEnds[i], array);
+        //     if (index >= 0) {
+        //         weekEndsValue.splice(index, 1, 'true');
+        //     }
+        // }
+
+        var url = $('.ajax-create-time-template').val();
+        $.ajax({
+            url: url,
+            dataType: "json",
+            type: 'post',
+            data: {
+                'taobao_user_id': taobaoUserId,
+                'time_template_name': timeTemplateName,
+                'time_template_workday': workDays.toString(),
+                'time_template_weekend': weekEnds.toString()
+            },
+            success: function (res) {
+                if (res.result == true) {
+
+                    $('.show-period-input').hide();
+                    $('.save-time-template-success').show().delay(1000).fadeOut();
+                    $('.save-period').show();
+
+                    // 获取店铺地域模板
+                    var ajaxGetUserTimeTemplates = $('.ajax-get-user-time-templates').val();
+                    var taobaoShopId = $('.taobao-shop-id').val();
+                    $.ajax({
+                        url: ajaxGetUserTimeTemplates,
+                        dataType: "json",
+                        data: {
+                            "taobaoShopId": taobaoShopId
+                        },
+                        success: function (res) {
+                            if (res.data != '') {
+                                // 获取店铺地域模板
+                                var selectOptionStr = '';
+                                $.each(res.data.userTimeTemplates, function (i, v) {
+                                    selectOptionStr += '<option value="' + v.time_template_id + '">' + v.time_template_name + '</option>';
+                                });
+
+                                $(".time-template option").remove();
+                                $(".time-template").append(selectOptionStr);
+                            }
+                        },
+                        error: function (XmlHttpRequest, textStatus, errorThrown) {
+                            console.log('获取店铺时间模板网络异常 请稍后再试')
+                        }
+                    });
+
+                    return false;
+
+                } else {
+                    LAYER_MSG('已存在同名模板');
+                }
+            },
+            error: function (XmlHttpRequest, textStatus, errorThrown) {
+                LAYER_MSG('网络异常 请稍后再试');
+            }
+        });
+    });
+
     // 时段设置 显示隐藏
     $('.period-type').click(function () {
 
         var periodTypeVal = $(this).val();
         if (periodTypeVal == 1) {
-            $('.period-type-select').css('display', 'block')
+            $('.time-template').hide();
+
+            $('#work-days').attr('name', 'workdays[]');
+            $('#week-ends').attr('name', 'week_ends[]');
+
+            $('.period-type-select').show();
         } else {
-            $('.period-type-select').css('display', 'none')
+            $('.time-template').show();
+
+            $('#work-days').removeAttr('name');
+            $('#week-ends').removeAttr('name');
+
+            $('.period-type-select').hide();
         }
     });
 
     // 选中时间
-    $('.periodWrapper .period ul li').click(function () {
-
-        KISSY.add("app/views/main/plan/period", function (n, e, a) {
-            return e.extend({
-                template: '<div class="periodWrapper">\n    <div class="period">\n        <ul class="hours clearfix mb40">\n            <li class="all" data-spm-click="gostr=/alimama.5;locaid=d510ab51d">\n                <span class="btnInfo">\u65f6\u95f4\u6bb5</span>\n                <a href="javascript:;" mx-click="toggleAll" data-spm-click="gostr=/alimama.5;locaid=d8d499c8b" class="allBtn">\u5468\u4e00\u81f3\u5468\u4e94</a>\n            </li>\n            {{#hours}}\n            <li mx-mousedown="drag" data-spm-click="gostr=/alimama.5;locaid=dfa07eafe" class="one hour {{#milestone}}milestone{{/milestone}}" value="{{index}}">\n                <div class="hourInner">\n                    <span class="hourInnerTop"></span>\n                </div>\n                <div class="curLineStart" style="z-index: {{zIndex}}">\n                    <span class="lineArrow"></span>\n                    <span class="lineInfo">{{index}}</span>\n                </div>\n                <div class="curLineEnd" style="z-index: {{zIndex}}">\n                    <span class="lineArrow"></span>\n                    <span class="lineInfo">{{indexNext}}</span>\n                </div>\n                <div class="hourLine">\n                    <span class="hourInfo">{{index}}</span>\n                </div>\n            </li>\n            {{/hours}}\n            <li class="hour milestone hourLast">\n                <span class="hourLine">\n                    <span class="hourInfo">24</span>\n                </span>\n            </li>\n        </ul>\n\n        <ul class="hours clearfix mb10">\n            <li class="all" data-spm-click="gostr=/alimama.5;locaid=d8f219ba4">\n                <span class="btnInfo">\u65f6\u95f4\u6bb5</span>\n                <a href="javascript:;" mx-click="toggleAll" data-spm-click="gostr=/alimama.5;locaid=d397fd007" class="allBtn">\u5468\u516d\u81f3\u5468\u65e5</a>\n            </li>\n            {{#hours}}\n            <li mx-mousedown="drag" data-spm-click="gostr=/alimama.5;locaid=dd2f3a0b3" class="one hour {{#milestone}}milestone{{/milestone}}" value="{{index}}">\n                <div class="hourInner">\n                    <span class="hourInnerTop"></span>\n                </div>\n                <div class="curLineStart" style="z-index: {{zIndex}}">\n                    <span class="lineArrow"></span>\n                    <span class="lineInfo">{{index}}</span>\n                </div>\n                <div class="curLineEnd" style="z-index: {{zIndex}}">\n                    <span class="lineArrow"></span>\n                    <span class="lineInfo">{{indexNext}}</span>\n                </div>\n                <div class="hourLine">\n                    <span class="hourInfo">{{index}}</span>\n                </div>\n            </li>\n            {{/hours}}\n            <li class="hour milestone hourLast">\n                <span class="hourLine">\n                    <span class="hourInfo">24</span>\n                </span>\n            </li>\n        </ul>\n    </div>\n    <div class="clearfix s_fc_9" style="margin-right: 2%; margin-left: 1%;">\n        <a mx-click="clearAll" data-spm-click="gostr=/alimama.5;locaid=d82658961" href="javascript:;" class="btn mr10 fl"><i class="zs_iconfont displacement-2 mr5">&#xe72e;</i>\u6e05\u7a7a</a>\n        <vframe id="vf_period_template_add"></vframe>\n        <span class="fr">\u84dd\u8272\u4e3a\u5df2\u9009\u6295\u653e\u65f6\u6bb5</span>\n    </div>\n</div>',
-                init: function (n) {
-                    var e = JSON.parse(n), a = this;
-                    a.timeTargetMap = a.toMap(e, {}), a.data = {
-                        hours: function (n) {
-                            for (var e = 0; e < 24; e++) n.push({
-                                index: e,
-                                indexNext: e + 1,
-                                milestone: e % 6 == 0,
-                                zIndex: e + 10
-                            });
-                            return n
-                        }([])
-                    }
-                },
-                toMap: function (n, e) {
-                    return a.each(n, function (n) {
-                        e[n.dayOfWeek] = n.timeSpanList
-                    }), e
-                },
-                render: function () {
-                    var n = this;
-                    n.setViewPagelet(n.data, function (e) {
-                        n.fixStyle()
-                    })
-                },
-                fixStyle: function () {
-                    function n(n, s) {
-                        var l = $("#" + e.id + " .period ul.hours").item(n);
-                        a.each(l.all("li.one"), function (n) {
-                            var l = $(n).attr("value");
-                            a.indexOf(e.timeTargetMap[s], +l) < 0 ? $(n).removeClass("selected") : $(n).addClass("selected")
-                        }), e._merge(l), e.syncAllStatus(l.all("li.all"), l.all("li.one"))
-                    }
-
-                    var e = this;
-                    n(0, "0111110"), n(1, "1000001")
-                },
-                "toggleAll<click>": function (n) {
-                    var e = $("#" + n.currentId).parent(".all");
-                    e.toggleClass("allselected"), e.siblings(".one")[e.hasClass("allselected") ? "addClass" : "removeClass"]("selected"), this._merge(e.parent("ul.hours"))
-                },
-                "clearAll<click>": function () {
-                    var n = this, e = $("#" + n.id + " .allBtn");
-                    a.each(e, function (e) {
-                        var a = $(e).parent(".all");
-                        a.removeClass("allselected"), a.siblings(".one").removeClass("selected"), n._merge(a.parent("ul.hours"))
-                    })
-                },
-                "drag<mousedown>": function (n) {
-                    var e = this, a = $("#" + n.currentId), s = !a.hasClass("selected");
-                    a.toggleClass("selected");
-                    var l = a.parent("ul.hours");
-                    e._merge(l);
-                    var i = a.siblings(".all"), t = i.siblings(".one");
-                    return e.syncAllStatus(i, t), t.on("mouseenter.drag", function (n) {
-                        n.preventDefault(), $(this)[s ? "addClass" : "removeClass"]("selected"), e._merge(l), e.syncAllStatus(i, t)
-                    }), $(document.body).detach("mouseup.drag").on("mouseup.drag", function (n) {
-                        t.detach("mouseenter.drag")
-                    }), n.srcEvent.preventDefault(), !1
-                },
-                _merge: function (n) {
-                    var e = $(n).all(".one");
-                    a.each(e, function (n, e) {
-                        n = $(n);
-                        var a = n.find(".curLineStart"), s = n.find(".curLineEnd");
-                        n.hasClass("selected") ? (a[n.prev(".one") && n.prev(".one").hasClass("selected") ? "hide" : "show"](), s[n.next(".one") && n.next(".one").hasClass("selected") ? "hide" : "show"]()) : (a.hide(), s.hide())
-                    })
-                },
-                syncAllStatus: function (n, e) {
-                    n[24 === e.filter(".selected").length ? "addClass" : "removeClass"]("allselected")
-                },
-                getSelected: function () {
-                    function n(n) {
-                        var s = [];
-                        return a.each($("#" + e.id + " .period ul.hours").item(n).all("li.one.selected"), function (n) {
-                            s.push(+$(n).attr("value"))
-                        }), s
-                    }
-
-                    var e = this;
-                    return [{dayOfWeek: "0111110", timeSpanList: n(0)}, {dayOfWeek: "1000001", timeSpanList: n(1)}]
-                },
-                update: function (n) {
-                    var e = JSON.parse(n);
-                    this.timeTargetMap = this.toMap(e, {}), this.fixStyle()
-                },
-                doDataBeforeSubmit: function () {
-                    for (var n = this, e = n.getSelected(), s = !1, l = 0; l < e.length; l++) s = s || !a.isEmpty(e[l].timeSpanList);
-                    return s ? {ok: !0, params: {templateValue: JSON.stringify(e)}} : {
-                        ok: !1,
-                        msg: "\u8bf7\u81f3\u5c11\u9009\u62e9\u4e00\u4e2a\u65f6\u6bb5"
-                    }
-                }
-            })
-        }, {requires: ["mxext/view", "components/underscore/", "app/views/main/assets/period.css"]});
-
-    });
+    // $('.periodWrapper .period ul li').click(function () {
+    // });
 
     // ajax 提交 计划设置
     $('.create-plan').click(function () {
 
         if ($('#taobao_shop_name').val() == '' || $('.taobao_user_id').val() == '') {
             LAYER_MSG('请正确选择店铺');
+            return false;
+        }
+
+        var dayBudget = $('input[name=day_budget]').val();
+        if (!dayBudget || dayBudget == '') {
+            LAYER_MSG('请正确填写每日预算，每日预算必须大于等于 300');
             return false;
         }
 
@@ -255,6 +309,8 @@ $(function () {
                     LAYER_MSG_FUNCTION('提交成功', 1, i);
                     $('.nav-tabs li').eq(0).removeClass('active').siblings('li').addClass('active');
                     $('.nav-tabs li').eq(0).addClass('disabled');
+                    $('.nav-tabs li').eq(1).removeClass('disabled');
+                    $('.nav-tabs li').eq(2).removeClass('active');
 
                     $('.tab-pane').eq(0).removeClass('active in');
                     $('.tab-pane').eq(1).addClass('active in');

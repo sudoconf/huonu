@@ -17,6 +17,7 @@ class GoLinkPager extends LinkPager
 
     protected function renderPageButtons()
     {
+        $totalCount = $this->pagination->totalCount;
         $pageCount = $this->pagination->getPageCount();
         if ($pageCount < 2 && $this->hideOnSinglePage) {
             return '';
@@ -57,6 +58,7 @@ class GoLinkPager extends LinkPager
             $goPage = $currentPage + 1;
             $goHtml = <<<goHtml
                 <div class="form-inline" style="float: left;">
+                    <span class="text">共 {$totalCount} 条数据</span>
                     <span class="text">共 {$pageCount} 页</span>
                     <span class="text">到第</span>
                     <input class="input form-control" type="number" value="{$goPage}" min="1" max="{$pageCount}" aria-label="页码输入框" style="width: 80px">

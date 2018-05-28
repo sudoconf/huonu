@@ -41,7 +41,7 @@ abstract class AbstractOAuthClient
      *
      * @return string
      */
-    public function postRequest($url, $params)
+    public function postRequest($url, $params = null)
     {
         $curl = curl_init();
 
@@ -54,6 +54,8 @@ abstract class AbstractOAuthClient
         curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
         curl_setopt($curl, CURLOPT_URL, $url);
 
+        // curl_setopt($curl, CURLINFO_HEADER_OUT, TRUE );
+
         $response = curl_exec($curl);
 
         curl_close($curl);
@@ -62,7 +64,7 @@ abstract class AbstractOAuthClient
     }
 
     /**
-     * HTTP GET.
+     * HTTP get.
      *
      * @param string $url 要请求的url地址
      * @param array $params 请求的参数
@@ -79,7 +81,7 @@ abstract class AbstractOAuthClient
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_HEADER, 0);
 
-        $url = $url . '?' . http_build_query($params);
+        $url = $url.'?'.http_build_query($params);
         curl_setopt($curl, CURLOPT_URL, $url);
 
         $response = curl_exec($curl);

@@ -9,35 +9,50 @@
 
 namespace common\components\OAuthClient;
 
+use backend\components\CtConstant;
+
 class TaoBaoOAuthClient extends AbstractOAuthClient
 {
-    const APP_KEY = '24544547';
-    const APP_SECRET = 'fb256ba89bd6207531a676df2fdad049';
-    const AUTHORIZE_URL = 'https://oauth.taobao.com/authorize';
-    const OAUTH_TOKEN_URL = 'https://oauth.taobao.com/token';
+    protected static $authorizeUrl = 'https://oauth.taobao.com/authorize';
+    protected static $oauthTokenUrl = 'https://oauth.taobao.com/token';
 
     public function getAuthorizeUrl($redirectUri = '')
     {
         $params = [
             'response_type' => 'code',
-            'client_id' => self::APP_KEY,
+            'client_id' => CtConstant::APP_KEY,
             'redirect_uri' => $redirectUri,
+            'state' => 'huonu',
+            'view' => 'web'
         ];
 
-        return self::AUTHORIZE_URL . http_build_query($params);
+        return self::$authorizeUrl . '?' . http_build_query($params);
     }
 
-    public function getAccessToken($code = '', $redirectUri = '')
+    public function getAccessToken($code, $state, $redirectUri = null)
     {
         $params = array(
-            'code' => $code,
             'grant_type' => 'authorization_code',
-            'client_id' => self::APP_KEY,
-            'client_secret' => self::APP_SECRET,
-            'redirect_uri' => $redirectUri
+            'client_id' => CtConstant::APP_KEY,
+            'client_secret' => CtConstant::APP_SECRET,
+            'code' => $code,
+            'redirect_uri' => $redirectUri,
+            'state' => $state, // 可选参数state
+            'view' => 'web', // 可选参数，默认为web
         );
 
-        return $this->getRequest(self::OAUTH_TOKEN_URL, $params);
+        $url = self::$oauthTokenUrl . '?' . http_build_query($params);
+
+        $responseJson = $this->postRequest($url);
+
+        $responseArray = json_decode($responseJson, true);
+
+        // 如果返回异常，会返回异常error 和 error_description
+        if (isset($responseArray['error']) && isset($responseArray['error_description'])) {
+            throw new \Exception($responseArray['error_description'], intval($responseArray['error']));
+        }
+
+        return $responseArray;
     }
 
 }

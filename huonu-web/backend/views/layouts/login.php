@@ -50,6 +50,8 @@ $model = new \backend\models\AdminLoginForm();
 
     <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
+    <p>其他方式登录：<a href="<?=\yii\helpers\Url::toRoute('oauth/get-code')?>">淘宝登录</a></p>
+
     <button type="submit" class="btn btn-primary" name="login-button">登录</button>
     <?php ActiveForm::end(); ?>
 

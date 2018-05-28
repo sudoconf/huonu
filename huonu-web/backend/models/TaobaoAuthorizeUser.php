@@ -29,6 +29,7 @@ use yii\data\ActiveDataProvider;
  * @property int $sync_status 同步状态：0未同步1部分同步2首次全量同步完成11初始化定向汇总数据12初始化定向分日数据13处理定向数据
  * @property string $email 用户邮箱用于接收监控通知等
  * @property string $phone 手机号
+ * @property int $user_state 是否禁用 0 否 1是
  */
 class TaobaoAuthorizeUser extends \yii\db\ActiveRecord
 {
@@ -47,7 +48,7 @@ class TaobaoAuthorizeUser extends \yii\db\ActiveRecord
     {
         return [
             [['taobao_user_id'], 'required'],
-            [['expires_in', 're_expires_in', 'r1_expires_in', 'r2_expires_in', 'w1_expires_in', 'w2_expires_in', 'r1_valid', 'r2_valid', 'w1_valid', 'w2_valid', 'expire_time', 'refresh_token_valid_time', 'sync_status'], 'integer'],
+            [['expires_in', 're_expires_in', 'r1_expires_in', 'r2_expires_in', 'w1_expires_in', 'w2_expires_in', 'r1_valid', 'r2_valid', 'w1_valid', 'w2_valid', 'expire_time', 'refresh_token_valid_time', 'sync_status', 'user_state'], 'integer'],
             [['expire_date'], 'safe'],
             [['taobao_user_id', 'taobao_user_nick', 'access_token', 'refresh_token'], 'string', 'max' => 255],
             [['token_type', 'phone'], 'string', 'max' => 45],
@@ -85,6 +86,7 @@ class TaobaoAuthorizeUser extends \yii\db\ActiveRecord
             'sync_status' => '状态',
             'email' => 'Email',
             'phone' => 'Phone',
+            'user_state' => '账号状态',
         ];
     }
 }

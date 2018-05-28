@@ -34,7 +34,7 @@ class AuthorizeUser extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%authorize_user}}';
+        return 'taobao_authorize_user';
     }
 
     /**

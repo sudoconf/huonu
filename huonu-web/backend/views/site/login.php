@@ -41,6 +41,7 @@ $model = new \backend\models\AdminLoginForm();
   </div>
 
     <?= $form->field($model, 'rememberMe')->checkbox() ?>
+    <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
   <button type="submit" class="btn btn-primary" name="login-button">登录</button>
     <?php ActiveForm::end(); ?>

@@ -10,7 +10,7 @@ use backend\components\widget\LinkPager;
 /* @var $searchModel backend\models\searchs\TaobaoAuthorizeUserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '客户报表 - 数据同步';
+$this->title = '客户列表';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-lg-12">
             <h3 class="page-title">
-                客户报表
+                客户管理
                 <small><?= Html::encode($this->title) ?></small>
             </h3>
         </div>
@@ -34,11 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
-                <a href="<?= Url::toRoute('index') ?>">客户报表</a>
-                <i class="fa fa-angle-right"></i>
-            </li>
-            <li>
-                <a href="#">数据同步</a>
+                <a href="<?= Url::toRoute('index') ?>"><?= $this->title ?></a>
             </li>
         </ul>
     </div>
@@ -69,8 +65,21 @@ $this->params['breadcrumbs'][] = $this->title;
                             ]);
                         },
                         'forbidden' => function ($url, $model, $key) {
-                            return Html::button('禁用', [
-                                'class' => 'btn btn-primary',
+                            $butClass = '';
+                            $userStatusHtml = '已禁用';
+                            $userStatus = 0;
+                            $title = '确定取消用户：'.$model->taobao_user_nick.' 的禁用状态?';
+                            if (!$model->user_state) {
+                                $userStatusHtml = '禁用';
+                                $butClass = 'btn-primary';
+                                $userStatus = 1;
+                                $title = '确定禁用用户：'.$model->taobao_user_nick.'?';
+                            }
+                            return Html::button($userStatusHtml, [
+                                'class' => 'btn ajax-forbid ' . $butClass,
+                                'title' => $title,
+                                'data-url' => Url::toRoute(['ajax-forbid', 'userId' => $model->taobao_user_id]),
+                                'data-value-status' => $userStatus
                             ]);
                         },
                     ],
@@ -101,7 +110,6 @@ $this->params['breadcrumbs'][] = $this->title;
     $(function () {
 
         $('.manual-sync').click(function () {
-
             var userId = $(this).val();
             var syncStatus = $(this).attr('sync-status');
 
@@ -136,7 +144,40 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             });
             return false;
+        });
 
+        // 改变状态
+        $('.ajax-forbid').click(function () {
+            var _this = $(this);
+            var ajaxUrl = $(this).attr("data-url");
+            var dataValueStatus = $(this).attr("data-value-status");
+
+            var dataTitle = $(this).attr('title');
+
+            layer.confirm(dataTitle, {icon: 3, title: '提示'}, function (i) {
+                $.ajax({
+                    url: ajaxUrl,
+                    type: 'get',
+                    data: {
+                        'userStatus': dataValueStatus,
+                    },
+                    beforeSend: function () {
+                        _this.button('loading');
+                    },
+                    success: function (req) {
+                        if (!req.result) {
+                            LAYER_MSG('状态修改失败');
+                            return false;
+                        }
+                        window.location.reload();
+                    },
+                    error: function (e, jqxhr, settings, exception) {
+                        LAYER_MSG('服务器错误');
+                    }
+                });
+            });
+
+            return false;
         });
 
     });

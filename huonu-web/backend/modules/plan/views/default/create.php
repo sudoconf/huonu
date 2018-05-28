@@ -53,7 +53,7 @@ $this->title = '客户计划 - 新建计划';
                             <!--                                </a>-->
                             <!--                            </li>-->
 
-                            <li class="active">
+                            <li class="disabled">
                                 <a href="#set-plan" data-toggle="tab" data-placement="top" title="设置计划">
                                     <i class="create-step">1</i>
                                     <i class="glyphicon glyphicon-list-alt"></i>
@@ -61,7 +61,7 @@ $this->title = '客户计划 - 新建计划';
                                 </a>
                             </li>
 
-                            <li class="disabled">
+                            <li class="active">
                                 <a href="#set-unit" data-toggle="tab" data-placement="top" title="设置单元">
                                     <i class="create-step">2</i>
                                     <i class="glyphicon glyphicon-list"></i>
@@ -119,6 +119,8 @@ $this->title = '客户计划 - 新建计划';
 <?= Html::jsFile('@web/vendor/daterangepicker/daterangepicker.js') ?>
 <?= Html::jsFile('@web/vendor/layer/layer.js') ?>
 <?= Html::jsFile('@web/js/plan/plan.js') ?>
+<?= Html::jsFile('@web/js/plan/unit.js') ?>
+<?= Html::jsFile('@web/js/plan/creative.js') ?>
 
 <script>
     // 店铺名称
@@ -130,8 +132,9 @@ $this->title = '客户计划 - 新建计划';
         scrollHeight: 220,
         minLength: 1, // 输入框字符个等于2时开始查询
         source: function (request, response) {
+            var ajaxGetShopUrl = $('.ajax-get-shop').val();
             $.ajax({
-                url: '/huonu_zxht_web/backend/web/report/default/ajax-get-shop.html', // 后台请求路径
+                url: ajaxGetShopUrl, // 后台请求路径
                 dataType: "json",
                 data: {
                     "inputStr": request.term    // 获取输入框内容
@@ -161,6 +164,58 @@ $this->title = '客户计划 - 新建计划';
             $('.taobao-shop-name').val(ui.item.label);
             $('#taobao-shop-name').val(ui.item.label);
             $('.taobao-shop-id').val(ui.item.id);
+
+            // 获取地域模板
+            var ajaxGetUserAreaTemplates = $('.ajax-get-user-area-templates').val();
+            var taobaoShopId = $('.taobao-shop-id').val();
+            $.ajax({
+                url: ajaxGetUserAreaTemplates,
+                dataType: "json",
+                data: {
+                    "taobaoShopId": taobaoShopId
+                },
+                success: function (res) {
+                    if (res.data != '') {
+                        // 获取店铺地域模板
+                        var selectOptionStr = '';
+                        $.each(res.data.userAreaTemplates, function (i, v) {
+                            selectOptionStr += '<option value="'+ v.area_template_id+'">'+v.area_template_name+'</option>';
+                        });
+
+                        $(".area-template-id option").remove();
+                        $(".area-template-id").append(selectOptionStr);
+                    }
+                },
+                error: function (XmlHttpRequest, textStatus, errorThrown) {
+                    console.log('获取店铺地域模板网络异常 请稍后再试')
+                }
+            });
+
+            var ajaxGetUserTimeTemplates = $('.ajax-get-user-time-templates').val();
+            // 获取时间模板
+            $.ajax({
+                url: ajaxGetUserTimeTemplates,
+                dataType: "json",
+                data: {
+                    "taobaoShopId": taobaoShopId
+                },
+                success: function (res) {
+                    if (res.data != '') {
+                        // 获取店铺地域模板
+                        var selectOptionStr = '';
+                        $.each(res.data.userTimeTemplates, function (i, v) {
+                            selectOptionStr += '<option value="'+ v.time_template_id+'">'+v.time_template_name+'</option>';
+                        });
+
+                        $(".time-template option").remove();
+                        $(".time-template").append(selectOptionStr);
+                    }
+                },
+                error: function (XmlHttpRequest, textStatus, errorThrown) {
+                    console.log('获取店铺地域模板网络异常 请稍后再试')
+                }
+            });
+
             return false;
         },
         search: function () {
@@ -181,21 +236,17 @@ $this->title = '客户计划 - 新建计划';
         $('.campaign-end-time').val(end.format('YYYY-MM-DD'));
     };
     var optionSet = {
-        'opens': 'right',
+        'minDate': moment(), // 设置最小可用日期
+        'startDate': moment().startOf('day'), // 默认开始时间
+        'endDate': moment().add(15, 'd').endOf('day'), // 默认结束时间
         'drops': 'up',
-        'format': 'YYYY-MM-DD',
-        'autoUpdateInput': true, // 当前默认时间
         'ranges': {
-            // '最近1小时': [moment().subtract('hours',1), moment()],
-            '今天': [moment().startOf('day'), moment()],
-            '昨天': [moment().subtract(1, 'days').startOf('day'), moment().subtract(1, 'days').endOf('day')],
-            '7天': [moment().subtract(7, 'days').startOf('day'), moment().endOf('day')],
-            '15天': [moment().subtract(15, 'days').startOf('day'), moment().endOf('day')],
-            '30天': [moment().subtract(30, 'days').startOf('day'), moment().endOf('day')],
-            '这个月': [moment().startOf('month').startOf('day'), moment().endOf('month').endOf('day')],
-            '上个月': [moment().subtract(1, 'month').startOf('month').startOf('day'), moment().subtract(1, 'month').endOf('month').endOf('day')],
-            // '近俩个月': [moment().subtract(2, 'month').startOf('month').startOf('day'), moment().subtract(1, 'month').endOf('month').endOf('day')],
-            '近三个月': [moment().subtract(3, 'month').startOf('month').startOf('day'), moment().subtract(1, 'month').endOf('month').endOf('day')]
+            '15天后结束': [moment().startOf('day'), moment().add(15, 'd').endOf('day')],
+            '30天后结束': [moment().startOf('day'), moment().add(30, 'd').endOf('day')],
+            '60天后结束': [moment().startOf('day'), moment().add(60, 'day').endOf('day')],
+            '90天后结束': [moment().startOf('day'), moment().add(90, 'day').endOf('day')],
+            '自然月月底结束': [moment().startOf('day'), moment().endOf('month')],
+            '次月月底结束': [moment().startOf('day'), moment().add(1, 'M').endOf('month')]
         },
         'locale': {
             'format': 'YYYY-MM-DD',

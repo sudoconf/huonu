@@ -29,25 +29,49 @@ class TemplateController extends BaseController
         ];
     }
 
-    // TODO Ajax 创建地域模板
+    /**
+     * 获取地域模板列表
+     */
+    public function actionAjaxGetUserAreaTemplates()
+    {
+        TemplateService::service()->getUserAreaTemplates();
+    }
+
+    /**
+     * 创建地域模板
+     */
     public function actionAjaxCreateAreaTemplate()
     {
         TemplateService::service()->createAreaTemplate();
     }
 
-    // TODO ajax 修改地域模板
+    /**
+     * 修改地域模板
+     */
     public function actionAjaxUpdateAreaTemplate()
     {
         TemplateService::service()->updateAreaTemplate();
     }
 
-    // TODO ajax 创建时间模板
+    /**
+     * 获取地域模板列表
+     */
+    public function actionAjaxGetUserTimeTemplates()
+    {
+        TemplateService::service()->getUserTimeTemplates();
+    }
+
+    /**
+     * 创建时间模板
+     */
     public function actionAjaxCreateTimeTemplate()
     {
         TemplateService::service()->createTimeTemplate();
     }
 
-    // TODO ajax 修改时间模板
+    /**
+     * 修改时间模板
+     */
     public function actionAjaxUpdateTimeTemplate()
     {
         TemplateService::service()->updateTimeTemplate();

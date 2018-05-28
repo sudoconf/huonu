@@ -131,6 +131,14 @@ class DefaultController extends BaseController
     }
 
     /**
+     * TODO Ajax 导出报表
+     */
+    public function actionAjaxExport()
+    {
+        ReportService::service()->exportOperation();
+    }
+
+    /**
      * 复盘详情
      */
     public function actionShow()
@@ -150,14 +158,6 @@ class DefaultController extends BaseController
         $multitrayStatistics = MultitrayStatistics::find()->where(['multitray_id' => $multitrayId])->asArray()->one();
 
         return CtHelper::response('true', 'ok', $multitrayStatistics);
-    }
-
-    /**
-     * TODO Ajax 导出报表
-     */
-    public function actionAjaxExport()
-    {
-        ReportService::service()->exportOperation();
     }
 
 }

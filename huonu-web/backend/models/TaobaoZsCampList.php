@@ -8,17 +8,19 @@ use Yii;
  * This is the model class for table "taobao_zs_camp_list".
  *
  * @property int $id 计划ID
- * @property string $taobao_user_id
+ * @property string $taobao_user_id 淘宝用户id
+ * @property string $name 计划名称
+ * @property int $type 计划类型
  * @property string $week_ends 投放时间:周六和周日
  * @property string $workdays 投放时间:周一到周五
+ * @property string $area_id_list 投放地区
  * @property int $online_status 计划状态0暂停，1投放中，9投放结束
  * @property int $speed_type 投放方式，0:尽快;1:平滑
  * @property string $start_time 开始时间
- * @property string $name 计划名称
- * @property int $type 计划类型
  * @property string $end_time 结束时间
  * @property int $day_budget 日预算（分）
  * @property int $marketingdemand 计划类型：0:未知 ，-1：自定义，1：日常托管，2：日常推荐，3：拉新托管，4：拉新推荐
+ * @property int $payment_type 付费方式 2按展现付费（CPM）8按点击付费（CPC）
  * @property string $life_cycle 草稿：1，2,完成：99
  * @property int $sort 排序
  * @property string $last_update_time
@@ -52,9 +54,9 @@ class TaobaoZsCampList extends \yii\db\ActiveRecord
     {
         return [
             [['id', 'taobao_user_id'], 'required'],
-            [['id', 'online_status', 'speed_type', 'type', 'day_budget', 'marketingdemand', 'sort'], 'integer'],
+            [['id', 'type', 'online_status', 'speed_type', 'day_budget', 'marketingdemand', 'payment_type', 'sort'], 'integer'],
             [['last_update_time'], 'safe'],
-            [['taobao_user_id', 'week_ends', 'workdays', 'start_time', 'name', 'end_time', 'life_cycle'], 'string', 'max' => 255],
+            [['taobao_user_id', 'name', 'week_ends', 'workdays', 'area_id_list', 'start_time', 'end_time', 'life_cycle'], 'string', 'max' => 255],
             [['id', 'taobao_user_id'], 'unique', 'targetAttribute' => ['id', 'taobao_user_id']],
         ];
     }
@@ -69,6 +71,7 @@ class TaobaoZsCampList extends \yii\db\ActiveRecord
             'taobao_user_id' => '淘宝用户id',
             'week_ends' => '投放时间:周六和周日',
             'workdays' => '投放时间:周一到周五',
+            'area_id_list' => '投放地区',
             'online_status' => '计划状态',
             'speed_type' => '投放方式',
             'start_time' => '开始时间',

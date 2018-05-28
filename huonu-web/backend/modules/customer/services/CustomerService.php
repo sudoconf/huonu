@@ -4,6 +4,7 @@
  * User: hx
  * Date: 2018/5/16 11:50
  */
+
 namespace backend\modules\customer\services;
 
 use backend\models\TaobaoAuthorizeUser;
@@ -45,5 +46,25 @@ class CustomerService extends BaseService
         $result = CurlToolkit::request('GET', $url, $data);
 
         CtHelper::response(true, $result['errMsg']);
+    }
+
+    /**
+     * 禁用
+     */
+    public function forbid()
+    {
+        $get = Yii::$app->request->get();
+        $taobaoAuthorizeUser = TaobaoAuthorizeUser::findOne($get['userId']);
+        if (empty($taobaoAuthorizeUser)) {
+            CtHelper::response(false, '参数错误');
+        }
+
+        $taobaoAuthorizeUser->user_state = $get['userStatus'];
+
+        if (!$taobaoAuthorizeUser->save()) {
+            CtHelper::response(false, $taobaoAuthorizeUser->getErrors());
+        }
+
+        CtHelper::response(true, '操作成功');
     }
 }

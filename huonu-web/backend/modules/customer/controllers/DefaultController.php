@@ -55,9 +55,19 @@ class DefaultController extends BaseController
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    // TODO ajax 数据同步
+    /**
+     * 数据同步
+     */
     public function actionAjaxSync()
     {
         CustomerService::service()->SyncOperation();
+    }
+
+    /**
+     * 禁用
+     */
+    public function actionAjaxForbid()
+    {
+        CustomerService::service()->forbid();
     }
 }

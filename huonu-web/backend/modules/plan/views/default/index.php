@@ -170,9 +170,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </tr>
                                     <tr class="odd gradeX dpn">
                                         <td colspan="11" class="operation-td">
-                                            <a href="javascript:;" class="btn btn-primary mr10">设置</a>
-                                            <a href="javascript:;" class="btn btn-primary mr10">详情</a>
-                                            <a href="javascript:;" class="btn btn-primary mr10">编辑</a>
+                                            <!--<a href="javascript:;" class="btn btn-primary mr10">设置</a>-->
+                                            <!--<a href="javascript:;" class="btn btn-primary mr10">详情</a>-->
+                                            <!--<a href="javascript:;" class="btn btn-primary mr10">编辑</a>-->
                                             <a href="javascript:;" class="btn btn-primary mr10 ajax-remove-plan"
                                                data-url="<?= Url::toRoute(['ajax-remove-plan', 'planId' => $v['id'], 'taobaoUserId' => $v['taobao_user_id']]) ?>"
                                                data-title="<?= $v['name'] ?>">移除</a>
@@ -180,7 +180,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                data-url="<?= Url::toRoute(['ajax-plan-sort', 'planId' => $v['id'], 'taobaoUserId' => $v['taobao_user_id']]) ?>"><?= ($v['sort']) ? '取消置顶' : '置顶' ?></a>
                                             <a href="javascript:;" class="btn btn-primary mr10 ajax-plan-sync"
                                                data-url="<?= Url::toRoute(['ajax-plan-sync', 'planId' => $v['id'], 'taobaoUserId' => $v['taobao_user_id']]) ?>">同步</a>
-                                            <a href="javascript:;" class="btn btn-primary mr10">报表</a>
+                                            <!--<a href="javascript:;" class="btn btn-primary mr10">报表</a>-->
                                         </td>
                                     </tr>
                                 <?php } ?>

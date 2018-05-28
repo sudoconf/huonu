@@ -64,4 +64,31 @@ class TargetController extends BaseController
 
     }
 
+    /**
+     * 获取相似宝贝定向
+     */
+    public function actionAjaxGetSimilarBabyOrientation()
+    {
+        TargetService::service()->getSimilarBabyOrientation();
+    }
+
+    /**
+     * 获取达摩盘定向
+     */
+    public function actionAjaxGetDmpOrientate()
+    {
+        TargetService::service()->getDmpOrientate();
+    }
+
+    // 获取访客定向
+    public function actionAjaxGetVisitorsDirectional()
+    {
+        TargetService::service()->getVisitorsDirectional();
+    }
+
+    // 类目型定向-高级兴趣点
+    public function actionAjaxGetClassOrientationAdvancedInterestPoint()
+    {
+        TargetService::service()->getClassOrientationAdvancedInterestPoint();
+    }
 }

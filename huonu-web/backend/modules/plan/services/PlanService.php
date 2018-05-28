@@ -10,6 +10,8 @@ namespace backend\modules\plan\services;
 
 use backend\models\TaobaoAuthorizeUser;
 use backend\models\TaobaoZsCampList;
+use backend\models\UserAreaTemplate;
+use backend\models\UserTimeTemplate;
 use common\components\CtHelper;
 use common\components\Toolkit\ArrayToolkit;
 use common\components\Toolkit\CurlToolkit;
@@ -20,7 +22,10 @@ use yii\base\InvalidArgumentException;
 // 计划 service TODO
 class PlanService extends BaseService
 {
-    // 新建计划
+    /**
+     * 新建计划
+     * @return array
+     */
     public function createPlan()
     {
         $whetherOrNotCompletePlan = Yii::$app->session->get('whetherOrNotCompletePlan');
@@ -30,24 +35,39 @@ class PlanService extends BaseService
         }
 
         $setPlan = Yii::$app->session->get('setPlan');
-        if (empty($setPlan) && !isset($setPlan['taobao_shop_name'])) {
+
+        // 获取地域模板
+        $userAreaTemplateModal = UserAreaTemplate::find()
+            ->where(['taobao_user_id' => 0]);
+
+        // 获取时间段模板
+        $userTimeTemplateModal = UserTimeTemplate::find()
+            ->where(['taobao_user_id' => 0]);
+
+        if (isset($setPlan['taobao_user_id'])) {
+            $userAreaTemplateModal->orWhere(['taobao_user_id' => $setPlan['taobao_user_id']]);
+            $userTimeTemplateModal->orWhere(['taobao_user_id' => $setPlan['taobao_user_id']]);
+        }
+
+        if (!isset($setPlan['name'])) {
+
             $setPlan = [
                 'taobao_user_id' => '',
                 'taobao_shop_name' => '',
-                'marketingAim' => '',
-                'campaign_name' => sprintf('智行慧投_自定义计划_%s', date('Ymd_His')),
-                'campaign_type' => '',
+                'name' => sprintf('智行慧投_自定义计划_%s', date('Ymd_His')),
+                'payment_type' => 2,
                 'region' => '',
-                'area_template_id' => '',
-                'period_type' => '',
-                'time_template_id' => '',
-                'campaign_start_time' => '',
-                'campaign_end_time' => '',
-                'campaign_speed_type' => '',
-                'campaign_day_budget' => '',
+                'period_type' => 2,
+                'start_time' => '',
+                'end_time' => '',
+                'speed_type' => 2,
+                'day_budget' => ''
             ];
         }
 
+        $setPlan['userAreaTemplates'] = $userAreaTemplateModal->asArray()->all();
+
+        $setPlan['userTimeTemplates'] = $userTimeTemplateModal->asArray()->all();
 
         $setUnit = Yii::$app->session->get('setUnit');
         if (empty($setUnit)) {
@@ -60,11 +80,12 @@ class PlanService extends BaseService
             'setPlan' => $setPlan,
             'setUnit' => $setUnit
         ];
-
         return $result;
     }
 
-    // TODO 保存计划设置到session
+    /**
+     * 保存计划设置到session
+     */
     public function savePlan()
     {
         $data = Yii::$app->request->post();
@@ -74,7 +95,7 @@ class PlanService extends BaseService
         }
 
         // 校验提交的字段
-        $this->filterCreatePlanFields($data);
+        $data = $this->filterCreatePlanFields($data);
 
         $setPlan = Yii::$app->session->get('setPlan');
         if ($setPlan && is_array($setPlan)) {
@@ -82,7 +103,7 @@ class PlanService extends BaseService
         }
         Yii::$app->session->set('setPlan', $data);
 
-        return CtHelper::response('true', '保存成功');
+        return CtHelper::response(true, '保存成功');
     }
 
     /**
@@ -194,23 +215,28 @@ class PlanService extends BaseService
         $data['campaign_id'] = $request['planId'];
 
         // 计划同步
-        $planUrl = "http://localhost:30005/huonu/zxht/sync/camp/rtrpts";
+        // $planUrl = "http://localhost:30005/huonu/zxht/sync/camp/rtrpts";
+        $planUrl = "http://192.168.8.58:8080/huonu/zxht/sync/camp/rtrpts";
         $planResult = CurlToolkit::request('GET', $planUrl, $data);
 
         // 单元同步
-        $adgroupUrl = "http://localhost:30005/huonu/zxht/sync/adgroup/rtrpts";
+        // $adgroupUrl = "http://localhost:30005/huonu/zxht/sync/adgroup/rtrpts";
+        $adgroupUrl = "http://192.168.8.58:8080/huonu/zxht/sync/adgroup/rtrpts";
         $adgroupResult = CurlToolkit::request('GET', $adgroupUrl, $data);
 
         // 定向同步
-        $targetUrl = "http://localhost:30005/huonu/zxht/sync/target/rtrpts";
+        // $targetUrl = "http://localhost:30005/huonu/zxht/sync/target/rtrpts";
+        $targetUrl = "http://192.168.8.58:8080/huonu/zxht/sync/target/rtrpts";
         $targetResult = CurlToolkit::request('GET', $targetUrl, $data);
 
         // 创意同步
-        $creativeUrl = "http://localhost:30005/huonu/zxht/sync/creative/rtrpts";
+        // $creativeUrl = "http://localhost:30005/huonu/zxht/sync/creative/rtrpts";
+        $creativeUrl = "http://192.168.8.58:8080/huonu/zxht/sync/creative/rtrpts";
         $creativeResult = CurlToolkit::request('GET', $creativeUrl, $data);
 
         // 资源位同步
-        $adzoneUrl = "http://localhost:30005/huonu/zxht/sync/adzone/rtrpts";
+        // $adzoneUrl = "http://localhost:30005/huonu/zxht/sync/adzone/rtrpts";
+        $adzoneUrl = "http://192.168.8.58:8080/huonu/zxht/sync/adzone/rtrpts";
         $adzoneResult = CurlToolkit::request('GET', $adzoneUrl, $data);
 
         CtHelper::response(true, '');
@@ -223,21 +249,25 @@ class PlanService extends BaseService
      */
     protected function filterCreatePlanFields($fields)
     {
+        if (isset($fields['_csrf-backend'])) {
+            unset($fields['_csrf-backend']);
+        }
+
         $requiredFields = array(
             'taobao_user_id',
             'taobao_shop_name',
-            'campaign_name',
-            'campaign_type',
-            'area_template_id',
-            'time_template_id',
-            'campaign_start_time',
-            'campaign_end_time',
-            'campaign_speed_type',
-            'campaign_day_budget',
+            'name',
+            'region',
+            'payment_type',
+            'period_type',
+            'start_time',
+            'end_time',
+            'speed_type',
+            'day_budget',
         );
 
         if (!ArrayToolkit::requires($fields, $requiredFields)) {
-            throw new InvalidArgumentException('Missing required fields when creating course');
+            throw new InvalidArgumentException('Missing required fields when creating plan');
         }
 
         return $fields;

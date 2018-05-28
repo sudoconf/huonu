@@ -451,6 +451,88 @@ class ReportService extends BaseService
     }
 
     /**
+     * TODO 下载
+     */
+    public function exportOperation()
+    {
+        $multitrayId = Yii::$app->request->get('multitray_id');
+
+        $multitray = Multitray::findOne($multitrayId)->toArray();
+        if (empty($multitray)) {
+            CtHelper::response(false, '参数错误');
+        }
+
+        $multitrayPolicyGroup = MultitrayPolicyGroup::find()->select('policy_group_name,target_id')->where(
+            ['multitray_id' => $multitrayId]
+        )->asArray()->all();
+
+        $targetIdArray = [];
+        foreach ($multitrayPolicyGroup as $v) {
+            $targetIdArray[] = $v['target_id'];
+        }
+
+        $logStartDate = date('Y-m-d', $multitray['multitray_start_time']);
+        $logEndDate = date('Y-m-d', $multitray['multitray_end_time']);
+
+        $taobaoZsAdvertiserTargetDaySumList = TaobaoZsAdvertiserTargetDaySumList::find()
+            ->where(['in', 'target_id', $targetIdArray])
+            ->andWhere(['>=', 'log_date', $logStartDate])
+            ->andWhere(['<=', 'log_date', $logEndDate])
+            ->andWhere(
+                [
+                    'effect' => $multitray['multitray_cycle'],
+                    'effect_type' => $multitray['multitray_effect_model'],
+                ]
+            )
+            ->asArray()->all();
+
+        $filePath = Yii::$app->basePath . '\web\excel-template\haixin-test.xlsx';
+        //读取文件
+        if (!file_exists($filePath)) {
+            CtHelper::response(false, '模板不存在');
+        }
+
+        $objPHPExcel = \PHPExcel_IOFactory::load($filePath);
+        $sheet = $objPHPExcel->getSheet(0); // 读取第一個工作表
+        $highestRow = $sheet->getHighestRow(); // 取得总行数
+
+        $objPHPExcel->setActiveSheetIndex(0);
+
+        foreach ($taobaoZsAdvertiserTargetDaySumList as $k => $v) {
+
+            $k = $k + 3;
+            $objPHPExcel->getactivesheet()->setcellvalue('A' . $k, $v['target_name']);
+            $objPHPExcel->getactivesheet()->setcellvalue('B' . $k, date('Y-m-d', strtotime($v['log_date'])));
+            $objPHPExcel->getactivesheet()->setcellvalue('C' . $k, '');
+            $objPHPExcel->getactivesheet()->setcellvalue('D' . $k, $v['ad_pv']);
+            $objPHPExcel->getactivesheet()->setcellvalue('E' . $k, $v['click']);
+            $objPHPExcel->getactivesheet()->setcellvalue('F' . $k, $v['charge']);
+            $objPHPExcel->getactivesheet()->setcellvalue('G' . $k, $v['inshop_item_col_num']);
+            $objPHPExcel->getactivesheet()->setcellvalue('H' . $k, $v['cart_num']);
+            $objPHPExcel->getactivesheet()->setcellvalue('I' . $k, $v['alipay_in_shop_num']);
+            $objPHPExcel->getactivesheet()->setcellvalue('J' . $k, $v['alipay_inshop_amt']);
+
+        }
+
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, "Excel5");
+
+        $filename = date('Y-m-d-His') . '-数据明细' . '.xlsx';
+        $filename = iconv('UTF-8', 'GBK//IGNORE', $filename);
+        ob_end_clean();
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control:must-revalidate, post-check=0, pre-check=0");
+        header("Content-Type:application/force-download");
+        header("Content-Type:application/vnd.ms-execl");
+        header("Content-Type:application/octet-stream");
+        header("Content-Type:application/download");
+        header('Content-Disposition:attachment;filename="' . $filename . '"');
+        header("Content-Transfer-Encoding:binary");
+        $objWriter->save('php://output');
+
+    }
+
+    /**
      * 统计展现
      * @return mixed
      */
@@ -585,88 +667,5 @@ class ReportService extends BaseService
         $result['directedCrowdAnalyzedDaily'] = $directedCrowdAnalyzedDaily;
 
         return $result;
-    }
-
-    /**
-     * TODO 下载
-     */
-    public function exportOperation()
-    {
-        $multitrayId = Yii::$app->request->get('multitray_id');
-
-        $multitray = Multitray::findOne($multitrayId)->toArray();
-        if (empty($multitray)) {
-            CtHelper::response(false, '参数错误');
-        }
-
-        $multitrayPolicyGroup = MultitrayPolicyGroup::find()->select('policy_group_name,target_id')->where(
-            ['multitray_id' => $multitrayId]
-        )->asArray()->all();
-
-        $targetIdArray = [];
-        foreach ($multitrayPolicyGroup as $v) {
-            $targetIdArray[] = $v['target_id'];
-        }
-
-        $logStartDate = date('Y-m-d', $multitray['multitray_start_time']);
-        $logEndDate = date('Y-m-d', $multitray['multitray_end_time']);
-
-        $taobaoZsAdvertiserTargetDaySumList = TaobaoZsAdvertiserTargetDaySumList::find()
-            ->where(['in', 'target_id', $targetIdArray])
-            ->andWhere(['>=', 'log_date', $logStartDate])
-            ->andWhere(['<=', 'log_date', $logEndDate])
-            ->andWhere(
-                [
-                    'effect' => $multitray['multitray_cycle'],
-                    'effect_type' => $multitray['multitray_effect_model'],
-                ]
-            )
-            ->asArray()->all();
-
-        $filePath = Yii::$app->basePath . '\web\excel-template\haixin-test.xlsx';
-        //读取文件
-        if (!file_exists($filePath)) {
-            CtHelper::response(false, '模板不存在');
-        }
-
-        $objPHPExcel = \PHPExcel_IOFactory::load($filePath);
-        $sheet = $objPHPExcel->getSheet(0); // 读取第一個工作表
-        $highestRow = $sheet->getHighestRow(); // 取得总行数
-
-        $objPHPExcel->setActiveSheetIndex(0);
-
-        foreach ($taobaoZsAdvertiserTargetDaySumList as $k => $v) {
-
-            $k = $k + 3;
-            $objPHPExcel->getactivesheet()->setcellvalue('A' . $k, $v['target_name']);
-            $objPHPExcel->getactivesheet()->setcellvalue('B' . $k, date('Y-m-d', strtotime($v['log_date'])));
-            $objPHPExcel->getactivesheet()->setcellvalue('C' . $k, '');
-            $objPHPExcel->getactivesheet()->setcellvalue('D' . $k, $v['ad_pv']);
-            $objPHPExcel->getactivesheet()->setcellvalue('E' . $k, $v['click']);
-            $objPHPExcel->getactivesheet()->setcellvalue('F' . $k, $v['charge']);
-            $objPHPExcel->getactivesheet()->setcellvalue('G' . $k, $v['inshop_item_col_num']);
-            $objPHPExcel->getactivesheet()->setcellvalue('H' . $k, $v['cart_num']);
-            $objPHPExcel->getactivesheet()->setcellvalue('I' . $k, $v['alipay_in_shop_num']);
-            $objPHPExcel->getactivesheet()->setcellvalue('J' . $k, $v['alipay_inshop_amt']);
-
-        }
-
-        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, "Excel5");
-
-        $filename = date('Y-m-d-His') . '-数据明细' . '.xlsx';
-        $filename = iconv('UTF-8', 'GBK//IGNORE', $filename);
-        ob_end_clean();
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control:must-revalidate, post-check=0, pre-check=0");
-        header("Content-Type:application/force-download");
-        header("Content-Type:application/vnd.ms-execl");
-        header("Content-Type:application/octet-stream");
-        header("Content-Type:application/download");
-        header('Content-Disposition:attachment;filename="' . $filename . '"');
-        header("Content-Transfer-Encoding:binary");
-        $objWriter->save('php://output');
-
-        CtHelper::response(true, 'ok');
     }
 }

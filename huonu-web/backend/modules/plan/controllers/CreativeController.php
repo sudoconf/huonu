@@ -8,6 +8,7 @@
 namespace backend\modules\plan\controllers;
 
 use backend\controllers\BaseController;
+use backend\modules\plan\services\CreativeService;
 use yii\filters\VerbFilter;
 
 class CreativeController extends BaseController
@@ -29,7 +30,8 @@ class CreativeController extends BaseController
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $creative = CreativeService::service()->getCreative();
+        return $this->render('index', $creative);
     }
 
     // TODO 创意同步
