@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="panel-body form-group form-inline">
+<div class="control-group form-inline">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],

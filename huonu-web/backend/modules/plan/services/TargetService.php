@@ -188,21 +188,52 @@ class TargetService extends BaseService
     // 类目型定向-高级兴趣点
     public function getClassOrientationAdvancedInterestPoint()
     {
-        $setPlan = Yii::$app->session->get('setPlan');
-        $taobaoUserId = $setPlan['taobao_user_id'];
+        $get = Yii::$app->request->get();
 
+        $setPlan = Yii::$app->session->get('setPlan');
+        if (empty($setPlan)) {
+            CtHelper::response(false, '参数错误');
+        }
+
+        $taobaoUserId = $setPlan['taobao_user_id'];
         $taobaoUser = AuthorizeUser::findOne($taobaoUserId)->toArray();
         if (empty($taobaoUser)) {
             CtHelper::response(false, '店铺不存在');
         }
 
-        $tabaoZsCats = TaobaoZsCatList::find()
-            ->where([
-                'taobao_user_id' => $taobaoUserId,
-                'campaign_type' => $setPlan['payment_type']
-            ])
-            ->asArray()->all();
+        if (isset($get['interestName']) && $get['interestName'] != '') {
+            $data['interest_name'] = trim($get['interestName']);
+        }
 
-        CtHelper::response(true, '', $tabaoZsCats);
+        $data['user_id'] = $taobaoUserId;
+        $data['call_people'] = $taobaoUser['taobao_user_nick'];
+        $data['campaign_type'] = $setPlan['payment_type'];
+        $url = 'http://192.168.8.58:8080/huonu/zxht/search/cat';
+        $result = CurlToolkit::request('GET', $url, $data);
+        $result = json_decode($result['data'], true);
+
+        $seniorInterestDto = $result['zuanshi_banner_cat_find_response']['result']['interests']['senior_interest_dto'];
+
+        CtHelper::response(true, '', $seniorInterestDto);
+    }
+
+    /**
+     * 复盘获取定向
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public function getTarget()
+    {
+        $setParameter = Yii::$app->session->get('setParameter');
+
+        if (empty($setParameter)) {
+            CtHelper::response(false, '参数错误');
+        }
+
+        $taobaoZsTargetList = TaobaoZsTargetList::find()->select('id as target_id,crowd_name as target_name')
+            ->where(['taobao_user_id' => $setParameter['taobao_id']])
+            ->andWhere(['>=', 'gmt_create', $setParameter['multitray_start_time']])
+            ->andWhere(['<=', 'gmt_create', $setParameter['multitray_end_time']])
+            ->asArray()->all();
+        return $taobaoZsTargetList;
     }
 }

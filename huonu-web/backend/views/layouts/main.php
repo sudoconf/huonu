@@ -19,7 +19,7 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
 
     <!-- jQuery -->
-    <?= Html::jsFile('@web/vendor/jquery/jquery.min.js') ?>
+    <?= Html::jsFile('@web/vendor/jquery/1.10.2/jquery.min.js') ?>
 
     <?php $this->head() ?>
 </head>

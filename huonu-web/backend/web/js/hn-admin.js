@@ -96,6 +96,21 @@ function LAYER_MSG(msg) {
     });
 }
 
+function LAYER_MSG_(msg, icon) {
+    layer.msg(msg, {
+        icon: icon,
+        shade: [0.5],
+        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+    });
+}
+
+function LAYER_MSG__(msg) {
+    layer.msg(msg, {
+        shade: [0.5],
+        time: 2000
+    });
+}
+
 function LAYER_MSG_FUNCTION(msg, icon, i) {
     layer.msg(msg, {
         icon: icon,

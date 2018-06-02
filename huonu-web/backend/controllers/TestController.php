@@ -8,6 +8,7 @@
 namespace backend\controllers;
 
 use backend\components\CtConstant;
+use common\components\Toolkit\CurlToolkit;
 use yii\web\Controller;
 use Yii;
 
@@ -67,7 +68,8 @@ class TestController extends Controller
         die;
     }
 
-    public function actionInterestFind(){
+    public function actionInterestFind()
+    {
         $c = new \TopClient;
         $c->appkey = CtConstant::APP_KEY;
         $c->secretKey = CtConstant::APP_SECRET;
@@ -78,7 +80,8 @@ class TestController extends Controller
         print_r($resp);
     }
 
-    public function actionGetAdSpace(){
+    public function actionGetAdSpace()
+    {
         $c = new \TopClient;
         $c->appkey = CtConstant::APP_KEY;
         $c->secretKey = CtConstant::APP_SECRET;
@@ -87,13 +90,34 @@ class TestController extends Controller
         print_r(json_decode(json_encode($resp), true));
     }
 
-    public function actionGetAdCondition(){
+    public function actionGetAdCondition()
+    {
         $c = new \TopClient;
         $c->appkey = CtConstant::APP_KEY;
         $c->secretKey = CtConstant::APP_SECRET;
         $req = new \ZuanshiBannerAdzoneConditionRequest;
         $resp = $c->execute($req, self::$sessionKey);
         print_r(json_decode(json_encode($resp), true));
+    }
+
+    public function actionOperateAdd()
+    {
+        $url = 'http://192.168.8.58:8080/huonu/zxht/operate/add';
+        $field['user_id'] = 1111;
+        $field['eee'] = [
+            '1',
+            '22222'
+        ];
+        $field['eee']['edwfgewgew'] = [
+            '1',
+            'scewaeefe'
+        ];
+
+        $data['field'] = json_encode($field);
+print_r($data);die;
+        $result = CurlToolkit::request('POST', $url, $data);
+        print_r($result);
+
     }
 
 }

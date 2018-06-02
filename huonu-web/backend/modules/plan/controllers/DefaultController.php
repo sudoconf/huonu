@@ -3,14 +3,20 @@
 namespace backend\modules\plan\controllers;
 
 use backend\controllers\BaseController;
+use backend\models\AuthorizeUser;
+use backend\models\searchs\TaobaoZsCampListSearch;
+use backend\models\TaobaoZsAdvertiserCampaignRtrptsTotalList;
 use backend\models\TaobaoZsCampList;
 use backend\modules\plan\services\PlanService;
+use common\components\CtHelper;
 use yii\data\Pagination;
 use yii\filters\VerbFilter;
 use Yii;
 
 class DefaultController extends BaseController
 {
+    public static $get;
+
     /**
      * @inheritdoc
      */
@@ -27,34 +33,105 @@ class DefaultController extends BaseController
     }
 
     /**
-     * TODO 计划列表
+     * 计划列表
      * @return string
      */
     public function actionIndex()
     {
+        $get = Yii::$app->request->get();
+
         $query = TaobaoZsCampList::find();
+
+        $query->where('0=0');
+
+        if (isset($get['planName'])) {
+            $query->andWhere(['like', 'name', $get['planName']]);
+        } else {
+            $get['planName'] = '';
+        }
+
+        if (isset($get['customerId']) && !empty($get['customerId'])) {
+            $query->andWhere(['camp.taobao_user_id' => $get['customerId']]);
+        } else {
+            $get['customerId'] = '';
+        }
+
+        if (isset($get['onlineStatus']) && $get['onlineStatus'] < 99) {
+            $query->andWhere(['online_status' => $get['onlineStatus']]);
+        } else {
+            $get['onlineStatus'] = 99;
+        }
+
+        if (isset($get['marketingdemand']) && !empty($get['marketingdemand'])) {
+            $query->andWhere(['marketingdemand' => $get['marketingdemand']]);
+        } else {
+            $get['marketingdemand'] = '';
+        }
+
+        if (isset($get['type']) && !empty($get['type'])) {
+            $query->andWhere(['type' => $get['type']]);
+        } else {
+            $get['type'] = '';
+        }
+
+        $query->from(TaobaoZsCampList::tableName() . ' camp')
+            ->select([
+                '`camp`.*',
+                '`timeShare`.charge',
+                '`timeShare`.ecpc',
+                '`timeShare`.ad_pv',
+                '`timeShare`.click',
+                '`timeShare`.ecpm',
+                '`timeShare`.ctr'
+            ])
+            ->leftJoin(TaobaoZsAdvertiserCampaignRtrptsTotalList::tableName() . ' timeShare', 'camp.id = timeShare.campaign_id');
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count()]);
-        $models = $query->offset($pages->offset)
+        $camps = $query->offset($pages->offset)
             ->limit($pages->limit)
-            ->orderBy(['sort' => SORT_DESC, 'id' => SORT_DESC])
+            ->orderBy([
+                'taobao_user_id' => SORT_ASC,
+                'sort' => SORT_DESC,
+                'id' => SORT_DESC
+            ])
+            ->asArray()
             ->all();
 
+        $customers = AuthorizeUser::find()->select([
+            'taobao_user_id',
+            'taobao_user_nick'
+        ])->asArray()->all();
+
         return $this->render('index', [
-            'models' => $models,
+            'camps' => $camps,
             'pages' => $pages,
+            'get' => $get,
+            'customers' => $customers
         ]);
     }
 
-    // TODO 新建计划 页面
+    /**
+     * 新建计划 页面
+     * @return string
+     */
     public function actionCreate()
     {
         $result = PlanService::service()->createPlan();
         return $this->render('create', $result);
     }
 
-    // TODO ajax 保存计划设置
+    /**
+     * ajax 保存计划设置
+     */
     public function actionAjaxSaveSetPlan()
+    {
+        PlanService::service()->saveSetPlan();
+    }
+
+    /**
+     * 创建计划
+     */
+    public function actionAjaxSavePlan()
     {
         PlanService::service()->savePlan();
     }

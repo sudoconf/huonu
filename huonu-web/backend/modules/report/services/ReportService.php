@@ -14,6 +14,7 @@ use backend\models\MultitrayPolicyGroup;
 use backend\models\MultitrayStatistics;
 use backend\models\SystemLog;
 use backend\models\TaobaoZsAdvertiserTargetDaySumList;
+use backend\modules\plan\services\TargetService;
 use common\components\CtHelper;
 use common\services\BaseService;
 use Yii;
@@ -28,8 +29,6 @@ class ReportService extends BaseService
      */
     public function create()
     {
-        $model = new Multitray();
-
         $whetherOrNotComplete = Yii::$app->session->get('whetherOrNotComplete');
         if ($whetherOrNotComplete) {
             Yii::$app->session->remove('setParameter');
@@ -38,17 +37,17 @@ class ReportService extends BaseService
         }
 
         $setParameter = Yii::$app->session->get('setParameter');
-        if (empty($setParameter) && !isset($setParameter['multitray_name'])) {
+        if (empty($setParameter)) {
             $setParameter['multitray_name'] = '';
             $setParameter['taobao_name'] = '';
             $setParameter['taobao_id'] = '';
             $setParameter['multitray_start_time'] = '';
             $setParameter['multitray_end_time'] = '';
-            $setParameter['multitray_effect_model'] = '';
-            $setParameter['multitray_cycle'] = '';
-        }
-        if (!array_key_exists('multitray_field', $setParameter)) {
+            $setParameter['multitray_effect_model'] = 'click';
+            $setParameter['multitray_cycle'] = 3;
             $setParameter['multitray_field'] = [];
+        } else {
+            $setParameter['multitray_field'] = explode(',', $setParameter['multitray_field']);
         }
 
         $strategyGroup = Yii::$app->session->get('strategyGroup');
@@ -57,7 +56,6 @@ class ReportService extends BaseService
         }
 
         $result = [
-            'model' => $model,
             'setParameter' => $setParameter,
             'strategyGroup' => $strategyGroup,
         ];
@@ -101,6 +99,10 @@ class ReportService extends BaseService
             CtHelper::response(false, '操作失败，请检查提交数据');
         }
 
+        if (empty($strategyGroup)) {
+            CtHelper::response(false, '操作失败，请检查提交数据');
+        }
+
         $transaction = Yii::$app->db->beginTransaction();
 
         try {
@@ -110,7 +112,7 @@ class ReportService extends BaseService
             $analyseArray['taobao_id'] = $setParameter['taobao_id'];
             $analyseArray['multitray_start_time'] = strtotime($setParameter['multitray_start_time']);
             $analyseArray['multitray_end_time'] = strtotime($setParameter['multitray_end_time']);
-            $analyseArray['multitray_field'] = json_encode($setParameter['multitray_field']);
+            $analyseArray['multitray_field'] = json_encode(explode(',', $setParameter['multitray_field']));
             $analyseArray['multitray_effect_model'] = $setParameter['multitray_effect_model'];
             $analyseArray['multitray_cycle'] = $setParameter['multitray_cycle'];
 

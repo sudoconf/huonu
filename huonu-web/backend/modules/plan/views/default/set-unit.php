@@ -1,15 +1,17 @@
-<div class="tab-pane fade in active" id="set-unit">
+<div class="tab-pane fade" id="set-unit">
 
-    <div class="control-group form-inline pd15">
+    <input type="hidden" name="SessionSetUnit" value="<?= \yii\helpers\Url::toRoute('unit/ajax-get-set-unit'); ?>">
+
+    <div class="control-group form-inline">
         <div class="form-inline pd10">
             <label for="name">单元名称</label>
             <input style="width: 350px" type="text" class="form-control adgroup-name" placeholder="请输入单元名称"
-                   name="adgroup_name" value="<?= $setUnit['adgroup_name']; ?>">
+                   name="adgroup_name" value="">
         </div>
     </div>
 
     <!--设置定向人群 start -->
-    <div class="control-group pd15">
+    <div class="control-group">
         <div class="well s_fs_16">
             <i class="fa fa-briefcase"></i>
             设置定向人群
@@ -22,23 +24,7 @@
                data-url="<?= \yii\helpers\Url::toRoute('target/ajax-get-similar-baby-orientation') ?>">设置定向</a>
         </div>
 
-        <div id="target_premium_131072_262144" class="pd10 dpn">
-            <div class="mt10 clearfix">
-                <div class="target-choose-result-item">
-                    <span>喜欢相似宝贝的人群：Hisense/海信 KFR-35GW/ER33N3(1L04) 大1.5匹冷暖壁挂式空调挂机</span>
-                    <a class="delete" href="javascript:;">
-                        <i class="fa fa-times"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="mt10 clearfix">
-                <div class="target-choose-result-item">
-                    <span>喜欢相似宝贝的人群：Hisense/海信 KFR-35GW/ER33N3(1L04) 大1.5匹冷暖壁挂式空调挂机</span>
-                    <a class="delete" href="javascript:;">
-                        <i class="fa fa-times"></i>
-                    </a>
-                </div>
-            </div>
+        <div id="target_premium_131072_262144" class="pd10 similarBabyOrientationDiv dpn">
         </div>
 
         <div class="form-inline pd10">
@@ -46,24 +32,19 @@
             <span class="pdl15 s_fc_9">基于达摩盘自定义组合圈定的各类人群</span>
             <a class="pdl15 s_fc_c cp damo-disk-orientation" data-toggle="modal"
                data-target="#damoDiskOrientation"
+               data-crowdType="128"
                data-url="<?= \yii\helpers\Url::toRoute('target/ajax-get-dmp-orientate') ?>">设置定向</a>
         </div>
 
         <div id="target_premium_128" class="pd10 dpn">
-            <div class="mt10 clearfix">
-                <div class="target-choose-result-item">
-                    <span>火奴_品牌_A1_S1X_电商部20180518173306</span>
-                    <a class="delete" href="javascript:;">
-                        <i class="fa fa-times"></i>
-                    </a>
-                </div>
+            <div class="clearfix">
             </div>
         </div>
 
         <div class="form-inline pd10">
             <label for="name">通投</label>
             <span class="pdl15 s_fc_9">不限人群投放</span>
-            <input type="checkbox" checked/>
+            <input name="status" value="1" type="checkbox" checked/>
         </div>
 
         <div class="form-inline pd10">
@@ -142,44 +123,20 @@
                         <i class="fa fa-times"></i>
                     </a>
                 </div>
-                <div class="target-choose-result-item">
-                    <span>康佳网络电视32（大家电_平板电视）</span>
-                    <a class="delete" href="javascript:;">
-                        <i class="fa fa-times"></i>
-                    </a>
-                </div>
-                <div class="target-choose-result-item">
-                    <span>长虹电视机超高清（大家电_平板电视）</span>
-                    <a class="delete" href="javascript:;">
-                        <i class="fa fa-times"></i>
-                    </a>
-                </div>
-                <div class="target-choose-result-item">
-                    <span>海信65寸液晶电视机4k高清智能英寸（大家电_平板电视）</span>
-                    <a class="delete" href="javascript:;">
-                        <i class="fa fa-times"></i>
-                    </a>
-                </div>
-                <div class="target-choose-result-item">
-                    <span>海信超薄液晶电视机（大家电_平板电视）</span>
-                    <a class="delete" href="javascript:;">
-                        <i class="fa fa-times"></i>
-                    </a>
-                </div>
             </div>
         </div>
     </div>
     <!--设置定向人群 end -->
 
     <!--选择投放资源位 start-->
-    <div class="control-group pd15">
+    <div class="control-group">
 
         <div class="well s_fs_16 pd15">
             <i class="fa fa-puzzle-piece"></i>
             选择投放资源位
         </div>
 
-        <div class="text-center pt40 pb60">
+        <div class="text-center pt40 pb60 no-resource-selected-div">
             <div class="s_fs_16 pd15">未选择任何资源位</div>
             <span class="btn btn-primary resource-list" data-toggle="modal"
                   data-target="#resourceList"
@@ -187,13 +144,14 @@
                   data-resources-url="<?= \yii\helpers\Url::toRoute('resource/ajax-get-resources') ?>">添加资源位</span>
         </div>
 
-        <div class="mb20 mt20 dpn">
+        <div class="mb20 mt20 resource-list-div dpn">
             <div class="toolbar mb20">
-                <a href="javascript:;" class="btn btn-primary mr10">
+                <a href="javascript:;" class="btn btn-primary mr10" data-toggle="modal"
+                   data-target="#resourceList">
                     <i class="fa fa-plus s_fs_12"></i>
                     添加资源位
                 </a>
-                <a href="javascript:;" class="btn btn-default">
+                <a href="javascript:;" class="btn btn-default resource-dels">
                     <i class="fa fa-trash-o"></i>
                     批量移除
                 </a>
@@ -203,7 +161,7 @@
                 <table class="table table-hover scrolltable" id="dataTables-example">
                     <thead>
                     <tr>
-                        <th><input type="checkbox"></th>
+                        <th><input type="checkbox" class="resourceListSelectAll" checked></th>
                         <th>资源位信息</th>
                         <th>网站行业</th>
                         <th>创意最低等级</th>
@@ -214,17 +172,7 @@
                     </tr>
                     </thead>
 
-                    <tbody>
-                    <tr>
-                        <th><input type="checkbox"></th>
-                        <td>Trident</td>
-                        <td>Trident</td>
-                        <td>Trident</td>
-                        <td>Trident</td>
-                        <td>Trident</td>
-                        <td>Trident</td>
-                        <td>Trident</td>
-                    </tr>
+                    <tbody class="resource-list-table-tr">
                     </tbody>
                 </table>
             </div>
@@ -235,132 +183,65 @@
     <!--选择投放资源位 end-->
 
     <!--设置出价 start-->
-    <div class="control-group pd15">
+    <div class="control-group">
 
         <div class="well s_fs_16">
-            <i class="fa fa-tasks"></i>
-            设置出价
+            <i class="fa fa-tasks"></i> 设置出价
+
+            <span class="ml20 mr10 s_fs_14">
+                智能调价 <i class="fa fa-question-circle tips-help" data-placement="bottom"
+                        data-toggle="tab"
+                        title="可选择优化进店和优化成交时：智能调价是全面分析消费者与您店铺的关系，根据您选择的调优目标为您在合适的人群上进行出价的自动调整，其中优化成交是优化成交转化效果的，优化进店是优化点击率的。调价范围在（－30%，＋30%）左右，因为市场竞争关系有部分流量可能超过正负30%调价范围，属于正常现象。提示：1.开启后第二天生效，持续使用效果更佳；2.计划展现量超过5000或选择常用定向时，效果更佳；3.该功能可能使扣费高于出价。"></i>
+            </span>
+
+            <label class="mr10 s_fs_14">
+                <input type="radio" name="intelligentBid" value="1">
+                <span class="ml5">优化进店</span>
+            </label>
+
+            <label class="mr10 s_fs_14">
+                <input type="radio" name="intelligentBid" checked value="2">
+                <span class="ml5">优化成交</span>
+            </label>
         </div>
 
-        <div class="text-center pt40 pb60">
+        <div class="text-center pt40 pb60 handle-unit-crossover-premium">
             <div class="s_fs_16">请先添加人群和资源位</div>
         </div>
 
-        <div class="mb60 mt20 offer-assistant dpn">
+        <div class="mb60 mt20 offer-assistant dpn set-price">
             <div class="control-group form-inline pb60">
                 <div class="col-md-5 lh35">
                     出价助手
                     <span class="s_fc_9">（帮您快速完成出价）</span>
                 </div>
                 <div class="col-md-7">
-                    <label class="mr10">
-                        <input type="radio" name="type" value="1">
-                        <span class="ml5">市场平均价格</span>
-                        <i class="fa fa-question-circle tips-help"></i>
-                    </label>
 
                     <label class="mr10">
-                        <input type="radio" name="type" value="2">
                         <span class="ml5">批量出价</span>
                         <i class="fa fa-question-circle tips-help"></i>
                     </label>
 
                     <div class="input-group wi100 mr30">
-                        <input type="text" class="form-control">
-                        <span class="input-group-addon">%</span>
+                        <input type="text" class="form-control batch-offer">
+                        <span class="input-group-addon">元</span>
                     </div>
 
-                    <a class="btn btn-gray mr10">应用</a>
-                    <a class="btn">全部展开</a>
+                    <span class="btn btn-gray mr10 batch-offer-confirm">应用</span>
+                    <span class="btn all-expanded-or-closed">全部收起</span>
                 </div>
             </div>
-            <div style="min-height: 300px; max-height: 600px; overflow-y: auto;">
-                <div class="control-group form-inline pb60">
-
-                    <div class="col-md-5 lh35">
-                        <label class="mr10">
-                            <input class="mr5" type="radio" name="type" value="1">
-                        </label>
-                        <i class="fa fa-plus-circle"></i>
-                        <span class="ml5">达摩盘_平台精选：电视人群包</span>
-                    </div>
-
-                    <div class="col-md-7">
-                        <div class="col-md-offset-2 col-md-10 pl40">
-                            <label class="mr10">
-                                <input type="radio" name="type" value="2">
-                                <span class="ml5">批量出价</span>
-                                <i class="fa fa-question-circle tips-help"></i>
-                            </label>
-
-                            <div class="input-group wi100 mr30">
-                                <input type="text" class="form-control">
-                                <span class="input-group-addon">元</span>
-                            </div>
-
-                            <span>市场平均价格<i class="fa fa-question-circle tips-help"></i> 1.50 元</span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <ul class="ml40">
-                            <li style="height: 52px;">
-                                <div class="col-md-5 lh35 s_fc_9">无线_流量包_网上购物_手淘app_手淘焦点图</div>
-                                <div class="col-md-7">
-                                    <div class="col-md-offset-2 col-md-10" style="padding-left: 97px">
-                                        <span class="ml5">出价</span>
-
-                                        <div class="input-group wi100 mr30">
-                                            <input type="text" class="form-control">
-                                            <span class="input-group-addon">元</span>
-                                        </div>
-
-                                        <span class="s_fc_9">市场平均价格<i class="fa fa-question-circle tips-help"></i> 1.50 元</span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li style="height: 52px;">
-                                <div class="col-md-5 lh35 s_fc_9">无线_流量包_网上购物_手淘app_手淘焦点图</div>
-                                <div class="col-md-7">
-                                    <div class="col-md-offset-2 col-md-10" style="padding-left: 97px">
-                                        <span class="ml5">出价</span>
-
-                                        <div class="input-group wi100 mr30">
-                                            <input type="text" class="form-control">
-                                            <span class="input-group-addon">元</span>
-                                        </div>
-
-                                        <span class="s_fc_9">市场平均价格<i class="fa fa-question-circle tips-help"></i> 1.50 元</span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li style="height: 52px;">
-                                <div class="col-md-5 lh35 s_fc_9">无线_流量包_网上购物_手淘app_手淘焦点图</div>
-                                <div class="col-md-7">
-                                    <div class="col-md-offset-2 col-md-10" style="padding-left: 97px">
-                                        <span class="ml5">出价</span>
-
-                                        <div class="input-group wi100 mr30">
-                                            <input type="text" class="form-control">
-                                            <span class="input-group-addon">元</span>
-                                        </div>
-
-                                        <span class="s_fc_9">市场平均价格<i class="fa fa-question-circle tips-help"></i> 1.50 元</span>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="set-price-div" style="min-height: 300px; max-height: 600px; overflow-y: auto;">
             </div>
         </div>
 
     </div>
     <!--设置出价 end-->
 
-    <div class="control-group pd15">
-        <span class="btn btn-primary create-plan">下一步，上传创意</span>
-        <span class="btn btn-gray create-plan">返回上一步</span>
+    <div class="control-group">
+        <span class="btn btn-primary create-unit"
+              data-url="<?= \yii\helpers\Url::toRoute('unit/ajax-save-set-unit') ?>">下一步，上传创意</span>
+        <span class="btn btn-gray plan-last-step">返回上一步</span>
     </div>
 
 </div>
@@ -451,7 +332,8 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary pull-left">
+                <button type="button" class="btn btn-primary pull-left similarBabyOrientationConfirm"
+                        data-dismiss="modal">
                     确定
                 </button>
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">
@@ -512,7 +394,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary pull-left">
+                <button type="button" class="btn btn-primary pull-left damoDiskOrientationConfirm" data-dismiss="modal">
                     确定
                 </button>
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">
@@ -885,8 +767,9 @@
 
                         <div class="col-md-12">
                             <div class="input-group col-md-6 mb15">
-                                <input type="text" class="form-control" placeholder="这里可以输入兴趣点的关键词进行搜索，如：连衣裙">
-                                <span class="input-group-addon btn btn-primary">搜索</span>
+                                <input type="text" name="interestName" class="form-control"
+                                       placeholder="这里可以输入兴趣点的关键词进行搜索，如：连衣裙">
+                                <span class="input-group-addon btn btn-primary seniorInterest">搜索</span>
                             </div>
 
                             <div class="pt5">
@@ -1003,8 +886,8 @@
                     </div>
 
                     <div class="input-group col-md-3 pull-right">
-                        <input type="text" class="form-control" placeholder="搜索资源位">
-                        <span class="input-group-addon btn btn-primary">搜索</span>
+                        <input type="text" name="adzoneName" class="form-control" placeholder="搜索资源位">
+                        <span class="input-group-addon btn btn-primary resource-list-model-search">搜索</span>
                     </div>
                 </div>
 
@@ -1014,7 +897,7 @@
                         <table class="table table-hover scrolltable" id="dataTables-example">
                             <thead>
                             <tr>
-                                <th><input type="checkbox"></th>
+                                <th><input type="checkbox" class="resourceListSelectAll"></th>
                                 <th><span class="cp tips-help" data-placement="bottom" data-toggle="tab" title="资源位名称。">资源位</span>
                                 </th>
                                 <th><span class="cp tips-help" data-placement="bottom" data-toggle="tab"
@@ -1046,47 +929,17 @@
                             </tr>
                             </thead>
 
-                            <tbody class="resource-list-tr">
-                            <tr>
-                                <th><input type="checkbox"></th>
-                                <td>Trident</td>
-                                <td>Trident</td>
-                                <td>Trident</td>
-                                <td>Trident</td>
-                                <td>Trident</td>
-                                <td>Trident</td>
-                                <td>Trident</td>
-                                <td>Trident</td>
-                                <td>Trident</td>
-                                <td>Trident</td>
-                                <td>Trident</td>
-                                <td>Trident</td>
-                                <td>Trident</td>
-                            </tr>
+                            <tbody class="resource-list-model-tr">
                             </tbody>
                         </table>
                     </div>
 
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination">
-                            <li>
-                                <a href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li><a href="#">1</a></li>
-                            <li>
-                                <a href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <div class="resource-list-model-page"></div>
                 </div>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary pull-left">
+                <button type="button" class="btn btn-primary pull-left resource-list-confirm" data-dismiss="modal">
                     确定
                 </button>
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">

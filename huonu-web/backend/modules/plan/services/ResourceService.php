@@ -8,11 +8,13 @@
 
 namespace backend\modules\plan\services;
 
+use backend\models\AuthorizeUser;
 use backend\models\TaobaoZsAdzoneList;
 use backend\models\ZsAdzoneCondition;
 use common\components\CtHelper;
 use common\services\BaseService;
 use Yii;
+use yii\data\Pagination;
 
 class ResourceService extends BaseService
 {
@@ -31,11 +33,34 @@ class ResourceService extends BaseService
      */
     public function getResources()
     {
-        $get = Yii::$app->request->get();
+        $adzoneName = Yii::$app->request->get('adzoneName');
 
-        $tt = TaobaoZsAdzoneList::find()->asArray()->all();
+        $setPlan = Yii::$app->session->get('setPlan');
+        $taobaoUserId = $setPlan['taobao_user_id'];
+        $taobaoUser = AuthorizeUser::findOne($taobaoUserId)->toArray();
+        if (empty($taobaoUser)) {
+            CtHelper::response(false, '店铺不存在');
+        }
 
-        CtHelper::response(true, '', 'sssssssssssssssssss');
+        $model = TaobaoZsAdzoneList::find()->where(['taobao_user_id' => $taobaoUserId]);
+
+        if ($adzoneName != '') {
+            $model->andWhere(['like', 'adzone_name', $adzoneName]);
+        }
+
+        $taobaoZsAdzoneCount = $model->count();
+        $taobaoZsAdzonePage = new Pagination(['totalCount' => $taobaoZsAdzoneCount, 'pageSize' => '40']);
+        $taobaoZsAdzones = $model->offset($taobaoZsAdzonePage->offset)
+            ->limit($taobaoZsAdzonePage->limit)
+            ->orderBy(['adzone_id' => SORT_DESC])
+            ->asArray()
+            ->all();
+
+        $result['taobaoZsAdzonePageCount'] = $taobaoZsAdzonePage->getPageCount();
+        $result['taobaoZsAdzoneCount'] = $taobaoZsAdzoneCount;
+        $result['taobaoZsAdzones'] = $taobaoZsAdzones;
+
+        CtHelper::response(true, '', $result);
     }
 
     /**

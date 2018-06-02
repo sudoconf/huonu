@@ -179,25 +179,6 @@ $(function () {
         var workDays = $('#work-days').val();
         var weekEnds = $('#week-ends').val();
 
-        // var array = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'];
-        // var workDaysValue = ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'];
-        //
-        // var weekEndsValue = ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'];
-        //
-        // for (var i = 0; i < workDays.length; i++) {
-        //     var index = $.inArray(workDays[i], array);
-        //     if (index >= 0) {
-        //         workDaysValue.splice(index, 1, 'true');
-        //     }
-        // }
-        //
-        // for (var i = 0; i < weekEnds.length; i++) {
-        //     var index = $.inArray(weekEnds[i], array);
-        //     if (index >= 0) {
-        //         weekEndsValue.splice(index, 1, 'true');
-        //     }
-        // }
-
         var url = $('.ajax-create-time-template').val();
         $.ajax({
             url: url,
@@ -275,10 +256,6 @@ $(function () {
         }
     });
 
-    // 选中时间
-    // $('.periodWrapper .period ul li').click(function () {
-    // });
-
     // ajax 提交 计划设置
     $('.create-plan').click(function () {
 
@@ -316,7 +293,7 @@ $(function () {
                     $('.tab-pane').eq(1).addClass('active in');
 
                 } else {
-                    LAYER_MSG_FUNCTION(response.message, 2, i);
+                    LAYER_MSG_FUNCTION('服务器错误', 2, i);
                 }
 
             },
@@ -325,6 +302,19 @@ $(function () {
             }
         });
 
+    });
+
+    // 监听每日预算
+    $('input[name="day_budget"]').bind('input porpertychange', function () {
+        var _this, value, reg;
+        _this = $(this);
+        value = _this.val();
+        reg = /^[1-9]\d*$/;
+        if (reg.test(value)) {
+            $('.error').hide();
+        } else {
+            $('.error').show().css('color', 'red');
+        }
     });
 
 });

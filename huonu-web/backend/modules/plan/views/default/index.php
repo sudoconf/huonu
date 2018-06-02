@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use backend\components\widget\GoLinkPager;
 use backend\models\TaobaoZsCampList;
@@ -52,41 +53,69 @@ $this->params['breadcrumbs'][] = $this->title;
                     <!-- 计划 -->
                     <div class="tab-pane fade in active">
 
-                        <div class="control-group form-inline pt15 pb15">
-                            <a href="<?= Url::toRoute('create') ?>" id="create-plan"
-                               class="btn btn-primary create-plan">
-                                <i class="fa fa-plus"></i>
-                                新建推广计划
-                            </a>
+                        <div class="control-group pt15 pb15">
+                            <div class="fl mr10">
+                                <a href="<?= Url::toRoute('create') ?>" id="create-plan"
+                                   class="btn btn-primary create-plan">
+                                    <i class="fa fa-plus"></i>
+                                    新建推广计划
+                                </a>
+                            </div>
 
-                            <select name="" class="form-control">
-                                <option>全部状态</option>
-                                <option>有效计划</option>
-                                <option>正在投放</option>
-                                <option>暂停投放</option>
-                                <option>等待投放</option>
-                                <option>结束投放</option>
-                                <option>投放故障</option>
-                            </select>
+                            <div class="form-inline">
+                                <?php $form = ActiveForm::begin([
+                                    'id' => 'camp-form',
+                                    'method' => 'get',
+                                ]); ?>
+                                <select name="customerId" class="form-control">
+                                    <option value="" <?= ($get['customerId'] == '') ? 'selected' : '' ?>>请选择客户
+                                    </option>
+                                    <?php foreach ($customers as $k => $v) { ?>
+                                        <option value="<?= $v['taobao_user_id'] ?>" <?= ($get['customerId'] == $v['taobao_user_id']) ? 'selected' : '' ?>>
+                                            <?= $v['taobao_user_nick'] ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
 
-                            <select name="" class="form-control">
-                                <option>全部计划类型</option>
-                                <option>自定义计划</option>
-                                <option>系统推荐计划</option>
-                                <option>系统托管计划</option>
-                            </select>
+                                <select name="onlineStatus" class="form-control">
+                                    <option value="99" <?= ($get['onlineStatus'] == 99) ? 'selected' : '' ?>>全部状态
+                                    </option>
+                                    <option value="1" <?= ($get['onlineStatus'] == 1) ? 'selected' : '' ?>>正在投放</option>
+                                    <option value="0" <?= ($get['onlineStatus'] == 0) ? 'selected' : '' ?>>暂停投放</option>
+                                    <option value="9" <?= ($get['onlineStatus'] == 9) ? 'selected' : '' ?>>结束投放</option>
+                                </select>
 
-                            <select name="" class="form-control">
-                                <option>所有付费方式</option>
-                                <option>按展现付费(CPM)</option>
-                                <option>按点击付费(CPC)</option>
-                            </select>
+                                <select name="marketingdemand" class="form-control">
+                                    <option value="" <?= ($get['marketingdemand'] == 0) ? 'selected' : '' ?>>全部计划类型
+                                    </option>
+                                    <option value="-1" <?= ($get['marketingdemand'] == -1) ? 'selected' : '' ?>>自定义计划
+                                    </option>
+                                    <option value="1" <?= ($get['marketingdemand'] == 1) ? 'selected' : '' ?>>日常托管计划
+                                    </option>
+                                    <option value="2" <?= ($get['marketingdemand'] == 2) ? 'selected' : '' ?>>日常推荐计划
+                                    </option>
+                                    <option value="3" <?= ($get['marketingdemand'] == 3) ? 'selected' : '' ?>>拉新托管计划
+                                    </option>
+                                    <option value="4" <?= ($get['marketingdemand'] == 4) ? 'selected' : '' ?>>拉新推荐计划
+                                    </option>
+                                </select>
+
+                                <select name="type" class="form-control">
+                                    <option value="" <?= ($get['type'] == 0) ? 'selected' : '' ?>>所有付费方式</option>
+                                    <option value="2" <?= ($get['type'] == 2) ? 'selected' : '' ?>>按展现付费(CPM)</option>
+                                    <option value="8" <?= ($get['type'] == 8) ? 'selected' : '' ?>>按点击付费(CPC)</option>
+                                </select>
+
+                                <input type="text" name="planName" class="form-control" value="<?= $get['planName'] ?>"
+                                       placeholder="请输入计划名称">
+                                <?php ActiveForm::end(); ?>
+                            </div>
 
                         </div>
 
                         <div class="control-group table-responsive">
 
-                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <table class="table table-hover" id="dataTables-example">
                                 <thead>
                                 <tr>
                                     <th><input type="checkbox"></th>
@@ -114,7 +143,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </thead>
                                 <tbody class="plan-table">
 
-                                <?php foreach ($models as $k => $v) { ?>
+                                <?php foreach ($camps as $k => $v) { ?>
                                     <tr class="odd gradeX operation-open">
                                         <th><input type="checkbox"></th>
                                         <td>
@@ -155,23 +184,31 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <?= $v['sort'] ? '<i class="fa fa-chevron-circle-up displacement-2 s_fs_18 s_fc_ct cursor-help" data-placement="bottom" data-toggle="tab" title="置顶计划"></i>' : '' ?>
                                             <?= $v['name'] ?>
                                         </td>
-                                        <td><?= date('Y-m-d', strtotime($v['start_time'])) . ' - ' . date('Y-m-d', strtotime($v['end_time'])) ?></td>
+                                        <td>
+                                            <div class="nowrap mb10">
+                                                起：<?= date('Y-m-d', strtotime($v['start_time'])) ?>
+                                            </div>
+                                            <div class="nowrap">
+                                                止：<?= date('Y-m-d', strtotime($v['end_time'])) ?>
+                                            </div>
+                                        </td>
                                         <td>
                                             <i class="zs_iconfont s_fc_9 s_fs_18 cursor-help" data-placement="bottom"
                                                data-toggle="tab" title="按图片单次点击出价，注：展现不另外计费。"></i>
                                             <?= $v['day_budget'] / 100 ?>
                                         </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td><?= (!$v['charge']) ? '--' : $v['charge'] ?></td>
+                                        <td><?= (!$v['ad_pv']) ? '--' : $v['ad_pv'] ?></td>
+                                        <td><?= (!$v['click']) ? '--' : $v['click'] ?></td>
+                                        <td><?= (!$v['ad_pv']) ? '--' : round($v['charge'] / ($v['ad_pv'] / 1000), 2) ?></td>
+                                        <td><?= (!$v['click'] || !$v['ad_pv']) ? '--' : (round(($v['click'] / $v['ad_pv']), 2) * 100) . '%' ?></td>
+                                        <td><?= (!$v['charge'] || !$v['click']) ? '--' : round(($v['charge'] / $v['click']), 2) ?></td>
                                     </tr>
                                     <tr class="odd gradeX dpn">
                                         <td colspan="11" class="operation-td">
                                             <!--<a href="javascript:;" class="btn btn-primary mr10">设置</a>-->
-                                            <!--<a href="javascript:;" class="btn btn-primary mr10">详情</a>-->
+                                            <a href="<?= Url::toRoute(['unit/index', 'campaignId' => $v['id']]) ?>"
+                                               class="btn btn-primary mr10">详情</a>
                                             <!--<a href="javascript:;" class="btn btn-primary mr10">编辑</a>-->
                                             <a href="javascript:;" class="btn btn-primary mr10 ajax-remove-plan"
                                                data-url="<?= Url::toRoute(['ajax-remove-plan', 'planId' => $v['id'], 'taobaoUserId' => $v['taobao_user_id']]) ?>"
@@ -211,6 +248,27 @@ $this->params['breadcrumbs'][] = $this->title;
 <script>
 
     $(function () {
+
+        $("select[name='customerId']").change(function () {
+            $('#camp-form').submit();
+        });
+
+        $("select[name='onlineStatus']").change(function () {
+            $('#camp-form').submit();
+        });
+
+        $("select[name='marketingdemand']").change(function () {
+            $('#camp-form').submit();
+        });
+
+        $("select[name='type']").change(function () {
+            $('#camp-form').submit();
+        });
+
+        $("input[name='planName']").blur(function () {
+            $('#camp-form').submit();
+        });
+
         $("[data-toggle='tab']").tooltip(); // 工具提示（Tooltip）插件 - 锚
 
         // 改变状态

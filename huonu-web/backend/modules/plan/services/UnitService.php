@@ -10,6 +10,8 @@ namespace backend\modules\plan\services;
 
 use backend\models\TaobaoAuthorizeUser;
 use backend\models\TaobaoZsAdgroupList;
+use backend\models\TaobaoZsAdzoneList;
+use backend\models\TaobaoZsDmpList;
 use common\components\CtHelper;
 use common\components\Toolkit\CurlToolkit;
 use common\services\BaseService;
@@ -23,6 +25,57 @@ class UnitService extends BaseService
     public function __construct()
     {
         $this->get = Yii::$app->request->get();
+    }
+
+    /**
+     * 保存session 设置
+     */
+    public function saveSetUnit()
+    {
+        $get = $this->get;
+
+        if (!isset($get['crowds'])) {
+            CtHelper::response(false, '参数错误');
+        }
+
+        $setUnit = Yii::$app->session->get('setUnit');
+        if ($setUnit && is_array($setUnit)) {
+            Yii::$app->session->remove('setUnit');
+        }
+        Yii::$app->session->set('setUnit', $get);
+        CtHelper::response(true, '操作成功');
+    }
+
+    /**
+     * 获取session 设置
+     */
+    public function getSetUnit()
+    {
+        $setUnit = Yii::$app->session->get('setUnit');
+
+        if (empty($setUnit) && !isset($setUnit['group_name'])) {
+            $groupName = sprintf('智行慧投_自定义单元_%s', date('Ymd_His'));
+        } else {
+            $groupName = $setUnit['group_name'];
+        }
+
+        $adzoneBidList = [];
+        if (isset($setUnit['adzone_bid_list']) && $setUnit['adzone_bid_list'] != '') {
+            $adzoneIds = explode(',', $setUnit['adzone_bid_list']);
+            $adzoneBidList = TaobaoZsAdzoneList::find()->where(['in', 'adzone_id', $adzoneIds])->asArray()->all();
+        }
+
+        $dmpCrowds = [];
+        if (isset($setUnit['dmpCrowdIds']) && $setUnit['dmpCrowdIds'] != '') {
+            $dmpCrowdIds = explode(',', $setUnit['dmpCrowdIds']);
+            $dmpCrowds = TaobaoZsDmpList::find()->where(['in', 'dmp_crowd_id', $dmpCrowdIds])->asArray()->all();
+        }
+
+        $result['adzoneBidList'] = $adzoneBidList;
+        $result['dmpCrowds'] = $dmpCrowds;
+        $result['group_name'] = $groupName;
+        $result['intelligent_bid'] = $setUnit['intelligent_bid'];
+        CtHelper::response(true, '', $result);
     }
 
     // TODO 改变单元状态

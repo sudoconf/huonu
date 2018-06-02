@@ -22,9 +22,7 @@ class SetUpParameterService extends BaseService
      */
     public function saveParameter()
     {
-
         $data = Yii::$app->request->post();
-
         if (empty($data)) {
             return CtHelper::response('false', '参数错误');
         }

@@ -1,9 +1,12 @@
 body {
     background-color: #f8f8f8;
     outline: none;
+    font-size: 12px;
 }
 
 body label{ font-weight: normal}
+
+.navbar-static-top{ margin: 0px; padding: 0px}
 
 /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
 ::-webkit-scrollbar
@@ -737,6 +740,7 @@ ul.custom-fields li.placeholder:before {
 .pdl1{ padding-left: 1%}
 .pdr10{ padding-right: 10px}
 .pdr20{ padding-right: 20px}
+.pdr40{ padding-right: 40px}
 .pdr70{ padding-right: 70px}
 
 .pb5{padding-bottom: 5px}
@@ -749,6 +753,7 @@ ul.custom-fields li.placeholder:before {
 .pt5{ padding-top: 5px}
 .pt10{ padding-top: 10px}
 .pt15{ padding-top: 15px}
+.pt20{ padding-top: 20px}
 .pt25{ padding-top: 25px}
 .pt20{ padding-top: 20px}
 .pt40{ padding-top: 40px}
@@ -766,6 +771,7 @@ body .s_fs_20{font-size:20px}
 .mb30 { margin-bottom: 30px}
 .mb60 { margin-bottom: 60px}
 
+.mt10{ margin-top: 10px}
 .mt20{ margin-top: 20px}
 .mt40{ margin-top: 40px}
 .mt80{ margin-top: 80px}
@@ -785,18 +791,21 @@ body .s_fs_20{font-size:20px}
 
 .s_fc_c{ color: #4d7fff}
 .s_fc_ct{color: #ccc;}
+.s_fc_3{color: #333;}
 .s_fc_9{ color: #999}
 .s_fc_green{ color: #51A300}
 .s_fc_red{ color: #a40100}
-.bg-fafafa{background-color: #fafafa}
-.s_fc_brand{ color: #4d7fff}
+body .bg-fafafa{background-color: #fafafa}
+body .s_fc_brand{ color: #4d7fff}
 .radius4{border-radius:4px}
 body .qualification_status_P{ color: #51A300}
+body .s_fc_notice{color: #ffb400;}
 
 body .font-tahoma{    font-family: Tahoma;}
 
-body .s_fs_26{ font-size: 26px}
 body .s_fs_18{ font-size: 18px}
+body .s_fs_14{ font-size: 14px}
+body .s_fs_26{ font-size: 26px}
 
 b, body .bold, body .fb, strong{font-weight: 700;}
 
@@ -816,6 +825,9 @@ body .h32{ height: 32px}
 .bb-e6{border-bottom: 1px solid #e6e6e6;}
 .tips-help{margin-left: 2px; color: #ccc; cursor: help; font-size: 14px;}
 
+body .word-break{word-break: break-all;}
+body .dpib{display: inline-block;}
+
 .w60 {width: 60px;}
 .w90{ width: 90px}
 .wi100{ width: 100px}
@@ -823,6 +835,7 @@ body .h32{ height: 32px}
 .w140{ width: 140px}
 .w150{ width: 150px}
 .w180{ width: 180px}
+.w300{ width: 300px}
 
 .bx-anim-radio {
     appearance: none;
@@ -950,7 +963,7 @@ body .ellipsis, body .nowrap, body .text-overflow{overflow: hidden;
 
 
 /*地域设置*/
-.dpIb{ display: inline-block}
+body .dpIb{ display: inline-block}
 .regionHalf{float: left;
     width: 50%;}
 .w100{ width: 100%}
@@ -1010,8 +1023,8 @@ body .ellipsis, body .nowrap, body .text-overflow{overflow: hidden;
     box-sizing: border-box;
     padding: 10px;
     overflow-y: auto;}
-.key-result-box .key-result-items .key-result-item{    height: 26px;
-    line-height: 26px;
+.key-result-box .key-result-items .key-result-item{    height: 30px;
+    line-height: 29px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
@@ -1059,7 +1072,7 @@ body .dialog-body{padding: 12px 24px;}
 .bannerCreativeBox{margin-bottom: 20px;
     border-radius: 4px;
     border: 1px solid #e6e6e6;}
-.bannerCreativeBox .boxCreatives{    padding: 20px 0 0 19px;
+.bannerCreativeBox .boxCreatives{    padding: 20px 0 0 18px;
     background-color: #fff;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;}
@@ -1205,3 +1218,23 @@ body .table tbody tr td{padding: 22px 8px;
     width: 102px;
     text-align: center;
     background-color: #fafafa;}
+.creativeIcons{padding: 0px; min-height: 182px; max-height: 516px; overflow-y: auto;}
+.creativeIcons li{width: 200px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;}
+.creativeIcons li .iconLine{display: block;
+    width: 100%;
+    height: 22px;
+    padding-right: 4px;
+    padding-left: 4px;
+    line-height: 22px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;}
+
+.fields-content{    min-height: 370px;
+    max-height: 687px; padding-left: 25px}
+.fields-content li{
+    line-height: 60px;
+    border-bottom: 1px solid rgb(230, 230, 230);}

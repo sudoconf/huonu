@@ -53,7 +53,7 @@ $this->title = '客户计划 - 新建计划';
                             <!--                                </a>-->
                             <!--                            </li>-->
 
-                            <li class="disabled">
+                            <li class="active">
                                 <a href="#set-plan" data-toggle="tab" data-placement="top" title="设置计划">
                                     <i class="create-step">1</i>
                                     <i class="glyphicon glyphicon-list-alt"></i>
@@ -61,7 +61,7 @@ $this->title = '客户计划 - 新建计划';
                                 </a>
                             </li>
 
-                            <li class="active">
+                            <li class="disabled">
                                 <a href="#set-unit" data-toggle="tab" data-placement="top" title="设置单元">
                                     <i class="create-step">2</i>
                                     <i class="glyphicon glyphicon-list"></i>
@@ -89,7 +89,7 @@ $this->title = '客户计划 - 新建计划';
                             <!--设置计划 end-->
 
                             <!--设置单元 start-->
-                            <?= $this->render('set-unit.php', ['setUnit' => $setUnit]); ?>
+                            <?= $this->render('set-unit.php'); ?>
                             <!--设置单元 end-->
 
                             <!--添加创意 start-->

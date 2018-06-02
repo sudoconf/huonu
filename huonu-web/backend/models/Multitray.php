@@ -52,6 +52,50 @@ class Multitray extends \yii\db\ActiveRecord
         'roi' => '投资回报率',
     ];
 
+    // 复盘 - 选择数据字段
+    public static $multitrayFields = [
+        '消耗' => [
+            'charge' => '消耗'
+        ],
+        '触达' => [
+            'ad_pv' => '展现量'
+        ],
+        '兴趣' => [
+            'click' => '点击量',
+            'uv' => '访客'
+        ],
+        '意向' => [
+            'deep_inshop_uv' => '深度进店',
+            'avg_access_time' => '访问时长',
+            'avg_access_page_num' => '访问页面数'
+        ],
+        '行动' => [
+            'inshop_item_col_num' => '收藏宝贝量',
+            'dir_shop_col_num' => '收藏店铺量',
+            'cart_num' => '添加购物车量',
+            'gmv_inshop_num' => '拍下订单量',
+            'gmv_inshop_amt' => '拍下订单金额',
+            'commodity_collection_rate' => '商品收藏率',
+            'purchase_rate_of_goods' => '商品加购率',
+            'commodity_collection_cost' => '商品收藏成本',
+            'purchase_cost_of_goods' => '商品加购成本',
+            'purchase_cost_of_goods_collection' => '商品收藏加购成本'
+        ],
+        '成交' => [
+            'alipay_in_shop_num' => '成交订单量',
+            'alipay_inshop_amt' => '成交订单金额',
+            'average_cost_of_order' => '订单平均成本',
+            'order_average_amount' => '订单平均金额'
+        ],
+        '成交' => [
+            'ecpm' => '千次展现成本',
+            'ctr' => '点击率',
+            'ecpc' => '点击单价',
+            'cvr' => '点击转化率',
+            'roi' => '投资回报率'
+        ],
+    ];
+
     /**
      * @inheritdoc
      */
@@ -79,7 +123,7 @@ class Multitray extends \yii\db\ActiveRecord
             [['taobao_name'], 'string', 'max' => 30],
             [['multitray_name'], 'string', 'max' => 50],
             [['multitray_effect_model'], 'string', 'max' => 15],
-            [['multitray_field'], 'string', 'max' => 150],
+            [['multitray_field'], 'string', 'max' => 255],
             [['is_delete'], 'default', 'value' => 0], // 添加默认值
         ];
     }

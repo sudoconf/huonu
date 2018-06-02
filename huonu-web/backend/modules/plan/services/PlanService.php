@@ -19,9 +19,10 @@ use common\services\BaseService;
 use Yii;
 use yii\base\InvalidArgumentException;
 
-// 计划 service TODO
 class PlanService extends BaseService
 {
+    public static $timeArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
+
     /**
      * 新建计划
      * @return array
@@ -69,16 +70,8 @@ class PlanService extends BaseService
 
         $setPlan['userTimeTemplates'] = $userTimeTemplateModal->asArray()->all();
 
-        $setUnit = Yii::$app->session->get('setUnit');
-        if (empty($setUnit)) {
-            $setUnit = [
-                'adgroup_name' => sprintf('智行慧投_自定义单元_%s', date('Ymd_His')),
-            ];
-        }
-
         $result = [
-            'setPlan' => $setPlan,
-            'setUnit' => $setUnit
+            'setPlan' => $setPlan
         ];
         return $result;
     }
@@ -86,7 +79,7 @@ class PlanService extends BaseService
     /**
      * 保存计划设置到session
      */
-    public function savePlan()
+    public function saveSetPlan()
     {
         $data = Yii::$app->request->post();
 
@@ -102,8 +95,77 @@ class PlanService extends BaseService
             Yii::$app->session->remove('setPlan');
         }
         Yii::$app->session->set('setPlan', $data);
-
         return CtHelper::response(true, '保存成功');
+    }
+
+    /**
+     * 创建计划
+     */
+    public function savePlan()
+    {
+        $setPlan = Yii::$app->session->get('setPlan');
+        if (empty($setPlan)) {
+            CtHelper::response(false, '参数错误');
+        }
+
+        $setUnit = Yii::$app->session->get('setUnit');
+        if (empty($setUnit)) {
+            CtHelper::response(false, '参数错误');
+        }
+
+        $setCreative = Yii::$app->session->get('setCreative');
+        if (empty($setCreative)) {
+            CtHelper::response(false, '参数错误');
+        }
+
+        // 获取地域
+        $userAreaTemplate = UserAreaTemplate::findOne($setPlan['area_template_id'])->toArray();
+        if (empty($userAreaTemplate)) {
+            CtHelper::response(false, '参数错误!');
+        }
+
+        $userTimeTemplate = UserTimeTemplate::findOne($setPlan['time_template_id'])->toArray();
+        if (empty($userTimeTemplate)) {
+            CtHelper::response(false, '参数错误!');
+        }
+
+        $timeTemplateWorkday = explode(',', $userTimeTemplate['time_template_workday']);
+        $timeTemplateWeekend = explode(',', $userTimeTemplate['time_template_weekend']);
+
+        $timeTemplateWorkday = implode(',', $this->timeCycle($timeTemplateWorkday));
+        $timeTemplateWeekend = implode(',', $this->timeCycle($timeTemplateWeekend));
+
+        // 计划参数
+        $fields['user_id'] = $setPlan['taobao_user_id'];
+        $fields['call_people'] = $setPlan['taobao_shop_name'];
+        $fields['camp_workday'] = $timeTemplateWorkday;
+        $fields['camp_weekend'] = $timeTemplateWeekend;
+        $fields['camp_type'] = $setPlan['payment_type'];
+        $fields['camp_name'] = $setPlan['name'];
+        $fields['area_id_list'] = $userAreaTemplate['area_id_list'];
+        $fields['speed_type'] = $setPlan['speed_type'];
+        $fields['day_budget'] = $setPlan['day_budget'] * 100;
+        $fields['start_time'] = $setPlan['start_time'] . ' 00:00:00';
+        $fields['end_time'] = $setPlan['end_time'] . ' 00:00:00';
+
+        // 单元参数
+        $fields['intelligent_bid'] = $setUnit['intelligent_bid'];
+        $fields['group_name'] = $setUnit['group_name'];
+
+        $adzoneBidListStr = '[' . $setUnit['adzoneBidListStr'] . ']';
+        $fields['adzone_bid_list'] = json_decode($adzoneBidListStr, true);
+
+        $crowds = '[' . $setUnit['crowds'] . ']';
+        $fields['crowds'] = json_decode($crowds, true);
+
+        // 创意参数
+        $fields['creativeIdList'] = $setCreative['creativeIdList'];
+
+        $url = '192.168.8.58:8080/huonu/zxht/operate/add_all';
+        $optData = 'fields=' . json_encode($fields, JSON_UNESCAPED_UNICODE);
+
+        $result = CurlToolkit::request('POST', $url, $optData);
+        CtHelper::response(true, '', $result['data']);
     }
 
     /**
@@ -190,7 +252,6 @@ class PlanService extends BaseService
     // TODO 计划报表
     public function planReport()
     {
-
     }
 
     /**
@@ -211,8 +272,8 @@ class PlanService extends BaseService
         }
 
         $data['user_id'] = $userInfo['taobao_user_id'];
+        $data['camp_id'] = $request['planId'];
         $data['call_people'] = $userInfo['taobao_user_nick'];
-        $data['campaign_id'] = $request['planId'];
 
         // 计划同步
         // $planUrl = "http://localhost:30005/huonu/zxht/sync/camp/rtrpts";
@@ -220,24 +281,24 @@ class PlanService extends BaseService
         $planResult = CurlToolkit::request('GET', $planUrl, $data);
 
         // 单元同步
-        // $adgroupUrl = "http://localhost:30005/huonu/zxht/sync/adgroup/rtrpts";
-        $adgroupUrl = "http://192.168.8.58:8080/huonu/zxht/sync/adgroup/rtrpts";
-        $adgroupResult = CurlToolkit::request('GET', $adgroupUrl, $data);
-
-        // 定向同步
-        // $targetUrl = "http://localhost:30005/huonu/zxht/sync/target/rtrpts";
-        $targetUrl = "http://192.168.8.58:8080/huonu/zxht/sync/target/rtrpts";
-        $targetResult = CurlToolkit::request('GET', $targetUrl, $data);
-
-        // 创意同步
-        // $creativeUrl = "http://localhost:30005/huonu/zxht/sync/creative/rtrpts";
-        $creativeUrl = "http://192.168.8.58:8080/huonu/zxht/sync/creative/rtrpts";
-        $creativeResult = CurlToolkit::request('GET', $creativeUrl, $data);
-
-        // 资源位同步
-        // $adzoneUrl = "http://localhost:30005/huonu/zxht/sync/adzone/rtrpts";
-        $adzoneUrl = "http://192.168.8.58:8080/huonu/zxht/sync/adzone/rtrpts";
-        $adzoneResult = CurlToolkit::request('GET', $adzoneUrl, $data);
+        // // $adgroupUrl = "http://localhost:30005/huonu/zxht/sync/adgroup/rtrpts";
+        // $adgroupUrl = "http://192.168.8.58:8080/huonu/zxht/sync/adgroup/rtrpts";
+        // $adgroupResult = CurlToolkit::request('GET', $adgroupUrl, $data);
+        //
+        // // 定向同步
+        // // $targetUrl = "http://localhost:30005/huonu/zxht/sync/target/rtrpts";
+        // $targetUrl = "http://192.168.8.58:8080/huonu/zxht/sync/target/rtrpts";
+        // $targetResult = CurlToolkit::request('GET', $targetUrl, $data);
+        //
+        // // 创意同步
+        // // $creativeUrl = "http://localhost:30005/huonu/zxht/sync/creative/rtrpts";
+        // $creativeUrl = "http://192.168.8.58:8080/huonu/zxht/sync/creative/rtrpts";
+        // $creativeResult = CurlToolkit::request('GET', $creativeUrl, $data);
+        //
+        // // 资源位同步
+        // // $adzoneUrl = "http://localhost:30005/huonu/zxht/sync/adzone/rtrpts";
+        // $adzoneUrl = "http://192.168.8.58:8080/huonu/zxht/sync/adzone/rtrpts";
+        // $adzoneResult = CurlToolkit::request('GET', $adzoneUrl, $data);
 
         CtHelper::response(true, '');
     }
@@ -271,5 +332,24 @@ class PlanService extends BaseService
         }
 
         return $fields;
+    }
+
+    /**
+     * 时间转换
+     * @param $timeStrArr
+     * @return array
+     */
+    public function timeCycle($timeStrArr)
+    {
+        $newTimeArr = [];
+        foreach (self::$timeArr as $k => $v) {
+
+            if (in_array($v, $timeStrArr)) {
+                $newTimeArr[$k] = 'true';
+            } else {
+                $newTimeArr[$k] = 'true';
+            }
+        }
+        return $newTimeArr;
     }
 }

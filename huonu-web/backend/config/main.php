@@ -43,13 +43,13 @@ return [
         ],
         'assetManager' => [
             'bundles' => [
-                //'yii\web\AssetManager' => false,
+                'yii\web\AssetManager' => false,
                 // 'yii\web\YiiAsset' => false,
                 // 'yii\widgets\ActiveFormAsset' => false,
                 // 'yii\validators\ValidationAsset' => false,
-                //'yii\bootstrap\BootstrapAsset' => false,
-                //'yii\bootstrap\BootstrapPluginAsset' => false,
-                //'yii\web\JqueryAsset' => false,
+                'yii\bootstrap\BootstrapAsset' => false,
+                'yii\bootstrap\BootstrapPluginAsset' => false,
+                'yii\web\JqueryAsset' => false,
                 // 'yii\grid\GridViewAsset' => false,
             ],
         ],

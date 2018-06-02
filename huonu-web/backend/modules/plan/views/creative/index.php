@@ -2,6 +2,7 @@
 
 use yii\helpers\Url;
 use backend\models\TaobaoZsCreativeList;
+use yii\widgets\ActiveForm;
 
 $this->title = '创意列表';
 $this->params['breadcrumbs'][] = $this->title;
@@ -12,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-12">
             <h3 class="page-title">
                 客户计划
-                <small><?= $this->title ?></small>
+                <small><?= (!empty($camp)) ? $camp['name'] : $this->title ?></small>
             </h3>
         </div>
     </div>
@@ -29,8 +30,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
-                <a href="<?= Url::toRoute('creative/index') ?>"><?= $this->title ?></a>
+                <a href="<?= Url::toRoute('creative/index') ?>"><?= (!empty($camp)) ? $camp['name'] : $this->title ?></a>
             </li>
+            <?php
+            if (!empty($adgroup)) {
+                ?>
+                <li>
+                    <i class="fa fa-angle-right"></i>
+                    <a href="#"><?= $adgroup['adgroup_name'] ?></a>
+                </li>
+                <?php
+            }
+            ?>
         </ul>
     </div>
 
@@ -38,60 +49,107 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-12">
             <div class="tabbable">
                 <ul class="nav nav-pills">
-                    <li class=""><a href="<?= Url::toRoute('default/index') ?>" title="计划">计划</a></li>
-                    <li class=""><a href="<?= Url::toRoute('unit/index') ?>" title="单元">单元</a></li>
-                    <li class=""><a href="<?= Url::toRoute('target/index') ?>" title="定向">定向</a></li>
-                    <li class=""><a href="<?= Url::toRoute('resource/index') ?>" title="资源位">资源位</a></li>
-                    <li class="active"><a href="<?= Url::toRoute('creative/index') ?>" data-placement="top"
-                                          data-toggle="tab" title="创意">创意</a></li>
+                    <?php
+                    if (isset($get['campaignId'])) {
+                        ?>
+                        <?php if (!empty($adgroup)) {
+                            ?>
+                            <li class=""><a
+                                        href="<?= Url::toRoute(['target/index', 'campaignId' => $get['campaignId'], 'adgroupId' => $get['adgroupId']]) ?>"
+                                        title="定向">定向</a></li>
+                            <li class=""><a
+                                        href="<?= Url::toRoute(['resource/index', 'campaignId' => $get['campaignId'], 'adgroupId' => $get['adgroupId']]) ?>"
+                                        title="资源位">资源位</a></li>
+                            <li class="active"><a
+                                        href="<?= Url::toRoute(['creative/index', 'campaignId' => $get['campaignId'], 'adgroupId' => $get['adgroupId']]) ?>"
+                                        data-placement="top"
+                                        data-toggle="tab" title="创意">创意</a></li>
+                        <?php } else {?>
+                            <li class=""><a href="<?= Url::toRoute(['unit/index', 'campaignId' => $get['campaignId']]) ?>"
+                                            title="单元">单元</a></li>
+                            <li class=""><a
+                                        href="<?= Url::toRoute(['target/index', 'campaignId' => $get['campaignId']]) ?>"
+                                        title="定向">定向</a></li>
+                            <li class=""><a
+                                        href="<?= Url::toRoute(['resource/index', 'campaignId' => $get['campaignId']]) ?>"
+                                        title="资源位">资源位</a></li>
+                            <li class="active"><a
+                                        href="<?= Url::toRoute(['creative/index', 'campaignId' => $get['campaignId']]) ?>"
+                                        data-placement="top"
+                                        data-toggle="tab"
+                                        title="创意">创意</a></li>
+                        <?php } ?>
+
+                        <?php
+                    } else { ?>
+                        <li class=""><a href="<?= Url::toRoute('default/index') ?>" title="计划">计划</a></li>
+                        <li class=""><a href="<?= Url::toRoute('unit/index') ?>" title="单元">单元</a></li>
+                        <li class=""><a href="<?= Url::toRoute('target/index') ?>" title="定向">定向</a></li>
+                        <li class=""><a href="<?= Url::toRoute('resource/index') ?>" title="资源位">资源位</a></li>
+                        <li class="active"><a href="<?= Url::toRoute('creative/index') ?>" data-placement="top"
+                                              data-toggle="tab" title="创意">创意</a></li>
+                        <?php
+                    }
+                    ?>
                 </ul>
                 <div class="tab-content">
                     <!-- 创意 -->
                     <div class="tab-pane fade in active" id="creative">
 
-                        <div class="control-group form-inline pt15 pb15">
-                            <span href="javascript:;" id="create-plan" class="btn btn-primary create-plan">
-                                <i class="fa fa-plus"></i>
-                                从创意库选择
-                            </span>
+                        <div class="control-group pt15 pb15">
+                            <div class="fl mr10">
+                                <span href="javascript:;" id="create-plan" class="btn btn-primary create-plan">
+                                    <i class="fa fa-plus"></i>
+                                    从创意库选择
+                                </span>
 
-                            <span href="javascript:;" id="create-plan" class="btn btn-primary create-plan">
-                                添加新创意
-                            </span>
+                                <span href="javascript:;" id="create-plan" class="btn btn-primary create-plan">
+                                    添加新创意
+                                </span>
+                            </div>
 
-                            <select name="" class="form-control">
-                                <option>全部计划类型</option>
-                                <option>自定义计划</option>
-                                <option>系统推荐计划</option>
-                                <option>系统托管计划</option>
-                            </select>
+                            <div class="form-inline">
+                                <?php $form = ActiveForm::begin([
+                                    'id' => 'adzone-form',
+                                    'method' => 'get',
+                                ]); ?>
+                                <select name="customerId" class="form-control">
+                                    <option value="" <?= ($get['customerId'] == '') ? 'selected' : '' ?>>请选择客户
+                                    <?php foreach ($customers as $k => $v) { ?>
+                                        <option value="<?= $v['taobao_user_id'] ?>" <?= ($get['customerId'] == $v['taobao_user_id']) ? 'selected' : '' ?>>
+                                    <?= $v['taobao_user_nick'] ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
 
-                            <select name="" class="form-control">
-                                <option>全部状态</option>
-                                <option>待审核</option>
-                                <option>审核通过</option>
-                                <option>投放保障</option>
-                            </select>
+                                <select name="auditStatus" class="form-control">
+                                    <option value="" <?= ($get['auditStatus'] == '') ? 'selected' : '' ?>>全部状态</option>
+                                    <option value="-4,-1,0" <?= ($get['auditStatus'] == '-4,-1,0') ? 'selected' : '' ?>>待审核</option>
+                                    <option value="1" <?= ($get['auditStatus'] == '1') ? 'selected' : '' ?>>审核通过</option>
+                                    <option value="-2,-5,-9" <?= ($get['auditStatus'] == '-2,-5,-9') ? 'selected' : '' ?>>审核拒绝</option>
+                                </select>
 
-                            <select name="" class="form-control">
-                                <option>全部等级</option>
-                                <option>一级</option>
-                                <option>二级</option>
-                                <option>三级</option>
-                                <option>四级</option>
-                            </select>
+                                <select name="creativeLevel" class="form-control">
+                                    <option value="" <?= ($get['creativeLevel'] == '') ? 'selected' : '' ?>>全部等级</option>
+                                    <option value="1" <?= ($get['creativeLevel'] == '1') ? 'selected' : '' ?>>一级</option>
+                                    <option value="2" <?= ($get['creativeLevel'] == '2') ? 'selected' : '' ?>>二级</option>
+                                    <option value="3" <?= ($get['creativeLevel'] == '3') ? 'selected' : '' ?>>三级</option>
+                                    <option value="4" <?= ($get['creativeLevel'] == '4') ? 'selected' : '' ?>>四级</option>
+                                    <option value="10" <?= ($get['creativeLevel'] == '10') ? 'selected' : '' ?>>十级</option>
+                                    <option value="99" <?= ($get['creativeLevel'] == '99') ? 'selected' : '' ?>>未分级</option>
+                                </select>
 
-                            <select name="" class="form-control">
-                                <option>全部创意类型</option>
-                                <option>图片</option>
-                            </select>
+                                <select name="creativeSize" class="form-control">
+                                    <option value="" <?= ($get['creativeSize'] == '') ? 'selected' : '' ?>>全部尺寸</option>
+                                    <option value="520,280" <?= ($get['creativeSize'] == '520,280') ? 'selected' : '' ?>>520x280</option>
+                                    <option value="640,200" <?= ($get['creativeSize'] == '640,200') ? 'selected' : '' ?>>640x200</option>
+                                    <option value="1180,500" <?= ($get['creativeSize'] == '1180,500') ? 'selected' : '' ?>>1180x500</option>
+                                </select>
 
-                            <select name="" class="form-control">
-                                <option>全部尺寸</option>
-                                <option>520*280</option>
-                                <option>640*200</option>
-                            </select>
-
+                                <input type="text" name="creativeName" class="form-control"
+                                       value="<?= $get['creativeName'] ?>" placeholder="请输入资源位名称">
+                                <?php ActiveForm::end(); ?>
+                            </div>
                         </div>
 
                         <div class="control-group table-responsive">
@@ -123,7 +181,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </thead>
                                 <tbody class="plan-table">
 
-                                <?php foreach ($models as $k => $v) { ?>
+                                <?php foreach ($taobaoZsCreative as $k => $v) { ?>
                                     <tr class="odd gradeX operation-open">
                                         <th><input type="checkbox"></th>
                                         <td>
@@ -200,7 +258,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             </table>
 
                             <?= \backend\components\widget\GoLinkPager::widget([
-                                'pagination' => $pages,
+                                'pagination' => $pagination,
                                 'maxButtonCount' => 5,
                                 'firstPageLabel' => '首页',
                                 'lastPageLabel' => '末页',
@@ -222,6 +280,26 @@ $this->params['breadcrumbs'][] = $this->title;
 <script>
 
     $(function () {
+
+        $("select[name='customerId']").change(function () {
+            $('#adzone-form').submit();
+        });
+        $("select[name='auditStatus']").change(function () {
+            $('#adzone-form').submit();
+        });
+
+        $("select[name='creativeLevel']").change(function () {
+            $('#adzone-form').submit();
+        });
+
+        $("select[name='creativeSize']").change(function () {
+            $('#adzone-form').submit();
+        });
+
+        $("input[name='creativeName']").blur(function () {
+            $('#adzone-form').submit();
+        });
+
         $("[data-toggle='tab']").tooltip(); // 工具提示（Tooltip）插件 - 锚
 
         $(".creativeImgLi").hover(function () {

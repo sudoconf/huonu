@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'header' => '更多操作',
-                    'template' => '{sync}{forbidden}',
+                    'template' => '{sync}{forbidden}{plan}',
                     'buttons' => [
                         'sync' => function ($url, $model, $key) {
                             return Html::button('手动同步', [
@@ -68,20 +68,29 @@ $this->params['breadcrumbs'][] = $this->title;
                             $butClass = '';
                             $userStatusHtml = '已禁用';
                             $userStatus = 0;
-                            $title = '确定取消用户：'.$model->taobao_user_nick.' 的禁用状态?';
+                            $title = '确定取消用户：' . $model->taobao_user_nick . ' 的禁用状态?';
                             if (!$model->user_state) {
                                 $userStatusHtml = '禁用';
                                 $butClass = 'btn-primary';
                                 $userStatus = 1;
-                                $title = '确定禁用用户：'.$model->taobao_user_nick.'?';
+                                $title = '确定禁用用户：' . $model->taobao_user_nick . '?';
                             }
                             return Html::button($userStatusHtml, [
-                                'class' => 'btn ajax-forbid ' . $butClass,
+                                'class' => 'btn mr10 ajax-forbid ' . $butClass,
                                 'title' => $title,
                                 'data-url' => Url::toRoute(['ajax-forbid', 'userId' => $model->taobao_user_id]),
                                 'data-value-status' => $userStatus
                             ]);
                         },
+                        'plan' => function ($url, $model, $key) {
+                            return Html::a(
+                                '计划',
+                                Url::toRoute(['/plan/default', 'userId' => $model->taobao_user_id]),
+                                [
+                                        'class' => 'btn btn-primary'
+                                ]
+                            );
+                        }
                     ],
                 ],
             ],

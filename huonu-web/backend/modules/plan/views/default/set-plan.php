@@ -1,4 +1,4 @@
-<div class="tab-pane fade" id="set-plan">
+<div class="tab-pane fade in active" id="set-plan">
     <?php
     $form = \yii\bootstrap\ActiveForm::begin(
         [
@@ -8,10 +8,11 @@
         ]
     );
     ?>
-    <div class="control-group pd15">
+    <div class="control-group">
         <div class="form-inline pd10">
             <label for="name">店铺名称</label>
-            <input type="text" class="form-control taobao-shop-name" placeholder="请输入店铺名称" value="<?= $setPlan['taobao_shop_name'] ?>">
+            <input type="text" class="form-control taobao-shop-name" placeholder="请输入店铺名称"
+                   value="<?= $setPlan['taobao_shop_name'] ?>">
             <input type="hidden" class="taobao-shop-id" name="taobao_user_id" value="<?= $setPlan['taobao_user_id'] ?>">
             <input type="hidden" class="taobao-shop-name" name="taobao_shop_name"
                    value="<?= $setPlan['taobao_shop_name'] ?>">
@@ -21,7 +22,7 @@
     </div>
 
     <!--基本信息 start -->
-    <div class="control-group pd15">
+    <div class="control-group">
         <div class="well s_fs_16">
             <i class="fa fa-bar-chart-o fa-fw"></i>
             基本信息
@@ -381,30 +382,9 @@
                             <li class="all allselected" style="width: 70%">
                                 <select id="work-days" class="selectpicker form-control"
                                         data-live-search="true" data-actions-box="true" multiple>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                    <option value="13">13</option>
-                                    <option value="14">14</option>
-                                    <option value="15">15</option>
-                                    <option value="16">16</option>
-                                    <option value="17">17</option>
-                                    <option value="18">18</option>
-                                    <option value="19">19</option>
-                                    <option value="20">20</option>
-                                    <option value="21">21</option>
-                                    <option value="22">22</option>
-                                    <option value="23">23</option>
-                                    <option value="24">24</option>
+                                    <?php for ($i = 1; $i <= 24; $i++) { ?>
+                                        <option value="<?= $i ?>"><?= $i ?></option>
+                                    <?php } ?>
                                 </select>
                             </li>
                         </ul>
@@ -417,30 +397,9 @@
                             <li class="all allselected" style="width: 70%">
                                 <select id="week-ends" class="selectpicker form-control"
                                         data-live-search="true" data-actions-box="true" multiple>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                    <option value="13">13</option>
-                                    <option value="14">14</option>
-                                    <option value="15">15</option>
-                                    <option value="16">16</option>
-                                    <option value="17">17</option>
-                                    <option value="18">18</option>
-                                    <option value="19">19</option>
-                                    <option value="20">20</option>
-                                    <option value="21">21</option>
-                                    <option value="22">22</option>
-                                    <option value="23">23</option>
-                                    <option value="24">24</option>
+                                    <?php for ($i = 1; $i <= 24; $i++) { ?>
+                                        <option value="<?= $i ?>"><?= $i ?></option>
+                                    <?php } ?>
                                 </select>
                             </li>
                         </ul>
@@ -492,15 +451,12 @@
         </div>
 
         <div class="form-inline pd10">
-            <div class="form-group">
-                <label for="name">每日预算</label>
-            </div>
-            <div class="input-group">
-                <span class="input-group-addon">$</span>
-                <input type="text" class="form-control " placeholder="最低300元" name="day_budget"
-                       value="<?= $setPlan['day_budget'] ?>">
-                <span class="input-group-addon">.00</span>
-            </div>
+            <label for="name">每日预算</label>
+
+            <input type="text" class="form-control " placeholder="最低300元" name="day_budget"
+                   value="<?= $setPlan['day_budget'] ?>"> 元
+
+            <span class="error dpn">请输入整数</span>
         </div>
     </div>
     <!--基本信息 end -->

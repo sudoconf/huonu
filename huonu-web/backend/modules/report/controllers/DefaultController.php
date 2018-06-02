@@ -4,10 +4,12 @@ namespace backend\modules\report\controllers;
 
 use backend\controllers\BaseController;
 use backend\models\AuthorizeUser;
+use backend\models\Multitray;
 use backend\models\MultitrayStatistics;
 use backend\models\searchs\MultitraySearch;
 use backend\models\TaobaoZsAdvertiserTargetDaySumList;
 use backend\models\TaobaoZsTargetList;
+use backend\modules\plan\services\TargetService;
 use backend\modules\report\services\ReportService;
 use backend\modules\report\services\SetUpParameterService;
 use backend\modules\report\services\StrategyGroupService;
@@ -61,7 +63,7 @@ class DefaultController extends BaseController
     }
 
     /**
-     * 创建第一步
+     * 创建第一步 设置参数
      * @return string
      */
     public function actionCreate()
@@ -83,7 +85,7 @@ class DefaultController extends BaseController
     }
 
     /**
-     * TODO 保存第一步骤的数据
+     * 保存 第一步数据
      */
     public function actionAjaxSaveSetParameter()
     {
@@ -91,13 +93,12 @@ class DefaultController extends BaseController
     }
 
     /**
-     * TODO 第二步 ajax 获取定向列表
+     * ajax 获取定向列表
      */
     public function actionAjaxGetTarget()
     {
-        $taobaoId = Yii::$app->request->get('taobao_id');
-        $shop = TaobaoZsTargetList::find()->select('id as target_id,crowd_name as target_name')->where(['taobao_user_id' => $taobaoId])->limit(50)->asArray()->all();
-        CtHelper::response(200, 'success', $shop);
+        $taobaoZsTargetList = TargetService::service()->getTarget();
+        CtHelper::response(200, 'success', $taobaoZsTargetList);
     }
 
     /**
